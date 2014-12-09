@@ -4,6 +4,7 @@ import com.vikestep.sprinklesforvanilla.common.reference.ModInfo;
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
@@ -27,17 +28,19 @@ public class ConfigurationHandler
         String CATEGORY;
 
         CATEGORY = "Overhauls";
+        config.setCategoryComment(CATEGORY, "Use this section to disable certain config sections (May fix mod compat issues)");
         COMMENT = "Set to true to enable the sleep configs, set to false to ignore sleep configs";
         Settings.overhaulSleep = config.get(CATEGORY, "overhaulSleep", true, COMMENT).getBoolean(true);
 
         CATEGORY = "Sleep";
+        config.setCategoryComment(CATEGORY, "This section handles the mechanics of beds and sleeping (May cause issues with mods like Insomnia or PerfectSpawn");
         COMMENT = "Set to true to enable sleeping in bed, false to disable sleeping in bed (if this is false and bedsSetSpawn is true, then you can't sleep, but it will set spawn)";
         Settings.sleepIsEnabled = config.get(CATEGORY, "sleepIsEnabled", true, COMMENT).getBoolean(true);
         COMMENT = "Set to true to let beds set spawn, set to false to have beds not set spawn";
         Settings.bedSetsSpawn = config.get(CATEGORY, "bedsSetSpawn", true, COMMENT).getBoolean(true);
         COMMENT = "Set to true to have nearby mobs cancel sleep, set to false to allow sleep with nearby mobs";
         Settings.nearbyMobsCancelSleep = config.get(CATEGORY, "nearbyMobsCancelSleep", true, COMMENT).getBoolean(true);
-        //Disabled and kept at true until I can find a work around
+        //Disabled and kept at true until I can find a work around because players are auto kicked from beds in EntityPlayer update method (PlayerTickEvent) I could cancel PlayerTickEvent but it would be a lot of work for a small feature. Maybe get a forge hook
         //COMMENT = "Set to true to only sleep at night, set to false to be able to sleep at any time (and wake up in morning)";
         //Settings.dayCancelsSleep = config.get(CATEGORY, "dayCancelsSleep", true, COMMENT).getBoolean(true);
         COMMENT = "Set to true to only allow sleeping in the Overworld, set to false to enable sleep in other dimensions (spawn will not be set regardless of bedsSetSpawn)";
@@ -51,6 +54,39 @@ public class ConfigurationHandler
         COMMENT = "Set this to the time in ticks (20 ticks = 1 second) that it takes for the player to sleep (max and default is 100)";
         Settings.timeToSleep = config.get(CATEGORY, "timeToSleep", 100, COMMENT, 0, 100).getInt(100);
 
+        CATEGORY = "Disable Mobs";
+        config.setCategoryComment(CATEGORY, "Set to true to enable the mob, set to false to disable the mob");
+        Settings.chickensAreEnabled = config.get(CATEGORY, "chickensAreEnabled", true).getBoolean(true);
+        Settings.cowsAreEnabled = config.get(CATEGORY, "cowsAreEnabled", true).getBoolean(true);
+        Settings.horsesAreEnabled = config.get(CATEGORY, "horsesAreEnabled", true).getBoolean(true);
+        Settings.ocelotsAreEnabled = config.get(CATEGORY, "ocelotsAreEnabled", true).getBoolean(true);
+        Settings.pigsAreEnabled = config.get(CATEGORY, "pigsAreEnabled", true).getBoolean(true);
+        Settings.sheepAreEnabled = config.get(CATEGORY, "sheepAreEnabled", true).getBoolean(true);
+        Settings.batsAreEnabled = config.get(CATEGORY, "batsAreEnabled", true).getBoolean(true);
+        Settings.mooshroomsAreEnabled = config.get(CATEGORY, "mooshroomsAreEnabled", true).getBoolean(true);
+        Settings.squidsAreEnabled = config.get(CATEGORY, "squidsAreEnabled", true).getBoolean(true);
+        Settings.villagersAreEnabled = config.get(CATEGORY, "villagersAreEnabled", true).getBoolean(true);
+        Settings.caveSpidersAreEnabled = config.get(CATEGORY, "caveSpidersAreEnabled", true).getBoolean(true);
+        Settings.endermenAreEnabled = config.get(CATEGORY, "endermenAreEnabled", true).getBoolean(true);
+        Settings.spidersAreEnabled = config.get(CATEGORY, "spidersAreEnabled", true).getBoolean(true);
+        Settings.wolvesAreEnabled = config.get(CATEGORY, "wolvesAreEnabled", true).getBoolean(true);
+        Settings.zombiePigmenAreEnabled = config.get(CATEGORY, "zombiePigmenAreEnabled", true).getBoolean(true);
+        Settings.blazesAreEnabled = config.get(CATEGORY, "blazesAreEnabled", true).getBoolean(true);
+        Settings.creepersAreEnabled = config.get(CATEGORY, "creepersAreEnabled", true).getBoolean(true);
+        Settings.ghastsAreEnabled = config.get(CATEGORY, "ghastsAreEnabled", true).getBoolean(true);
+        Settings.magmaCubesAreEnabled = config.get(CATEGORY, "magmaCubesAreEnabled", true).getBoolean(true);
+        Settings.silverfishAreEnabled = config.get(CATEGORY, "silverfishAreEnabled", true).getBoolean(true);
+        Settings.skeletonsAreEnabled = config.get(CATEGORY, "skeletonsAreEnabled", true).getBoolean(true);
+        Settings.slimesAreEnabled = config.get(CATEGORY, "slimesAreEnabled", true).getBoolean(true);
+        Settings.witchesAreEnabled = config.get(CATEGORY, "witchesAreEnabled", true).getBoolean(true);
+        Settings.witherSkeletonsAreEnabled = config.get(CATEGORY, "witherSkeletonsAreEnabled", true).getBoolean(true);
+        Settings.zombiesAreEnabled = config.get(CATEGORY, "zombiesAreEnabled", true).getBoolean(true);
+        Settings.zombieVillagersAreEnabled = config.get(CATEGORY, "zombieVillagersAreEnabled", true).getBoolean(true);
+        Settings.snowGolemsAreEnabled = config.get(CATEGORY, "snowGolemsAreEnabled", true).getBoolean(true);
+        Settings.ironGolemsAreEnabled = config.get(CATEGORY, "ironGolemsAreEnabled", true).getBoolean(true);
+        Settings.withersAreEnabled = config.get(CATEGORY, "withersAreEnabled", true).getBoolean(true);
+        Settings.enderDragonsAreEnabled = config.get(CATEGORY, "enderDragonsAreEnabled", true).getBoolean(true);
+        
         if (config.hasChanged())
         {
             config.save();
