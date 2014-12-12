@@ -2,146 +2,52 @@ package com.vikestep.sprinklesforvanilla.common.handlers;
 
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.entity.boss.*;
-import net.minecraft.entity.monster.*;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+
+import java.util.Arrays;
 
 public class MobHandler
 {
     @SubscribeEvent
     public void onEntityJoin(EntityJoinWorldEvent event)
     {
-        boolean allowed = true;
-        if (event.entity instanceof EntityChicken)
+        //Gets the class of the entity as a string
+        String CLASS_NAME = event.entity.getClass().getName();
+        //Removes path before and including the last "."
+        String TRUNCATED_CLASS_NAME = CLASS_NAME.substring(CLASS_NAME.lastIndexOf(".") + 1);
+        //Finds the class name in the mobNames Array. Will return -1 if the entity is not in the list
+        int mobNum = Arrays.asList(Settings.mobNames).indexOf(TRUNCATED_CLASS_NAME);
+        if (mobNum != -1)
         {
-            allowed = Settings.chickensAreEnabled;
-        }
-        else if (event.entity instanceof EntityCow)
-        {
-            allowed = Settings.cowsAreEnabled;
-        }
-        else if (event.entity instanceof EntityHorse)
-        {
-            allowed = Settings.horsesAreEnabled;
-        }
-        else if (event.entity instanceof EntityOcelot)
-        {
-            allowed = Settings.ocelotsAreEnabled;
-        }
-        else if (event.entity instanceof EntityPig)
-        {
-            allowed = Settings.pigsAreEnabled;
-        }
-        else if (event.entity instanceof EntitySheep)
-        {
-            allowed = Settings.sheepAreEnabled;
-        }
-        else if (event.entity instanceof EntityBat)
-        {
-            allowed = Settings.batsAreEnabled;
-        }
-        else if (event.entity instanceof EntityMooshroom)
-        {
-            allowed = Settings.mooshroomsAreEnabled;
-        }
-        else if (event.entity instanceof EntitySquid)
-        {
-            allowed = Settings.squidsAreEnabled;
-        }
-        else if (event.entity instanceof EntityVillager)
-        {
-            allowed = Settings.villagersAreEnabled;
-        }
-        else if (event.entity instanceof EntityCaveSpider)
-        {
-            allowed = Settings.caveSpidersAreEnabled;
-        }
-        else if (event.entity instanceof EntityEnderman)
-        {
-            allowed = Settings.endermenAreEnabled;
-        }
-        else if (event.entity instanceof EntitySpider)
-        {
-            allowed = Settings.spidersAreEnabled;
-        }
-        else if (event.entity instanceof EntityWolf)
-        {
-            allowed = Settings.wolvesAreEnabled;
-        }
-        else if (event.entity instanceof EntityPigZombie)
-        {
-            allowed = Settings.zombiePigmenAreEnabled;
-        }
-        else if (event.entity instanceof EntityBlaze)
-        {
-            allowed = Settings.blazesAreEnabled;
-        }
-        else if (event.entity instanceof EntityCreeper)
-        {
-            allowed = Settings.creepersAreEnabled;
-        }
-        else if (event.entity instanceof EntityGhast)
-        {
-            allowed = Settings.ghastsAreEnabled;
-        }
-        else if (event.entity instanceof EntityMagmaCube)
-        {
-            allowed = Settings.magmaCubesAreEnabled;
-        }
-        else if (event.entity instanceof EntitySilverfish)
-        {
-            allowed = Settings.silverfishAreEnabled;
-        }
-        else if (event.entity instanceof EntitySkeleton)
-        {
-            if(((EntitySkeleton) event.entity).getSkeletonType() == 0)
+            mobNum = (mobNum - 1) / 2;
+            if (TRUNCATED_CLASS_NAME.equals("EntityZombie"))
             {
-                allowed = Settings.skeletonsAreEnabled;
+                if (((EntityZombie) event.entity).isVillager())
+                {
+                    event.setCanceled(!Settings.mobNameConfigs[Arrays.asList(Settings.mobNames).indexOf("zombieVillagers") / 2]);
+                }
+                else
+                {
+                    event.setCanceled(Settings.mobNameConfigs[Arrays.asList(Settings.mobNames).indexOf("zombies") / 2]);
+                }
+            }
+            else if (TRUNCATED_CLASS_NAME.equals("EntitySkeleton"))
+            {
+                if(((EntitySkeleton) event.entity).getSkeletonType() == 0)
+                {
+                    event.setCanceled(!Settings.mobNameConfigs[Arrays.asList(Settings.mobNames).indexOf("skeletons") / 2]);
+                }
+                else
+                {
+                    event.setCanceled(!Settings.mobNameConfigs[Arrays.asList(Settings.mobNames).indexOf("witherSkeletons") / 2]);
+                }
             }
             else
             {
-                allowed = Settings.witherSkeletonsAreEnabled;
+                event.setCanceled(!Settings.mobNameConfigs[mobNum]);
             }
-        }
-        else if (event.entity instanceof EntitySlime)
-        {
-            allowed = Settings.slimesAreEnabled;
-        }
-        else if (event.entity instanceof EntityWitch)
-        {
-            allowed = Settings.witchesAreEnabled;
-        }
-        else if (event.entity instanceof EntityZombie)
-        {
-            if (((EntityZombie) event.entity).isVillager())
-            {
-                allowed = Settings.zombieVillagersAreEnabled;
-            }
-            else
-            {
-                allowed = Settings.zombiesAreEnabled;
-            }
-        }
-        else if (event.entity instanceof EntitySnowman)
-        {
-            allowed = Settings.snowGolemsAreEnabled;
-        }
-        else if (event.entity instanceof EntityIronGolem)
-        {
-            allowed = Settings.ironGolemsAreEnabled;
-        }
-        else if (event.entity instanceof EntityWither)
-        {
-            allowed = Settings.withersAreEnabled;
-        }
-        else if (event.entity instanceof EntityDragon)
-        {
-            allowed = Settings.enderDragonsAreEnabled;
-        }
-        if (!allowed)
-        {
-            event.setCanceled(true);
         }
     }
 }

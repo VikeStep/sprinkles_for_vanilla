@@ -1,7 +1,7 @@
 sprinkles_for_vanilla
 =====================
 
-This is a mod that adds a config for vanilla.
+This is a mod that adds a config for vanilla. An example config is shown in the repo.
 
 Current Features
 ---------------------
@@ -13,3 +13,5 @@ Current Features
 - Set time taken to be fully asleep
 - Set distance checked away from bed for nearby mobs
 - Set distance you need to be away from bed to sleep in it
+- Disable/Enable any mob
+- Disable/Enable any explosion

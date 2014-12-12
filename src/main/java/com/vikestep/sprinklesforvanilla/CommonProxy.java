@@ -1,5 +1,6 @@
 package com.vikestep.sprinklesforvanilla;
 
+import com.vikestep.sprinklesforvanilla.common.handlers.ExplosionHandler;
 import com.vikestep.sprinklesforvanilla.common.handlers.MobHandler;
 import com.vikestep.sprinklesforvanilla.common.handlers.SleepHandler;
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
@@ -15,5 +16,6 @@ public class CommonProxy
             FMLCommonHandler.instance().bus().register(new SleepHandler());
         }
         MinecraftForge.EVENT_BUS.register(new MobHandler());
+        MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
     }
 }

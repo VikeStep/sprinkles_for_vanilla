@@ -15,7 +15,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 
 import java.lang.reflect.Field;
-import java.util.Iterator;
 
 public class SleepHandler
 {
@@ -48,6 +47,7 @@ public class SleepHandler
         }
     }
 
+    //This will cause problems with mods like Insomnia and PerfectSpawn which also override this data. To resolve disable sleepOverhaul in configs
     @SubscribeEvent
     public void onPlayerSleep(PlayerSleepInBedEvent event)
     {
@@ -87,6 +87,7 @@ public class SleepHandler
         }
     }
 
+    //This will cause problems with other mods that also replace the PlayerInteractEvent under conditions which mine fall under. To resolve disable sleepOverhaul in configs
     @SubscribeEvent
     public void onBedActivated(PlayerInteractEvent event)
     {
@@ -110,10 +111,9 @@ public class SleepHandler
                 if (BlockBed.func_149976_c(meta))
                 {
                     EntityPlayer entityplayer1 = null;
-                    Iterator iterator = event.world.playerEntities.iterator();
-                    while (iterator.hasNext())
+                    for (Object playerEntity : event.world.playerEntities)
                     {
-                        EntityPlayer entityplayer2 = (EntityPlayer)iterator.next();
+                        EntityPlayer entityplayer2 = (EntityPlayer) playerEntity;
                         if (entityplayer2.isPlayerSleeping())
                         {
                             ChunkCoordinates chunkcoordinates = entityplayer2.playerLocation;

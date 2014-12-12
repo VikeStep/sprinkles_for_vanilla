@@ -9,42 +9,59 @@ public class Settings
     public static boolean sleepIsEnabled = true;
     public static boolean bedSetsSpawn = true;
     public static boolean nearbyMobsCancelSleep = true;
-    public static boolean dayCancelsSleep = true;
+    public static boolean dayCancelsSleep = true; //Currently not in the configs. Either use coremodding or request a Forge PR to fix this
     public static boolean playerMustSleepInOverworld = true;
     public static boolean distanceFromBedCancelsSleep = true;
     public static int[] nearbyMobDistance = {8, 5, 8}; //{x, y, z}
     public static int[] distanceFromBed = {3, 2, 3}; //{x, y, z}
     public static int timeToSleep = 100; //Max is 100 Ticks
 
-    //DisableMobs
-    public static boolean chickensAreEnabled = true;
-    public static boolean cowsAreEnabled = true;
-    public static boolean horsesAreEnabled = true;
-    public static boolean ocelotsAreEnabled = true;
-    public static boolean pigsAreEnabled = true;
-    public static boolean sheepAreEnabled = true;
-    public static boolean batsAreEnabled = true;
-    public static boolean mooshroomsAreEnabled = true;
-    public static boolean squidsAreEnabled = true;
-    public static boolean villagersAreEnabled = true;
-    public static boolean caveSpidersAreEnabled = true;
-    public static boolean endermenAreEnabled = true;
-    public static boolean spidersAreEnabled = true;
-    public static boolean wolvesAreEnabled = true;
-    public static boolean zombiePigmenAreEnabled = true;
-    public static boolean blazesAreEnabled = true;
-    public static boolean creepersAreEnabled = true;
-    public static boolean ghastsAreEnabled = true;
-    public static boolean magmaCubesAreEnabled = true;
-    public static boolean silverfishAreEnabled = true;
-    public static boolean skeletonsAreEnabled = true;
-    public static boolean slimesAreEnabled = true;
-    public static boolean witchesAreEnabled = true;
-    public static boolean witherSkeletonsAreEnabled = true;
-    public static boolean zombiesAreEnabled = true;
-    public static boolean zombieVillagersAreEnabled = true;
-    public static boolean snowGolemsAreEnabled = true;
-    public static boolean ironGolemsAreEnabled = true;
-    public static boolean withersAreEnabled = true;
-    public static boolean enderDragonsAreEnabled = true;
+    //I know there are better ways of doing this like a Map. May change later but it works well and is easily extendable
+    public static final String[] mobNames =
+            {
+                    "chickens", "EntityChicken",
+                    "cows", "EntityCow",
+                    "horses", "EntityHorse",
+                    "ocelots", "EntityOcelot",
+                    "pigs", "EntityPig",
+                    "sheep", "EntitySheep",
+                    "bats", "EntityBat",
+                    "mooshrooms", "EntityMooshroom",
+                    "squids", "EntitySquid",
+                    "villagers", "EntityVillager",
+                    "caveSpiders", "EntityCaveSpider",
+                    "endermen", "EntityEnderman",
+                    "spiders", "EntitySpider",
+                    "wolves", "EntityWolf",
+                    "zombiePigmen", "EntityPigZombie",
+                    "blazes", "EntityBlaze",
+                    "creepers", "EntityCreeper",
+                    "ghasts", "EntityGhast",
+                    "magmaCubes", "EntityMagmaCube",
+                    "silverfish", "EntitySilverfish",
+                    "skeletons", "EntitySkeleton",
+                    "slimes", "EntitySlime",
+                    "witches", "EntityWitch",
+                    "witherSkeletons", "EntitySkeleton",
+                    "zombies", "EntityZombie",
+                    "zombieVillagers", "EntityZombie",
+                    "snowGolems", "EntitySnowman",
+                    "ironGolems", "EntityIronGolem",
+                    "withers", "EntityWither",
+                    "enderDragons", "EntityDragon"
+            };
+
+    public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
+
+    //Explosions
+    public static boolean explosionsAreEnabled = true;
+    public static boolean TNTExplosionsAreEnabled = true;
+    public static boolean creeperExplosionsAreEnabled = true;
+    public static boolean chargedCreeperExplosionsAreEnabled = true;
+    public static boolean witherCreationExplosionsAreEnabled = true;
+    public static boolean enderCrystalExplosionsAreEnabled = true;
+    public static boolean ghastFireballExplosionsAreEnabled = true;
+    public static boolean witherSkullProjectileExplosionsAreEnabled = true;
+    public static boolean bedExplosionsAreEnabled = true;
+
 }
