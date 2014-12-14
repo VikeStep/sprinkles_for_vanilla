@@ -64,4 +64,7 @@ public class Settings
     public static boolean witherSkullProjectileExplosionsAreEnabled = true;
     public static boolean bedExplosionsAreEnabled = true;
 
+    //Misc
+    public static boolean mobGriefingIsForcedFalse = false;
+
 }

@@ -17,5 +17,6 @@ public class CommonProxy
         }
         MinecraftForge.EVENT_BUS.register(new MobHandler());
         MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
+        FMLCommonHandler.instance().bus().register(new MobHandler());
     }
 }

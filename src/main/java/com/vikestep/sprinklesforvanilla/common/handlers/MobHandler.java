@@ -2,6 +2,8 @@ package com.vikestep.sprinklesforvanilla.common.handlers;
 
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -48,6 +50,15 @@ public class MobHandler
             {
                 event.setCanceled(!Settings.mobNameConfigs[mobNum]);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onServerTick(TickEvent.WorldTickEvent event)
+    {
+        if (event.world.getGameRules().getGameRuleBooleanValue("mobGriefing") && Settings.mobGriefingIsForcedFalse)
+        {
+            event.world.getGameRules().setOrCreateGameRule("mobGriefing", "false");
         }
     }
 }

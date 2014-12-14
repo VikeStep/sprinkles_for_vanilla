@@ -73,6 +73,11 @@ public class ConfigurationHandler
         Settings.witherSkullProjectileExplosionsAreEnabled = config.get(CATEGORY, "witherSkullProjectileExplosionsAreEnabled", true).getBoolean(true);
         Settings.bedExplosionsAreEnabled = config.get(CATEGORY, "bedExplosionsAreEnabled", true).getBoolean(true);
 
+        CATEGORY = "General";
+        config.setCategoryComment(CATEGORY, "This section is for general/miscellaneous configs that don't fit in other categories");
+        COMMENT = "Set to true to manually change mob griefing, set to false to automatically disable mob griefing";
+        Settings.mobGriefingIsForcedFalse = config.get(CATEGORY, "mobGriefingIsForcedFalse", false, COMMENT).getBoolean(false);
+
         if (config.hasChanged())
         {
             config.save();

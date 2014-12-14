@@ -257,7 +257,7 @@ public class SleepHandler
 
         try
         {
-            sleepTimer.set(player, 100 - Settings.timeToSleep);
+            sleepTimer.set(player, Math.min(Math.max(100 - Settings.timeToSleep, 0), 100));
             sleeping.set(player, true);
         }
         catch (Exception e)
