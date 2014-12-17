@@ -35,7 +35,7 @@ jar {
 
 sourceSets.main{
 	java {
-		srcDirs 'java', 'apis', 'ASMHelper/java'
+		srcDirs 'java', 'apis', 'src/main/java/ASMHelper/java'
 	}
 }
 
