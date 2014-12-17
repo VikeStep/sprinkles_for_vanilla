@@ -1,3 +1,6 @@
-[submodule "ASMHelper"]
-	path = ASMHelper	
+[submodule "src/main/java/ASMHelper."]
+	path = src/main/java/ASMHelper.
+	url = https://github.com/squeek502/ASMHelper.git
+[submodule "src/main/java/ASMHelper"]
+	path = src/main/java/ASMHelper
 	url = https://github.com/squeek502/ASMHelper.git
