@@ -26,6 +26,19 @@ minecraft {
     runDir = "run"
 }
 
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': 'com.vikestep.sprinklesforvanilla.asm.SprinklesForVanillaPlugin'
+        attributes 'FMLCorePluginContainsFMLMod': 'true'
+    }
+}
+
+sourceSets.main{
+	java {
+		srcDirs 'java', 'apis', 'ASMHelper/java'
+	}
+}
+
 dependencies {
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
