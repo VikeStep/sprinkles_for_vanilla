@@ -18,15 +18,14 @@ import java.lang.reflect.Field;
 
 public class SleepHandler
 {
-    Field sleepTimer;
-    Field sleeping;
-    Field spawnChunk;
-    Field spawnForced;
-
-    public static boolean resetSpawn = false;
-    public static boolean oldSpawnWasBed = false;
-    public static EntityPlayer playerResettingSpawn = null;
-    public static ChunkCoordinates spawnCoordinates;
+    private static boolean          resetSpawn;
+    private static boolean          oldSpawnWasBed;
+    private static EntityPlayer     playerResettingSpawn;
+    private static ChunkCoordinates spawnCoordinates;
+    private        Field            sleepTimer;
+    private        Field            sleeping;
+    private        Field            spawnChunk;
+    private        Field            spawnForced;
 
     public SleepHandler()
     {
@@ -125,7 +124,7 @@ public class SleepHandler
                     }
                     if (entityplayer1 != null)
                     {
-                        event.entityPlayer.addChatComponentMessage(new ChatComponentTranslation("tile.bed.occupied", new Object[0]));
+                        event.entityPlayer.addChatComponentMessage(new ChatComponentTranslation("tile.bed.occupied"));
                         occupied = true;
                     }
                     BlockBed.func_149979_a(event.world, bedX, bedY, bedZ, false);
@@ -139,11 +138,11 @@ public class SleepHandler
                     }
                     else if (enumstatus == EntityPlayer.EnumStatus.NOT_POSSIBLE_NOW)
                     {
-                        event.entityPlayer.addChatComponentMessage(new ChatComponentTranslation("tile.bed.noSleep", new Object[0]));
+                        event.entityPlayer.addChatComponentMessage(new ChatComponentTranslation("tile.bed.noSleep"));
                     }
                     else if (enumstatus == EntityPlayer.EnumStatus.NOT_SAFE)
                     {
-                        event.entityPlayer.addChatComponentMessage(new ChatComponentTranslation("tile.bed.notSafe", new Object[0]));
+                        event.entityPlayer.addChatComponentMessage(new ChatComponentTranslation("tile.bed.notSafe"));
                     }
                 }
             }
@@ -172,7 +171,7 @@ public class SleepHandler
         }
     }
 
-    public EntityPlayer.EnumStatus getEnumStatus(EntityPlayer player, int x, int y, int z)
+    EntityPlayer.EnumStatus getEnumStatus(EntityPlayer player, int x, int y, int z)
     {
         if (!player.worldObj.isRemote)
         {
@@ -184,7 +183,7 @@ public class SleepHandler
             {
                 return EntityPlayer.EnumStatus.NOT_POSSIBLE_HERE;
             }
-            if (player.worldObj.isDaytime()&& Settings.dayCancelsSleep)
+            if (player.worldObj.isDaytime() && Settings.dayCancelsSleep)
             {
                 return EntityPlayer.EnumStatus.NOT_POSSIBLE_NOW;
             }
@@ -206,11 +205,11 @@ public class SleepHandler
         return null;
     }
 
-    public void sleep(EntityPlayer player, int x, int y, int z)
+    void sleep(EntityPlayer player, int x, int y, int z)
     {
         if (player.isRiding())
         {
-            player.mountEntity((Entity) null);
+            player.mountEntity(null);
         }
 
         player.width = 0.2F;
@@ -274,17 +273,19 @@ public class SleepHandler
         }
     }
 
-    public void setSpawn(EntityPlayer player, int x, int y, int z)
+    void setSpawn(EntityPlayer player, int x, int y, int z)
     {
         ChunkCoordinates chunkCoordinates = new ChunkCoordinates(x, y, z);
         ChunkCoordinates bedCoordinates = player.worldObj.getBlock(x, y, z).getBedSpawnPosition(player.worldObj, chunkCoordinates.posX, chunkCoordinates.posY, chunkCoordinates.posZ, player);
-        if (bedCoordinates == null) {
+        if (bedCoordinates == null)
+        {
             bedCoordinates = new ChunkCoordinates(chunkCoordinates.posX, chunkCoordinates.posY + 1, chunkCoordinates.posZ);
         }
 
         ChunkCoordinates verifiedCoordinates = EntityPlayer.verifyRespawnCoordinates(player.worldObj, bedCoordinates, false);
 
-        if (verifiedCoordinates == null) {
+        if (verifiedCoordinates == null)
+        {
             verifiedCoordinates = new ChunkCoordinates(chunkCoordinates.posX, chunkCoordinates.posY, chunkCoordinates.posZ);
         }
 

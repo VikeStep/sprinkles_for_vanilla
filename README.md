@@ -1,7 +1,7 @@
 sprinkles_for_vanilla
 =====================
 
-This is a mod that adds a config for vanilla. An example config is shown in the repo.
+This is a mod that adds a config for vanilla. An example config is shown in [sprinkles_for_vanilla.cfg](https://github.com/VikeStep/sprinkles_for_vanilla/blob/master/sprinkles_for_vanilla.cfg).
 
 Current Features
 ---------------------
@@ -15,7 +15,12 @@ Current Features
 - Set distance you need to be away from bed to sleep in it
 - Disable/Enable any mob
 - Disable/Enable any explosion
-- Force Mob Griefing Off
+- Option to Force Disable Mob Griefing
+- Disable/Enable nether portals being generated
+- Disable/Enable nether portals teleporting
+- Change the mutliplier for the chance of zombie pigmen being spawned at a nether portal
+- Disable/Enable nether portal particles
+- Disable/Enable nether portal sound
 
 Possible Planned Features
 ---------------------
@@ -26,7 +31,7 @@ Possible Planned Features
 - Disable/Enable Weather overall or based on biomes
 - Set Frequency/Duration of rain/thunder
 - Set which biomes should snow
-- Disable Nether or End
+- Disable End
 - Disable/Enable Double Chests being created
 - Disable/Enable Christmas themed chest
 - Toggle between full block or chest models

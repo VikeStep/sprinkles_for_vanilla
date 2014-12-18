@@ -10,7 +10,7 @@ import java.io.File;
 
 public class ConfigurationHandler
 {
-    public static Configuration config;
+    private static Configuration config;
 
     public static void init(File configFile)
     {
@@ -77,6 +77,23 @@ public class ConfigurationHandler
         config.setCategoryComment(CATEGORY, "This section is for general/miscellaneous configs that don't fit in other categories");
         COMMENT = "Set to true to manually change mob griefing, set to false to automatically disable mob griefing";
         Settings.mobGriefingIsForcedFalse = config.get(CATEGORY, "mobGriefingIsForcedFalse", false, COMMENT).getBoolean(false);
+
+        CATEGORY = "Nether Portals";
+        config.setCategoryComment(CATEGORY, "This section handles the behaviour of nether portals");
+        COMMENT = "Set to true to enable teleportation to the nether via portal block (generated in Nether Portal), set to false to disable it";
+        Settings.netherPortalsCanTeleport = config.get(CATEGORY, "netherPortalsCanTeleport", true, COMMENT).getBoolean(true);
+        COMMENT = "Set to true to enable portal blocks being generated when the portal structure catches fire, set to false to disable portal blocks being made";
+        Settings.netherPortalsAreGenerated = config.get(CATEGORY, "netherPortalsAreGenerated", true, COMMENT).getBoolean(true);
+        COMMENT = "Set this to a value which is multiplied by the chance of a zombie pigman being spawned at a nether portal. Set to 0 to disable zombie pigmen being spawned at portals";
+        Settings.netherPortalPigmenSpawnMult = config.get(CATEGORY, "netherPortalPigmenSpawnMult", 1.0, COMMENT, 0, Double.MAX_VALUE).getDouble(1.0);
+
+        CATEGORY = "Particles";
+        config.setCategoryComment(CATEGORY, "Set to true to enable the particles, set to false to disable the particles");
+        Settings.netherPortalsCreateParticles = config.get(CATEGORY, "netherPortalsCreateParticles", true).getBoolean(true);
+
+        CATEGORY = "Sound";
+        config.setCategoryComment(CATEGORY, "Set to true to enable the sound, set to false to disable the sound");
+        Settings.netherPortalsCreateSound = config.get(CATEGORY, "netherPortalsCreateSound", true).getBoolean(true);
 
         if (config.hasChanged())
         {

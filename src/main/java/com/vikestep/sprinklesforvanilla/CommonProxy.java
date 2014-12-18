@@ -9,7 +9,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class CommonProxy
 {
-    public void init() {
+    public void init()
+    {
         if (Settings.overhaulSleep)
         {
             MinecraftForge.EVENT_BUS.register(new SleepHandler());

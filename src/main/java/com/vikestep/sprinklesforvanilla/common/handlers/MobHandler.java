@@ -3,7 +3,6 @@ package com.vikestep.sprinklesforvanilla.common.handlers;
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -37,7 +36,7 @@ public class MobHandler
             }
             else if (TRUNCATED_CLASS_NAME.equals("EntitySkeleton"))
             {
-                if(((EntitySkeleton) event.entity).getSkeletonType() == 0)
+                if (((EntitySkeleton) event.entity).getSkeletonType() == 0)
                 {
                     event.setCanceled(!Settings.mobNameConfigs[Arrays.asList(Settings.mobNames).indexOf("skeletons") / 2]);
                 }

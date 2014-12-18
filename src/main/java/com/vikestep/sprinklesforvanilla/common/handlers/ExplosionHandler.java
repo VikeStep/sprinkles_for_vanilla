@@ -14,7 +14,7 @@ import net.minecraftforge.event.world.ExplosionEvent;
 
 public class ExplosionHandler
 {
-    public static boolean playerSleepInNether;
+    private static boolean playerSleepInNether;
 
     @SubscribeEvent
     public void onExplosion(ExplosionEvent event)
