@@ -19,12 +19,11 @@ Current Features
 - Disable/Enable nether portals being generated
 - Disable/Enable nether portals teleporting
 - Change the mutliplier for the chance of zombie pigmen being spawned at a nether portal
-- Disable/Enable nether portal particles
+- Disable/Enable any particle
 - Disable/Enable nether portal sound
 
 Possible Planned Features
 ---------------------
-- Disable/Enable different particle types
 - Disable/Enable Fire spread
 - Set rate of fire spread
 - Set damage from non-mob sources (Cactus, Fire, Lava, Drowning etc.)

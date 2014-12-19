@@ -7,10 +7,22 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
-import java.util.Arrays;
-
 public class MobHandler
 {
+    public static int findMobIndex(String searchTerm, int col)
+    {
+        int mobIndex = -1;
+        for (int i = 0; i < Settings.mobNames.length; i++)
+        {
+            if (Settings.mobNames[i][col].equals(searchTerm))
+            {
+                mobIndex = i;
+                break;
+            }
+        }
+        return mobIndex;
+    }
+
     @SubscribeEvent
     public void onEntityJoin(EntityJoinWorldEvent event)
     {
@@ -19,35 +31,34 @@ public class MobHandler
         //Removes path before and including the last "."
         String TRUNCATED_CLASS_NAME = CLASS_NAME.substring(CLASS_NAME.lastIndexOf(".") + 1);
         //Finds the class name in the mobNames Array. Will return -1 if the entity is not in the list
-        int mobNum = Arrays.asList(Settings.mobNames).indexOf(TRUNCATED_CLASS_NAME);
-        if (mobNum != -1)
+        int mobIndex = findMobIndex(TRUNCATED_CLASS_NAME, 1);
+        if (mobIndex != -1)
         {
-            mobNum = (mobNum - 1) / 2;
             if (TRUNCATED_CLASS_NAME.equals("EntityZombie"))
             {
                 if (((EntityZombie) event.entity).isVillager())
                 {
-                    event.setCanceled(!Settings.mobNameConfigs[Arrays.asList(Settings.mobNames).indexOf("zombieVillagers") / 2]);
+                    event.setCanceled(!Settings.mobNameConfigs[findMobIndex("zombieVillager", 0)]);
                 }
                 else
                 {
-                    event.setCanceled(Settings.mobNameConfigs[Arrays.asList(Settings.mobNames).indexOf("zombies") / 2]);
+                    event.setCanceled(Settings.mobNameConfigs[findMobIndex("zombie", 0)]);
                 }
             }
             else if (TRUNCATED_CLASS_NAME.equals("EntitySkeleton"))
             {
                 if (((EntitySkeleton) event.entity).getSkeletonType() == 0)
                 {
-                    event.setCanceled(!Settings.mobNameConfigs[Arrays.asList(Settings.mobNames).indexOf("skeletons") / 2]);
+                    event.setCanceled(!Settings.mobNameConfigs[findMobIndex("skeleton", 0)]);
                 }
                 else
                 {
-                    event.setCanceled(!Settings.mobNameConfigs[Arrays.asList(Settings.mobNames).indexOf("witherSkeletons") / 2]);
+                    event.setCanceled(!Settings.mobNameConfigs[findMobIndex("witherSkeleton", 0)]);
                 }
             }
             else
             {
-                event.setCanceled(!Settings.mobNameConfigs[mobNum]);
+                event.setCanceled(!Settings.mobNameConfigs[mobIndex]);
             }
         }
     }

@@ -91,11 +91,9 @@ public class ModuleBlockPortal
     }
 
     /*
-    This function both handles nether sounds and particles
+    This function handles nether portal sounds
     FROM: if (p_149734_5_.nextInt(100) == 0)
     TO: if (p_149734_5_.nextInt(100) == 0 && HookBlockPortal.netherPortalPlaysSound())
-
-    Then after that conditional we add if (!HookBlockPortal.netherPortalHasParticles()) { return; }
     */
     private static void transformRandomDisplayTick(MethodNode method, boolean isObfuscated)
     {
@@ -110,20 +108,6 @@ public class ModuleBlockPortal
         toInject.add(new JumpInsnNode(IFEQ, ifSoundEndLabel));
 
         method.instructions.insert(ifSoundNode, toInject);
-
-        //This is the for loop we are inserting before. This ensure it will be after the label node from the previous statement
-        AbstractInsnNode forLoopStartNode = ASMHelper.findFirstInstructionWithOpcode(method, ISTORE).getPrevious().getPrevious();
-
-        //if (!HookBlockPortal.netherPortalHasParticles()) { return; }
-        toInject = new InsnList();
-        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HookBlockPortal.class), "netherPortalHasParticles", "()Z", false));
-        LabelNode newLabel = new LabelNode();
-        toInject.add(new JumpInsnNode(IFNE, newLabel));
-        toInject.add(new InsnNode(RETURN));
-        //This is where the new if statement will jump to if the nether portal does show particles
-        toInject.add(newLabel);
-
-        method.instructions.insertBefore(forLoopStartNode, toInject);
     }
 
     //Inserts if (!HookBlockPortal.portalBlocksAreCreated()) { return false; } on start

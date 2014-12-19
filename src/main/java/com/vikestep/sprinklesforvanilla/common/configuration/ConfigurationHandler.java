@@ -53,12 +53,20 @@ public class ConfigurationHandler
         COMMENT = "Set this to the time in ticks (20 ticks = 1 second) that it takes for the player to sleep (max and default is 100)";
         Settings.timeToSleep = config.get(CATEGORY, "timeToSleep", 100, COMMENT, 0, 100).getInt(100);
 
-        Settings.mobNameConfigs = new boolean[Settings.mobNames.length / 2];
-        CATEGORY = "Disable Mobs";
+        Settings.mobNameConfigs = new boolean[Settings.mobNames.length];
+        CATEGORY = "Mobs";
         config.setCategoryComment(CATEGORY, "Set to true to enable the mob, set to false to disable the mob");
         for (int i = 0; i < Settings.mobNameConfigs.length; i++)
         {
-            Settings.mobNameConfigs[i] = config.get(CATEGORY, Settings.mobNames[2 * i] + "AreEnabled", true).getBoolean(true);
+            Settings.mobNameConfigs[i] = config.get(CATEGORY, Settings.mobNames[i][0], true).getBoolean(true);
+        }
+
+        Settings.particleNameConfigs = new boolean[Settings.particleNames.length];
+        CATEGORY = "Particles";
+        config.setCategoryComment(CATEGORY, "Set to true to enable the particle, set to false to disable the particle. Refer to http://minecraft.gamepedia.com/Particles for details");
+        for (int i = 0; i < Settings.particleNameConfigs.length; i++)
+        {
+            Settings.particleNameConfigs[i] = config.get(CATEGORY, Settings.particleNames[i], true).getBoolean(true);
         }
 
         CATEGORY = "Explosions";
@@ -86,10 +94,6 @@ public class ConfigurationHandler
         Settings.netherPortalsAreGenerated = config.get(CATEGORY, "netherPortalsAreGenerated", true, COMMENT).getBoolean(true);
         COMMENT = "Set this to a value which is multiplied by the chance of a zombie pigman being spawned at a nether portal. Set to 0 to disable zombie pigmen being spawned at portals";
         Settings.netherPortalPigmenSpawnMult = config.get(CATEGORY, "netherPortalPigmenSpawnMult", 1.0, COMMENT, 0, Double.MAX_VALUE).getDouble(1.0);
-
-        CATEGORY = "Particles";
-        config.setCategoryComment(CATEGORY, "Set to true to enable the particles, set to false to disable the particles");
-        Settings.netherPortalsCreateParticles = config.get(CATEGORY, "netherPortalsCreateParticles", true).getBoolean(true);
 
         CATEGORY = "Sound";
         config.setCategoryComment(CATEGORY, "Set to true to enable the sound, set to false to disable the sound");

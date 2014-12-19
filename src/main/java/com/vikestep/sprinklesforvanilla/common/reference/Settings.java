@@ -2,42 +2,87 @@ package com.vikestep.sprinklesforvanilla.common.reference;
 
 public class Settings
 {
-    //I know there are better ways of doing this like a Map. May change later but it works well and is easily extendable
-    public static final String[] mobNames =
+    //List of Mobs and the class that is checked against
+    public static final String[][] mobNames      =
             {
-                    "chickens", "EntityChicken",
-                    "cows", "EntityCow",
-                    "horses", "EntityHorse",
-                    "ocelots", "EntityOcelot",
-                    "pigs", "EntityPig",
-                    "sheep", "EntitySheep",
-                    "bats", "EntityBat",
-                    "mooshrooms", "EntityMooshroom",
-                    "squids", "EntitySquid",
-                    "villagers", "EntityVillager",
-                    "caveSpiders", "EntityCaveSpider",
-                    "endermen", "EntityEnderman",
-                    "spiders", "EntitySpider",
-                    "wolves", "EntityWolf",
-                    "zombiePigmen", "EntityPigZombie",
-                    "blazes", "EntityBlaze",
-                    "creepers", "EntityCreeper",
-                    "ghasts", "EntityGhast",
-                    "magmaCubes", "EntityMagmaCube",
-                    "silverfish", "EntitySilverfish",
-                    "skeletons", "EntitySkeleton",
-                    "slimes", "EntitySlime",
-                    "witches", "EntityWitch",
-                    "witherSkeletons", "EntitySkeleton",
-                    "zombies", "EntityZombie",
-                    "zombieVillagers", "EntityZombie",
-                    "snowGolems", "EntitySnowman",
-                    "ironGolems", "EntityIronGolem",
-                    "withers", "EntityWither",
-                    "enderDragons", "EntityDragon"
+                    {"chicken", "EntityChicken"},
+                    {"cow", "EntityCow"},
+                    {"horse", "EntityHorse"},
+                    {"ocelot", "EntityOcelot"},
+                    {"pig", "EntityPig"},
+                    {"sheep", "EntitySheep"},
+                    {"bat", "EntityBat"},
+                    {"mooshroom", "EntityMooshroom"},
+                    {"squid", "EntitySquid"},
+                    {"villager", "EntityVillager"},
+                    {"caveSpider", "EntityCaveSpider"},
+                    {"enderman", "EntityEnderman"},
+                    {"spider", "EntitySpider"},
+                    {"wolf", "EntityWolf"},
+                    {"zombiePigman", "EntityPigZombie"},
+                    {"blaze", "EntityBlaze"},
+                    {"creeper", "EntityCreeper"},
+                    {"ghast", "EntityGhast"},
+                    {"magmaCube", "EntityMagmaCube"},
+                    {"silverfish", "EntitySilverfish"},
+                    {"skeleton", "EntitySkeleton"},
+                    {"slime", "EntitySlime"},
+                    {"witch", "EntityWitch"},
+                    {"witherSkeleton", "EntitySkeleton"},
+                    {"zombie", "EntityZombie"},
+                    {"zombieVillager", "EntityZombie"},
+                    {"snowGolem", "EntitySnowman"},
+                    {"ironGolem", "EntityIronGolem"},
+                    {"wither", "EntityWither"},
+                    {"enderDragon", "EntityDragon"}
             };
+    //Refer to http://minecraft.gamepedia.com/Particles for details
+    public static final String[]   particleNames =
+            {
+                    "hugeexplosion",
+                    "largeexplode",
+                    "fireworksSpark",
+                    "bubble",
+                    "suspended",
+                    "depthsuspend",
+                    "townaura",
+                    "crit",
+                    "magicCrit",
+                    "smoke",
+                    "mobSpell",
+                    "mobSpellAmbient",
+                    "spell",
+                    "instantSpell",
+                    "witchMagic",
+                    "note",
+                    "portal",
+                    "enchantmenttable",
+                    "explode",
+                    "flame",
+                    "lava",
+                    "footstep",
+                    "splash",
+                    "wake",
+                    "largesmoke",
+                    "cloud",
+                    "reddust",
+                    "snowballpoof",
+                    "dripWater",
+                    "dripLava",
+                    "snowshovel",
+                    "slime",
+                    "heart",
+                    "angryVillager",
+                    "happyVillager",
+                    "iconcrack_",
+                    "blockcrack_",
+                    "blockdust_"
+            };
+    public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
+    public static boolean[] particleNameConfigs; //Initialized with values in ConfigurationHandler
+
     //Overhauls
-    public static boolean overhaulSleep = true;
+    public static boolean overhaulSleep               = true;
     //Sleep
     public static boolean sleepIsEnabled              = true;
     public static boolean bedSetsSpawn                = true;
@@ -48,7 +93,6 @@ public class Settings
     public static int[]   nearbyMobDistance           = {8, 5, 8}; //{x, y, z}
     public static int[]   distanceFromBed             = {3, 2, 3}; //{x, y, z}
     public static int     timeToSleep                 = 100; //Max is 100 Ticks
-    public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
 
     //Explosions
     public static boolean explosionsAreEnabled                      = true;
@@ -65,9 +109,6 @@ public class Settings
     public static boolean netherPortalsCanTeleport    = true;
     public static boolean netherPortalsAreGenerated   = true;
     public static double  netherPortalPigmenSpawnMult = 1.0;
-
-    //Particles
-    public static boolean netherPortalsCreateParticles = true;
 
     //Sounds
     public static boolean netherPortalsCreateSound = true;

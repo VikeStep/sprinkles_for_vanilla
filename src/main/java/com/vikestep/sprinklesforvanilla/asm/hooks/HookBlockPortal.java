@@ -17,11 +17,6 @@ public class HookBlockPortal
         return Settings.netherPortalsCreateSound;
     }
 
-    public static boolean netherPortalHasParticles()
-    {
-        return Settings.netherPortalsCreateParticles;
-    }
-
     public static boolean portalBlocksAreCreated()
     {
         return Settings.netherPortalsAreGenerated;
