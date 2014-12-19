@@ -76,7 +76,8 @@ public class Settings
                     "happyVillager",
                     "iconcrack_",
                     "blockcrack_",
-                    "blockdust_"
+                    "blockdust_",
+                    "blockBreak"
             };
     public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
     public static boolean[] particleNameConfigs; //Initialized with values in ConfigurationHandler
@@ -115,5 +116,6 @@ public class Settings
 
     //Misc
     public static boolean mobGriefingIsForcedFalse = false;
+    public static int     christmasChest           = 0;
 
 }

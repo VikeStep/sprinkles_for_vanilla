@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
 public class MobHandler
 {
-    public static int findMobIndex(String searchTerm, int col)
+    private static int findMobIndex(String searchTerm, int col)
     {
         int mobIndex = -1;
         for (int i = 0; i < Settings.mobNames.length; i++)

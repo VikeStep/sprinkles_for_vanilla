@@ -2,6 +2,7 @@ package com.vikestep.sprinklesforvanilla.asm;
 
 import com.vikestep.sprinklesforvanilla.asm.modules.ModuleBlockPortal;
 import com.vikestep.sprinklesforvanilla.asm.modules.ModuleRenderGlobal;
+import com.vikestep.sprinklesforvanilla.asm.modules.ModuleTileEntityChestRenderer;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 public class SprinklesForVanillaTransformer implements IClassTransformer
@@ -11,6 +12,9 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     private static final String RENDER_GLOBAL_DEOBF = "net.minecraft.client.renderer.RenderGlobal";
     private static final String RENDER_GLOBAL_OBF   = "bma";
+
+    private static final String CHEST_RENDERER_DEOBF = "net.minecraft.client.renderer.tileentity.TileEntityChestRenderer";
+    private static final String CHEST_RENDERER_OBF   = "bmm";
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] transformingClass)
@@ -23,6 +27,10 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         else if (name.equals(RENDER_GLOBAL_DEOBF) || name.equals(RENDER_GLOBAL_OBF))
         {
             transformingClass = ModuleRenderGlobal.transform(transformingClass, isObfuscated);
+        }
+        else if (name.equals(CHEST_RENDERER_DEOBF) || name.equals(CHEST_RENDERER_OBF))
+        {
+            transformingClass = ModuleTileEntityChestRenderer.transform(transformingClass, isObfuscated);
         }
         return transformingClass;
     }

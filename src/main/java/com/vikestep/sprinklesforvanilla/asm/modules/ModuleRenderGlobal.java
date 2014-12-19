@@ -15,16 +15,27 @@ public class ModuleRenderGlobal
     private static final String SPAWN_PARTICLE_DEOBF_SIG = "(Ljava/lang/String;DDDDDD)Lnet/minecraft/client/particle/EntityFX;";
     private static final String SPAWN_PARTICLE_OBF_SIG   = "(Ljava/lang/String;DDDDDD)Lbkm;";
 
-    public static byte[] transform(byte[] portalClass, boolean isObfuscated)
+    private static final String PLAY_AUX_SFX_DEOBF     = "playAuxSFX";
+    private static final String PLAY_AUX_SFX_OBF       = "a";
+    private static final String PLAY_AUX_SFX_DEOBF_SIG = "(Lnet/minecraft/entity/player/EntityPlayer;IIIII)V";
+    private static final String PLAY_AUX_SFX_OBF_SIG   = "(Lyz;IIIII)V";
+
+    public static byte[] transform(byte[] renderGlobalClass, boolean isObfuscated)
     {
         LogHelper.log("Transforming RenderGlobal Class");
 
-        ClassNode classNode = ASMHelper.readClassFromBytes(portalClass);
+        ClassNode classNode = ASMHelper.readClassFromBytes(renderGlobalClass);
 
         MethodNode methodNode = ASMHelper.findMethodNodeOfClass(classNode, isObfuscated ? SPAWN_PARTICLE_OBF : SPAWN_PARTICLE_DEOBF, isObfuscated ? SPAWN_PARTICLE_OBF_SIG : SPAWN_PARTICLE_DEOBF_SIG);
         if (methodNode != null)
         {
             transformDoSpawnParticle(methodNode, isObfuscated);
+        }
+
+        methodNode = ASMHelper.findMethodNodeOfClass(classNode, isObfuscated ? PLAY_AUX_SFX_OBF : PLAY_AUX_SFX_DEOBF, isObfuscated ? PLAY_AUX_SFX_OBF_SIG : PLAY_AUX_SFX_DEOBF_SIG);
+        if (methodNode != null)
+        {
+            transformPlayAusSFX(methodNode, isObfuscated);
         }
 
         return ASMHelper.writeClassToBytes(classNode);
@@ -47,5 +58,21 @@ public class ModuleRenderGlobal
         toInject.add(new JumpInsnNode(IFEQ, injectNodeLabel));
 
         method.instructions.insert(injectNode, toInject);
+    }
+
+    private static void transformPlayAusSFX(MethodNode method, boolean isObfuscated)
+    {
+        //This will be (ALOAD, 0) so we inject before it
+        AbstractInsnNode injectNode = ASMHelper.findPreviousInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, ISHR), GETFIELD).getPrevious().getPrevious();
+        LabelNode ifParticleNode = new LabelNode();
+        AbstractInsnNode endIfNode = ASMHelper.findNextInstructionWithOpcode(injectNode, INVOKEVIRTUAL);
+
+        InsnList toInject = new InsnList();
+        toInject.add(new LdcInsnNode("blockBreak"));
+        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HookRenderGlobal.class), "particleIsAllowed", "(Ljava/lang/String;)Z", false));
+        toInject.add(new JumpInsnNode(IFEQ, ifParticleNode));
+
+        method.instructions.insertBefore(injectNode, toInject);
+        method.instructions.insert(endIfNode, ifParticleNode);
     }
 }

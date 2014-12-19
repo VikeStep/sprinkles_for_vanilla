@@ -28,13 +28,6 @@ public class HookBlockPortal
         double multiplier = Settings.netherPortalPigmenSpawnMult;
         double randomVal = rand.nextDouble();
         double chance = (difficultyID * multiplier) / 2000.0f;
-        if (randomVal < chance)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return randomVal < chance;
     }
 }
