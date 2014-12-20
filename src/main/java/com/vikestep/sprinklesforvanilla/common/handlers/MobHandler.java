@@ -34,7 +34,7 @@ public class MobHandler
         int mobIndex = findMobIndex(TRUNCATED_CLASS_NAME, 1);
         if (mobIndex != -1)
         {
-            if (TRUNCATED_CLASS_NAME.equals("EntityZombie"))
+            if (TRUNCATED_CLASS_NAME.equals("EntityZombie") || TRUNCATED_CLASS_NAME.equals("yq"))
             {
                 if (((EntityZombie) event.entity).isVillager())
                 {
@@ -45,7 +45,7 @@ public class MobHandler
                     event.setCanceled(Settings.mobNameConfigs[findMobIndex("zombie", 0)]);
                 }
             }
-            else if (TRUNCATED_CLASS_NAME.equals("EntitySkeleton"))
+            else if (TRUNCATED_CLASS_NAME.equals("EntitySkeleton") || TRUNCATED_CLASS_NAME.equals("yl"))
             {
                 if (((EntitySkeleton) event.entity).getSkeletonType() == 0)
                 {
