@@ -83,8 +83,8 @@ public class ConfigurationHandler
 
         CATEGORY = "General";
         config.setCategoryComment(CATEGORY, "This section is for general/miscellaneous configs that don't fit in other categories");
-        COMMENT = "Set to true to manually change mob griefing, set to false to automatically disable mob griefing";
-        Settings.mobGriefingIsForcedFalse = config.get(CATEGORY, "mobGriefingIsForcedFalse", false, COMMENT).getBoolean(false);
+        COMMENT = "Set to 0 to allow setting in game, set to 1 to force no mob griefing, set to 2 to force mob griefing";
+        Settings.mobGriefingIsForcedFalse = config.get(CATEGORY, "mobGriefingIsForcedFalse", 0, COMMENT, 0, 2).getInt(0);
         COMMENT = "Set to 0 to have christmas chest on christmas, 1 for all the time, 2 for no christmas chest on christmas (you scrooge!)";
         Settings.christmasChest = config.get(CATEGORY, "christmasChest", 0, COMMENT, 0, 2).getInt(0);
 

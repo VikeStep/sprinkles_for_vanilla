@@ -69,7 +69,7 @@ public class ExplosionHandler
     {
         if (event.world.getBlock(event.x, event.y, event.z).isBed(event.world, event.x, event.y, event.z, event.entityPlayer) && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
         {
-            if (!event.world.isRemote && !event.world.provider.canRespawnHere() && event.world.getBiomeGenForCoords(event.x, event.z) == BiomeGenBase.hell)
+            if (!event.world.isRemote && (!event.world.provider.canRespawnHere() || event.world.getBiomeGenForCoords(event.x, event.z) == BiomeGenBase.hell))
             {
                 playerSleepInNether = true;
             }

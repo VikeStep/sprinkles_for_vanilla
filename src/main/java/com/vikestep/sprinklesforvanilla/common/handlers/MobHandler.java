@@ -14,7 +14,7 @@ public class MobHandler
         int mobIndex = -1;
         for (int i = 0; i < Settings.mobNames.length; i++)
         {
-            if (Settings.mobNames[i][col].equals(searchTerm))
+            if (Settings.mobNames[i][col].equals(searchTerm) || (col == 1 && Settings.mobNames[i][2].equals(searchTerm)))
             {
                 mobIndex = i;
                 break;
@@ -66,9 +66,9 @@ public class MobHandler
     @SubscribeEvent
     public void onServerTick(TickEvent.WorldTickEvent event)
     {
-        if (event.world.getGameRules().getGameRuleBooleanValue("mobGriefing") && Settings.mobGriefingIsForcedFalse)
+        if (Settings.mobGriefingIsForcedFalse == 1 || Settings.mobGriefingIsForcedFalse == 2)
         {
-            event.world.getGameRules().setOrCreateGameRule("mobGriefing", "false");
+            event.world.getGameRules().setOrCreateGameRule("mobGriefing", Settings.mobGriefingIsForcedFalse == 1 ? "false" : "true");
         }
     }
 }

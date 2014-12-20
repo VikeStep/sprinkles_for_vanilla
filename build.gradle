@@ -22,7 +22,7 @@ group= "com.vikestep.sprinklesforvanilla" // http://maven.apache.org/guides/mini
 archivesBaseName = "sprinklesforvanilla"
 
 minecraft {
-    version = "1.7.10-10.13.2.1264"
+    version = "1.7.10-10.13.2.1272"
     runDir = "run"
 }
 
@@ -35,7 +35,8 @@ jar {
 
 sourceSets.main{
 	java {
-		srcDirs 'java', 'apis', 'src/main/java/ASMHelper/java'
+		srcDirs 'java'
+        exclude '**/tests/**'
 	}
 }
 

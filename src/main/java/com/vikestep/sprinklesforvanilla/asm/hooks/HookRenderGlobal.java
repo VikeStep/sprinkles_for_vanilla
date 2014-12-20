@@ -1,7 +1,6 @@
 package com.vikestep.sprinklesforvanilla.asm.hooks;
 
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
-import com.vikestep.sprinklesforvanilla.common.util.LogHelper;
 
 import java.util.Arrays;
 

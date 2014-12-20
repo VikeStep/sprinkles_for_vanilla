@@ -3,6 +3,10 @@ sprinkles_for_vanilla
 
 This is a mod that adds a config for vanilla. An example config is shown in [sprinkles_for_vanilla.cfg](https://github.com/VikeStep/sprinkles_for_vanilla/blob/master/sprinkles_for_vanilla.cfg).
 
+If you have any feature requests please make an issue on the github with the tag 'enhancement' and I will look into it. If you don't have a github account you can PM me on reddit/FTB Forums/curseforge/MC Forums.
+
+This mod also uses ASMHelper by squeek to help me tweak some of these classes. Since this mod uses class transformers it may causes issues with other mods but I have not ran into any major compatibility issues
+
 Current Features
 ---------------------
 - Disable/Enable sleep
@@ -10,19 +14,19 @@ Current Features
 - Disable/Enable nearby mobs preventing sleep
 - Disable/Enable sleeping in other dimensions than overworld
 - Disable/Enable being able to hop in bed when you are not directly close to bed
-- Set time taken to be fully asleep
+- Set time taken to be fully asleep (Currently can only decrease the amount)
 - Set distance checked away from bed for nearby mobs
 - Set distance you need to be away from bed to sleep in it
-- Disable/Enable any mob
-- Disable/Enable any explosion
-- Option to Force Disable Mob Griefing
-- Disable/Enable nether portals being generated
-- Disable/Enable nether portals teleporting
-- Change the mutliplier for the chance of zombie pigmen being spawned at a nether portal
-- Disable/Enable any particle
+- Disable/Enable any mob of your choice
+- Disable/Enable any explosion of your choice
+- Disable/Enable any particle of your choice
+- Option to Force mobGriefing gamerule to value of choice
+- Disable/Enable nether portals being generated when caught on fire
+- Disable/Enable nether portals teleporting to the nether
+- Set a multiplier on the chance of zombie pigmen being spawned at a nether portal
 - Disable/Enable nether portal sound
 
-Possible Planned Features
+Planned Features
 ---------------------
 - Disable/Enable Fire spread
 - Set rate of fire spread
@@ -32,7 +36,6 @@ Possible Planned Features
 - Set which biomes should snow
 - Disable End
 - Disable/Enable Double Chests being created
-- Disable/Enable Christmas themed chest
 - Toggle between full block or chest models
 - Disable/Enable different Worldgen features
 - Disable/Enable Hunger

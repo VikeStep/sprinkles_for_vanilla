@@ -5,36 +5,36 @@ public class Settings
     //List of Mobs and the class that is checked against
     public static final String[][] mobNames      =
             {
-                    {"chicken", "EntityChicken"},
-                    {"cow", "EntityCow"},
-                    {"horse", "EntityHorse"},
-                    {"ocelot", "EntityOcelot"},
-                    {"pig", "EntityPig"},
-                    {"sheep", "EntitySheep"},
-                    {"bat", "EntityBat"},
-                    {"mooshroom", "EntityMooshroom"},
-                    {"squid", "EntitySquid"},
-                    {"villager", "EntityVillager"},
-                    {"caveSpider", "EntityCaveSpider"},
-                    {"enderman", "EntityEnderman"},
-                    {"spider", "EntitySpider"},
-                    {"wolf", "EntityWolf"},
-                    {"zombiePigman", "EntityPigZombie"},
-                    {"blaze", "EntityBlaze"},
-                    {"creeper", "EntityCreeper"},
-                    {"ghast", "EntityGhast"},
-                    {"magmaCube", "EntityMagmaCube"},
-                    {"silverfish", "EntitySilverfish"},
-                    {"skeleton", "EntitySkeleton"},
-                    {"slime", "EntitySlime"},
-                    {"witch", "EntityWitch"},
-                    {"witherSkeleton", "EntitySkeleton"},
-                    {"zombie", "EntityZombie"},
-                    {"zombieVillager", "EntityZombie"},
-                    {"snowGolem", "EntitySnowman"},
-                    {"ironGolem", "EntityIronGolem"},
-                    {"wither", "EntityWither"},
-                    {"enderDragon", "EntityDragon"}
+                    {"chicken", "EntityChicken", "wg"},
+                    {"cow", "EntityCow", "wh"},
+                    {"horse", "EntityHorse", "wi"},
+                    {"ocelot", "EntityOcelot", "wn"},
+                    {"pig", "EntityPig", "wo"},
+                    {"sheep", "EntitySheep", "wp"},
+                    {"bat", "EntityBat", "we"},
+                    {"mooshroom", "EntityMooshroom", "wm"},
+                    {"squid", "EntitySquid", "ws"},
+                    {"villager", "EntityVillager", "yv"},
+                    {"caveSpider", "EntityCaveSpider", "xy"},
+                    {"enderman", "EntityEnderman", "ya"},
+                    {"spider", "EntitySpider", "yn"},
+                    {"wolf", "EntityWolf", "wv"},
+                    {"zombiePigman", "EntityPigZombie", "yh"},
+                    {"blaze", "EntityBlaze", "xx"},
+                    {"creeper", "EntityCreeper", "xz"},
+                    {"ghast", "EntityGhast", "yd"},
+                    {"magmaCube", "EntityMagmaCube", "yf"},
+                    {"silverfish", "EntitySilverfish", "yk"},
+                    {"skeleton", "EntitySkeleton", "yl"},
+                    {"slime", "EntitySlime", "ym"},
+                    {"witch", "EntityWitch", "yp"},
+                    {"witherSkeleton", "EntitySkeleton", "yl"},
+                    {"zombie", "EntityZombie", "yq"},
+                    {"zombieVillager", "EntityZombie", "yq"},
+                    {"snowGolem", "EntitySnowman", "wr"},
+                    {"ironGolem", "EntityIronGolem", "wt"},
+                    {"wither", "EntityWither", "xc"},
+                    {"enderDragon", "EntityDragon", "xa"}
             };
     //Refer to http://minecraft.gamepedia.com/Particles for details
     public static final String[]   particleNames =
@@ -115,7 +115,7 @@ public class Settings
     public static boolean netherPortalsCreateSound = true;
 
     //Misc
-    public static boolean mobGriefingIsForcedFalse = false;
-    public static int     christmasChest           = 0;
+    public static int mobGriefingIsForcedFalse = 0;
+    public static int christmasChest           = 0;
 
 }
