@@ -25,6 +25,7 @@ Current Features
 - Disable/Enable nether portals teleporting to the nether
 - Set a multiplier on the chance of zombie pigmen being spawned at a nether portal
 - Disable/Enable nether portal sound
+- Choose to hide your own potion effect particles, everyone's particles, or see everyone's
 
 Planned Features
 ---------------------
@@ -53,3 +54,5 @@ Planned Features
 - Set Smelting/Brewing Duration
 - Set fuel supplied for different items in the furnace
 - Enable/Disable Achievements
+- Set Mob drops and chances
+- Choose to enable/disable different forms of mob griefing

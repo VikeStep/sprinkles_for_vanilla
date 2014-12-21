@@ -1,6 +1,7 @@
 package com.vikestep.sprinklesforvanilla.asm;
 
 import com.vikestep.sprinklesforvanilla.asm.modules.ModuleBlockPortal;
+import com.vikestep.sprinklesforvanilla.asm.modules.ModuleEntityLivingBase;
 import com.vikestep.sprinklesforvanilla.asm.modules.ModuleRenderGlobal;
 import com.vikestep.sprinklesforvanilla.asm.modules.ModuleTileEntityChestRenderer;
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -15,6 +16,9 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     private static final String CHEST_RENDERER_DEOBF = "net.minecraft.client.renderer.tileentity.TileEntityChestRenderer";
     private static final String CHEST_RENDERER_OBF   = "bmm";
+
+    private static final String ENTITY_LIVING_BASE_DEOBF = "net.minecraft.entity.EntityLivingBase";
+    private static final String ENTITY_LIVING_BASE_OBF   = "sv";
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] transformingClass)
@@ -31,6 +35,10 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         else if (name.equals(CHEST_RENDERER_DEOBF) || name.equals(CHEST_RENDERER_OBF))
         {
             transformingClass = ModuleTileEntityChestRenderer.transform(transformingClass, isObfuscated);
+        }
+        else if (name.equals(ENTITY_LIVING_BASE_DEOBF) || name.equals(ENTITY_LIVING_BASE_OBF))
+        {
+            transformingClass = ModuleEntityLivingBase.transform(transformingClass, isObfuscated);
         }
         return transformingClass;
     }

@@ -28,6 +28,7 @@ public class ModuleTileEntityChestRenderer
         return ASMHelper.writeClassToBytes(classNode);
     }
 
+    //Replaces the christmas chest functionality with HookTileEntityChestRenderer.isChristmasChest();
     private static void transformInit(MethodNode method, boolean isObfuscated)
     {
         AbstractInsnNode calendarStartNode = ASMHelper.findFirstInstructionWithOpcode(method, INVOKESTATIC).getPrevious();

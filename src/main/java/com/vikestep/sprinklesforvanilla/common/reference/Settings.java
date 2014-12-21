@@ -81,6 +81,7 @@ public class Settings
             };
     public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
     public static boolean[] particleNameConfigs; //Initialized with values in ConfigurationHandler
+    public static int       potionEffectsShown = 0;
 
     //Overhauls
     public static boolean overhaulSleep               = true;

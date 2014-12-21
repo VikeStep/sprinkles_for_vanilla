@@ -32,7 +32,7 @@ public class ConfigurationHandler
         Settings.overhaulSleep = config.get(CATEGORY, "overhaulSleep", true, COMMENT).getBoolean(true);
 
         CATEGORY = "Sleep";
-        config.setCategoryComment(CATEGORY, "This section handles the mechanics of beds and sleeping (May cause issues with mods like Insomnia or PerfectSpawn");
+        config.setCategoryComment(CATEGORY, "This section handles the mechanics of beds and sleeping (May cause issues with mods like Insomnia or PerfectSpawn)");
         COMMENT = "Set to true to enable sleeping in bed, false to disable sleeping in bed (if this is false and bedsSetSpawn is true, then you can't sleep, but it will set spawn)";
         Settings.sleepIsEnabled = config.get(CATEGORY, "sleepIsEnabled", true, COMMENT).getBoolean(true);
         COMMENT = "Set to true to let beds set spawn, set to false to have beds not set spawn";
@@ -68,6 +68,8 @@ public class ConfigurationHandler
         {
             Settings.particleNameConfigs[i] = config.get(CATEGORY, Settings.particleNames[i], true).getBoolean(true);
         }
+        COMMENT = "Set to 0 to go by default/by the particle config for potion effects, set to 1 to hide your own potion effect particles, set to 2 to hide everyone's potion effect particles";
+        Settings.potionEffectsShown = config.get(CATEGORY, "allPotionParticlesShown", 0, COMMENT, 0, 2).getInt(0);
 
         CATEGORY = "Explosions";
         config.setCategoryComment(CATEGORY, "enable/disable the explosion (if explosionsAreEnabled is false, all are false including non-vanilla)");
