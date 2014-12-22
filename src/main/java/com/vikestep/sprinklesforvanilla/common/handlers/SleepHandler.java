@@ -15,16 +15,15 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
 public class SleepHandler
 {
-    private static final String SLEEP_TIMER_DEOBF = "sleepTimer";
-    private static final String SLEEP_TIMER_OBF   = "field_71076_b";
-    private static final String SLEEPING_DEOBF = "sleeping";
-    private static final String SLEEPING_OBF   = "field_71083_bS";
-    private static final String SPAWN_CHUNK_DEOBF = "spawnChunk";
-    private static final String SPAWN_CHUNK_OBF   = "field_71077_c";
+    private static final String SLEEP_TIMER_DEOBF  = "sleepTimer";
+    private static final String SLEEP_TIMER_OBF    = "field_71076_b";
+    private static final String SLEEPING_DEOBF     = "sleeping";
+    private static final String SLEEPING_OBF       = "field_71083_bS";
+    private static final String SPAWN_CHUNK_DEOBF  = "spawnChunk";
+    private static final String SPAWN_CHUNK_OBF    = "field_71077_c";
     private static final String SPAWN_FORCED_DEOBF = "spawnForced";
     private static final String SPAWN_FORCED_OBF   = "field_82248_d";
     private static boolean          resetSpawn;

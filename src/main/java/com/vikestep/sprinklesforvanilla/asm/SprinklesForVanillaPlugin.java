@@ -2,7 +2,8 @@ package com.vikestep.sprinklesforvanilla.asm;
 
 import com.vikestep.sprinklesforvanilla.common.reference.ModInfo;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
-import cpw.mods.fml.relauncher.IFMLLoadingPlugin.*;
+import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
+import cpw.mods.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
 
 import java.util.Map;
 

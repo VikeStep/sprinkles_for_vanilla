@@ -8,27 +8,32 @@ import org.objectweb.asm.tree.*;
 import squeek.asmhelper.ASMHelper;
 import squeek.asmhelper.ObfRemappingClassWriter;
 
-import static org.objectweb.asm.Opcodes.*;
-
 import java.util.Arrays;
+
+import static org.objectweb.asm.Opcodes.*;
 
 public class SprinklesForVanillaTransformer implements IClassTransformer
 {
-    public static final String[] classesBeingTransformed =
+    private static final String[] classesBeingTransformed =
             {
                     "net.minecraft.block.BlockPortal",
                     "net.minecraft.client.renderer.RenderGlobal",
                     "net.minecraft.client.renderer.tileentity.TileEntityChestRenderer",
-                    "net.minecraft.entity.EntityLivingBase"
+                    "net.minecraft.entity.EntityLivingBase",
+                    //Mob Griefing Classes
+                    "net.minecraft.block.BlockFarmland",
+                    "net.minecraft.entity.EntityLiving",
+                    "net.minecraft.entity.ai.EntityAIBreakDoor",
+                    "net.minecraft.entity.ai.EntityAIEatGrass",
+                    "net.minecraft.entity.boss.EntityDragon",
+                    "net.minecraft.entity.boss.EntityWither",
+                    "net.minecraft.entity.monster.EntityCreeper",
+                    "net.minecraft.entity.monster.EntityEnderman",
+                    "net.minecraft.entity.monster.EntitySilverfish",
+                    "net.minecraft.entity.projectile.EntityLargeFireball",
+                    "net.minecraft.eneity.projectile.EntityWitherSkull"
+                    //End Mob Griefing Classes
             };
-
-    @Override
-    public byte[] transform(String name, String transformedName, byte[] transformingClass)
-    {
-        boolean isObfuscated = !name.equals(transformedName);
-        int index = Arrays.asList(classesBeingTransformed).indexOf(transformedName);
-        return index != -1 ? transform(index, transformingClass, isObfuscated) : transformingClass;
-    }
 
     private static byte[] transform(int index, byte[] transformingClass, boolean isObfuscated)
     {
@@ -36,7 +41,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         try
         {
             ClassNode classNode = ASMHelper.readClassFromBytes(transformingClass);
-            switch(index)
+            switch (index)
             {
                 case 0:
                     transformBlockPortal(classNode, isObfuscated);
@@ -53,6 +58,39 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                     ClassWriter writer = new ObfRemappingClassWriter(ClassWriter.COMPUTE_MAXS);
                     classNode.accept(writer);
                     return writer.toByteArray();
+                case 4:
+                    transformBlockFarmland(classNode, isObfuscated);
+                    break;
+                case 5:
+                    transformEntityLiving(classNode, isObfuscated);
+                    break;
+                case 6:
+                    transformEntityAIBreakDoor(classNode, isObfuscated);
+                    break;
+                case 7:
+                    transformEntityAIEatGrass(classNode, isObfuscated);
+                    break;
+                case 8:
+                    transformEntityDragon(classNode, isObfuscated);
+                    break;
+                case 9:
+                    transformEntityWither(classNode, isObfuscated);
+                    break;
+                case 10:
+                    transformEntityCreeper(classNode, isObfuscated);
+                    break;
+                case 11:
+                    transformEntityEnderman(classNode, isObfuscated);
+                    break;
+                case 12:
+                    transformEntitySilverfish(classNode, isObfuscated);
+                    break;
+                case 13:
+                    transformEntityLargeFireball(classNode, isObfuscated);
+                    break;
+                case 14:
+                    transformEntityWitherSkull(classNode, isObfuscated);
+                    break;
             }
             return ASMHelper.writeClassToBytes(classNode);
         }
@@ -66,14 +104,14 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     private static void transformBlockPortal(ClassNode blockPortalClass, boolean isObfuscated)
     {
-        final String UPDATE_TICK             = isObfuscated ? "a"                             : "updateTick";
-        final String RANDOM_DISPLAY_TICK     = isObfuscated ? "b"                             : "randomDisplayTick";
-        final String GET_SIZE                = isObfuscated ? "e"                             : "func_150000_e";
-        final String ENTITY_COLLIDE          = isObfuscated ? "a"                             : "onEntityCollidedWithBlock";
-        final String UPDATE_TICK_SIG         = isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V";
+        final String UPDATE_TICK = isObfuscated ? "a" : "updateTick";
+        final String RANDOM_DISPLAY_TICK = isObfuscated ? "b" : "randomDisplayTick";
+        final String GET_SIZE = isObfuscated ? "e" : "func_150000_e";
+        final String ENTITY_COLLIDE = isObfuscated ? "a" : "onEntityCollidedWithBlock";
+        final String UPDATE_TICK_SIG = isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V";
         final String RANDOM_DISPLAY_TICK_SIG = isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V";
-        final String GET_SIZE_SIG            = isObfuscated ? "(Lahb;III)Z"                   : "(Lnet/minecraft/world/World;III)Z";
-        final String ENTITY_COLLIDE_SIG      = isObfuscated ? "(Lahb;IIILsa;)V"               : "(Lnet/minecraft/world/World;IIILnet/minecraft/entity/Entity;)V";
+        final String GET_SIZE_SIG = isObfuscated ? "(Lahb;III)Z" : "(Lnet/minecraft/world/World;III)Z";
+        final String ENTITY_COLLIDE_SIG = isObfuscated ? "(Lahb;IIILsa;)V" : "(Lnet/minecraft/world/World;IIILnet/minecraft/entity/Entity;)V";
 
         for (MethodNode method : blockPortalClass.methods)
         {
@@ -163,10 +201,10 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     private static void transformRenderGlobal(ClassNode renderGlobalClass, boolean isObfuscated)
     {
-        final String SPAWN_PARTICLE     = isObfuscated ? "b"                               : "doSpawnParticle";
-        final String PLAY_AUX_SFX       = isObfuscated ? "a"                               : "playAuxSFX";
+        final String SPAWN_PARTICLE = isObfuscated ? "b" : "doSpawnParticle";
+        final String PLAY_AUX_SFX = isObfuscated ? "a" : "playAuxSFX";
         final String SPAWN_PARTICLE_SIG = isObfuscated ? "(Ljava/lang/String;DDDDDD)Lbkm;" : "(Ljava/lang/String;DDDDDD)Lnet/minecraft/client/particle/EntityFX;";
-        final String PLAY_AUX_SFX_SIG   = isObfuscated ? "(Lyz;IIIII)V"                    : "(Lnet/minecraft/entity/player/EntityPlayer;IIIII)V";
+        final String PLAY_AUX_SFX_SIG = isObfuscated ? "(Lyz;IIIII)V" : "(Lnet/minecraft/entity/player/EntityPlayer;IIIII)V";
 
         for (MethodNode method : renderGlobalClass.methods)
         {
@@ -217,7 +255,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     private static void transformTEChestRenderer(ClassNode TEChestRendererClass, boolean isObfuscated)
     {
-        final String INIT_METHOD     = "<init>";
+        final String INIT_METHOD = "<init>";
         final String INIT_METHOD_SIG = "()V";
 
         for (MethodNode method : TEChestRendererClass.methods)
@@ -243,7 +281,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     private static void transformEntityLivingBase(ClassNode entityLivingBaseClass, boolean isObfuscated)
     {
-        final String UPDATE_POTION_EFFECTS     = isObfuscated ? "aO" : "updatePotionEffects";
+        final String UPDATE_POTION_EFFECTS = isObfuscated ? "aO" : "updatePotionEffects";
         final String UPDATE_POTION_EFFECTS_SIG = "()V";
 
         for (MethodNode method : entityLivingBaseClass.methods)
@@ -273,5 +311,288 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 method.instructions.insert(ifSpawnParticleNode, toInject);
             }
         }
+    }
+
+    private static void transformBlockFarmland(ClassNode blockFarmlandClass, boolean isObfuscated)
+    {
+        final String ON_FALLEN_UPON = isObfuscated ? "a" : "onFallenUpon";
+        final String ON_FALLEN_UPON_SIG = isObfuscated ? "(Lahb;IIILsa;F)V" : "(Lnet/minecraft/world/World;IIILnet/minecraft/entity/Entity;F)V";
+
+        for (MethodNode method : blockFarmlandClass.methods)
+        {
+            if (method.name.equals(ON_FALLEN_UPON) && method.desc.equals(ON_FALLEN_UPON_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, INSTANCEOF), ALOAD);
+                AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFNE).getPrevious();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("fallenOnFarmland"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    private static void transformEntityLiving(ClassNode entityLivingClass, boolean isObfuscated)
+    {
+        final String ON_LIVING_UPDATE = isObfuscated ? "e" : "onLivingUpdate";
+        final String ON_LIVING_UPDATE_SIG = "()V";
+
+        for (MethodNode method : entityLivingClass.methods)
+        {
+            if (method.name.equals(ON_LIVING_UPDATE) && method.desc.equals(ON_LIVING_UPDATE_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IFEQ), INVOKEVIRTUAL).getPrevious();
+                AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFEQ).getPrevious();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("mobPickUpLoot"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    private static void transformEntityAIBreakDoor(ClassNode entityAIBreakDoorClass, boolean isObfuscated)
+    {
+        final String SHOULD_EXECUTE = isObfuscated ? "a" : "shouldExecute";
+        final String SHOULD_EXECUTE_SIG = "()Z";
+
+        for (MethodNode method : entityAIBreakDoorClass.methods)
+        {
+            if (method.name.equals(SHOULD_EXECUTE) && method.desc.equals(SHOULD_EXECUTE_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findFirstInstructionWithOpcode(method, GETFIELD).getNext();
+                AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFNE).getPrevious();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("mobBreakDoor"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    private static void transformEntityAIEatGrass(ClassNode entityAIEatGrassClass, boolean isObfuscated)
+    {
+        final String UPDATE_TASK = isObfuscated ? "e" : "updateTask";
+        final String UPDATE_TASK_SIG = "()V";
+
+        for (MethodNode method : entityAIEatGrassClass.methods)
+        {
+            if (method.name.equals(UPDATE_TASK) && method.desc.equals(UPDATE_TASK_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPNE), GETFIELD);
+                AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFEQ).getPrevious();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("mobEatTallGrass"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+
+                getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IF_ACMPNE), GETFIELD);
+                getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFEQ).getPrevious();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+
+                toInject = new InsnList();
+                toInject.add(new LdcInsnNode("mobEatGrassBlock"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    private static void transformEntityDragon(ClassNode entityDragonClass, boolean isObfuscated)
+    {
+        final String DESTROY_BLOCKS_AABB = isObfuscated ? "a" : "destroyBlocksInAABB";
+        final String DESTROY_BLOCKS_AABB_SIG = isObfuscated ? "(Lazt;)Z" : "(Lnet/minecraft/util/AxisAlignedBB;)Z";
+
+        for (MethodNode method : entityDragonClass.methods)
+        {
+            if (method.name.equals(DESTROY_BLOCKS_AABB) && method.desc.equals(DESTROY_BLOCKS_AABB_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, INVOKEVIRTUAL), IFEQ).getNext().getNext();
+                AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFEQ).getPrevious();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("enderDragonBreakBlock"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    private static void transformEntityWither(ClassNode entityWitherClass, boolean isObfuscated)
+    {
+        final String UPDATE_AI_TASKS = isObfuscated ? "bn" : "updateAITasks";
+        final String UPDATE_AI_TASKS_SIG = "()V";
+
+        for (MethodNode method : entityWitherClass.methods)
+        {
+            if (method.name.equals(UPDATE_AI_TASKS) && method.desc.equals(UPDATE_AI_TASKS_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findFirstInstructionWithOpcode(method, ICONST_0).getNext().getNext();
+                AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("witherExplode"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+
+                getGameRuleStart = ASMHelper.findPreviousInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, ICONST_M1), IFNE).getNext().getNext();
+                getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+
+                toInject = new InsnList();
+                toInject.add(new LdcInsnNode("witherBreakBlock"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    private static void transformEntityCreeper(ClassNode entityCreeperClass, boolean isObfuscated)
+    {
+        final String EXPLODE = isObfuscated ? "ce" : "func_146077_cc";
+        final String EXPLODE_SIG = "()V";
+
+        for (MethodNode method : entityCreeperClass.methods)
+        {
+            if (method.name.equals(EXPLODE) && method.desc.equals(EXPLODE_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findFirstInstructionWithOpcode(method, INVOKEVIRTUAL).getPrevious();
+                AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("creeperExplosion"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    private static void transformEntityEnderman(ClassNode entityEndermanClass, boolean isObfuscated)
+    {
+        final String ON_LIVING_UPDATE = isObfuscated ? "e" : "onLivingUpdate";
+        final String ON_LIVING_UPDATE_SIG = "()V";
+
+        for (MethodNode method : entityEndermanClass.methods)
+        {
+            if (method.name.equals(ON_LIVING_UPDATE) && method.desc.equals(ON_LIVING_UPDATE_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findFirstInstructionWithOpcode(method, IFNE).getNext().getNext();
+                AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("endermanStealBlock"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    private static void transformEntitySilverfish(ClassNode entitySilverfishClass, boolean isObfuscated)
+    {
+        final String UPDATE_ACTION_STATE = isObfuscated ? "bq" : "updateEntityActionState";
+        final String UPDATE_ACTION_STATE_SIG = "()V";
+
+        for (MethodNode method : entitySilverfishClass.methods)
+        {
+            if (method.name.equals(UPDATE_ACTION_STATE) && method.desc.equals(UPDATE_ACTION_STATE_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPNE), GETFIELD);
+                AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart, getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("silverfishBreakBlock"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    private static void transformEntityLargeFireball(ClassNode entityLargeFireballClass, boolean isObfuscated)
+    {
+        final String ON_IMPACT = isObfuscated ? "a" : "onImpact";
+        final String ON_IMPACT_SIG = isObfuscated ? "(Lazu;)V" : "(Lnet/minecraft/util/MovingObjectPosition;)V";
+
+        for (MethodNode method : entityLargeFireballClass.methods)
+        {
+            if (method.name.equals(ON_IMPACT) && method.desc.equals(ON_IMPACT_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findLastInstructionWithOpcode(method, GETFIELD);
+                AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart, getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("largeFireballExplosion"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    private static void transformEntityWitherSkull(ClassNode entityWitherSkullClass, boolean isObfuscated)
+    {
+        final String ON_IMPACT = isObfuscated ? "a" : "onImpact";
+        final String ON_IMPACT_SIG = isObfuscated ? "(Lazu;)V" : "(Lnet/minecraft/util/MovingObjectPosition;)V";
+
+        for (MethodNode method : entityWitherSkullClass.methods)
+        {
+            if (method.name.equals(ON_IMPACT) && method.desc.equals(ON_IMPACT_SIG))
+            {
+                AbstractInsnNode getGameRuleStart = ASMHelper.findLastInstructionWithOpcode(method, GETFIELD);
+                AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
+
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart, getGameRuleEnd.getNext());
+
+                InsnList toInject = new InsnList();
+                toInject.add(new LdcInsnNode("witherSkullExplosion"));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+
+                method.instructions.insert(getGameRuleStart, toInject);
+            }
+        }
+    }
+
+    @Override
+    public byte[] transform(String name, String transformedName, byte[] transformingClass)
+    {
+        boolean isObfuscated = !name.equals(transformedName);
+        int index = Arrays.asList(classesBeingTransformed).indexOf(transformedName);
+        return index != -1 ? transform(index, transformingClass, isObfuscated) : transformingClass;
     }
 }

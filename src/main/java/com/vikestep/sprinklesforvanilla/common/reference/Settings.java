@@ -79,9 +79,28 @@ public class Settings
                     "blockdust_",
                     "blockBreak"
             };
+    //Mob Griefing
+    public static final String[] mobGriefingTypes =
+            {
+                    "fallenOnFarmland",
+                    "mobPickUpLoot",
+                    "mobBreakDoor",
+                    "mobEatTallGrass",
+                    "mobEatGrassBlock",
+                    "enderDragonBreakBlock",
+                    "witherExplode",
+                    "witherBreakBlock",
+                    "creeperExplosion",
+                    "endermanStealBlock",
+                    "silverfishBreakBlock",
+                    "largeFireballExplosion",
+                    "witherSkullExplosion"
+            };
     public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
     public static boolean[] particleNameConfigs; //Initialized with values in ConfigurationHandler
-    public static int       potionEffectsShown = 0;
+    public static int potionEffectsShown = 0;
+    public static boolean[] griefTypeConfigs;
+    public static boolean mobGriefingOverride = false;
 
     //Overhauls
     public static boolean overhaulSleep               = true;
@@ -116,7 +135,6 @@ public class Settings
     public static boolean netherPortalsCreateSound = true;
 
     //Misc
-    public static int mobGriefingIsForcedFalse = 0;
-    public static int christmasChest           = 0;
+    public static int christmasChest = 0;
 
 }

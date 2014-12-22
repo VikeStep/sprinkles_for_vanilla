@@ -85,10 +85,18 @@ public class ConfigurationHandler
 
         CATEGORY = "General";
         config.setCategoryComment(CATEGORY, "This section is for general/miscellaneous configs that don't fit in other categories");
-        COMMENT = "Set to 0 to allow setting in game, set to 1 to force no mob griefing, set to 2 to force mob griefing";
-        Settings.mobGriefingIsForcedFalse = config.get(CATEGORY, "mobGriefingIsForcedFalse", 0, COMMENT, 0, 2).getInt(0);
         COMMENT = "Set to 0 to have christmas chest on christmas, 1 for all the time, 2 for no christmas chest on christmas (you scrooge!)";
         Settings.christmasChest = config.get(CATEGORY, "christmasChest", 0, COMMENT, 0, 2).getInt(0);
+
+        CATEGORY = "Mob Griefing";
+        config.setCategoryComment(CATEGORY, "This section is to choose different mob griefing types you want. Set to true to enable that type, set to false to disable that type");
+        COMMENT = "If this is set to true then minecraft will use the below mob griefing values, if false it will go by the gamerule mobGriefing set in game";
+        Settings.mobGriefingOverride = config.get(CATEGORY, "areMobGriefingConfigsUsed", false, COMMENT).getBoolean(false);
+        Settings.griefTypeConfigs = new boolean[Settings.mobGriefingTypes.length];
+        for (int i = 0; i < Settings.mobGriefingTypes.length; i++)
+        {
+            Settings.griefTypeConfigs[i] = config.get(CATEGORY, Settings.mobGriefingTypes[i], true).getBoolean(true);
+        }
 
         CATEGORY = "Nether Portals";
         config.setCategoryComment(CATEGORY, "This section handles the behaviour of nether portals");

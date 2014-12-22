@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
 
+@SuppressWarnings("MagicConstant")
 public class Hooks
 {
     private static EntityPlayer particlePlayerOrigin;
@@ -92,5 +93,15 @@ public class Hooks
         double randomVal = rand.nextDouble();
         double chance = (difficultyID * multiplier) / 2000.0f;
         return randomVal < chance;
+    }
+
+    public static boolean canMobGrief(World world, String griefType)
+    {
+        if (Settings.mobGriefingOverride)
+        {
+            int index = Arrays.asList(Settings.mobGriefingTypes).indexOf(griefType);
+            return index != -1 ? Settings.griefTypeConfigs[index] : world.getGameRules().getGameRuleBooleanValue("mobGriefing");
+        }
+        return world.getGameRules().getGameRuleBooleanValue("mobGriefing");
     }
 }
