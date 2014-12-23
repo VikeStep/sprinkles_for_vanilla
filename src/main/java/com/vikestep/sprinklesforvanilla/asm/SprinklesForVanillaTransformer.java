@@ -531,7 +531,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPNE), GETFIELD);
                 AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart, getGameRuleEnd.getNext());
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("silverfishBreakBlock"));
@@ -554,7 +554,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findLastInstructionWithOpcode(method, GETFIELD);
                 AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart, getGameRuleEnd.getNext());
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("largeFireballExplosion"));
@@ -577,7 +577,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findLastInstructionWithOpcode(method, GETFIELD);
                 AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart, getGameRuleEnd.getNext());
+                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("witherSkullExplosion"));
