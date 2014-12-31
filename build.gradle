@@ -17,12 +17,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.0.3"
+version = "1.7.10-1.0.4"
 group= "com.vikestep.sprinklesforvanilla" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "sprinklesforvanilla"
 
 minecraft {
-    version = "1.7.10-10.13.2.1272"
+    version = "1.7.10-10.13.2.1277"
     runDir = "run"
 }
 

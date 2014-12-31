@@ -31,7 +31,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                     "net.minecraft.entity.monster.EntityEnderman",
                     "net.minecraft.entity.monster.EntitySilverfish",
                     "net.minecraft.entity.projectile.EntityLargeFireball",
-                    "net.minecraft.eneity.projectile.EntityWitherSkull"
+                    "net.minecraft.entity.projectile.EntityWitherSkull"
                     //End Mob Griefing Classes
             };
 
@@ -212,17 +212,17 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             {
                 /*
                 FROM: if (this.mc != null && this.mc.renderViewEntity != null && this.mc.effectRenderer != null)
-                TO: if (this.mc != null && Hooks.isParticleAllowed(p_72726_1_) && this.mc.renderViewEntity != null && this.mc.effectRenderer != null)
+                TO: if (this.mc != null && HooksClient.particleIsAllowed(p_72726_1_) && this.mc.renderViewEntity != null && this.mc.effectRenderer != null)
                 */
 
                 //This will grab the first IFNULL JumpInsnNode
                 JumpInsnNode injectNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFNULL);
                 LabelNode injectNodeLabel = injectNode.label;
 
-                //Hooks.particleIsAllowed(p_72726_1_)
+                //HooksClient.particleIsAllowed(p_72726_1_)
                 InsnList toInject = new InsnList();
                 toInject.add(new VarInsnNode(ALOAD, 1));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "particleIsAllowed", "(Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "particleIsAllowed", "(Ljava/lang/String;)Z", false));
                 toInject.add(new JumpInsnNode(IFEQ, injectNodeLabel));
 
                 method.instructions.insert(injectNode, toInject);
@@ -231,7 +231,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             {
                 /*
                 FROM: this.mc.effectRenderer.addBlockDestroyEffects(p_72706_3_, p_72706_4_, p_72706_5_, block, p_72706_6_ >> 12 & 255);
-                TO: if (Hooks.particleIsAllowed("blockBreak") {
+                TO: if (HooksClient.particleIsAllowed("blockBreak") {
                         this.mc.effectRenderer.addBlockDestroyEffects(p_72706_3_, p_72706_4_, p_72706_5_, block, p_72706_6_ >> 12 & 255);
                     }
                 */
@@ -241,10 +241,10 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 LabelNode ifParticleNode = new LabelNode();
                 AbstractInsnNode endIfNode = ASMHelper.findNextInstructionWithOpcode(injectNode, INVOKEVIRTUAL);
 
-                //if (Hooks.particleIsAllowed("blockBreak")
+                //if (HooksClient.particleIsAllowed("blockBreak")
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("blockBreak"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "particleIsAllowed", "(Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "particleIsAllowed", "(Ljava/lang/String;)Z", false));
                 toInject.add(new JumpInsnNode(IFEQ, ifParticleNode));
 
                 method.instructions.insertBefore(injectNode, toInject);
@@ -262,7 +262,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         {
             if (method.name.equals(INIT_METHOD) && method.desc.equals(INIT_METHOD_SIG))
             {
-                //Replaces the christmas chest functionality with Hooks.isChristmasChest();
+                //Replaces the christmas chest functionality with HooksClient.isChristmasChest();
 
                 AbstractInsnNode calendarStartNode = ASMHelper.findFirstInstructionWithOpcode(method, INVOKESTATIC).getPrevious();
                 JumpInsnNode ifStatementNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IF_ICMPGT);
@@ -271,7 +271,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 ASMHelper.removeFromInsnListUntil(method.instructions, calendarStartNode.getNext(), ifStatementNode.getNext());
 
                 InsnList toInject = new InsnList();
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "isChristmasChest", "()Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "isChristmasChest", "()Z", false));
                 toInject.add(new JumpInsnNode(IFEQ, ifStatementEndLabel));
 
                 method.instructions.insert(calendarStartNode, toInject);

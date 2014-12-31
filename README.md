@@ -20,12 +20,12 @@ Current Features
 - Disable/Enable any mob of your choice
 - Disable/Enable any explosion of your choice
 - Disable/Enable any particle of your choice
-- Option to Force mobGriefing gamerule to value of choice
 - Disable/Enable nether portals being generated when caught on fire
 - Disable/Enable nether portals teleporting to the nether
 - Set a multiplier on the chance of zombie pigmen being spawned at a nether portal
 - Disable/Enable nether portal sound
 - Choose to hide your own potion effect particles, everyone's particles, or see everyone's
+- Choose to enable/disable different forms of mob griefing
 
 Planned Features
 ---------------------
@@ -55,5 +55,4 @@ Planned Features
 - Set fuel supplied for different items in the furnace
 - Enable/Disable Achievements
 - Set Mob drops and chances
-- Choose to enable/disable different forms of mob griefing
-- Set a Respawn Time
+- Set a Respawn Time (useful for hardcore servers)

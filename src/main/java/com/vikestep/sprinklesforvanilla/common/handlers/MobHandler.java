@@ -41,7 +41,7 @@ public class MobHandler
                 }
                 else
                 {
-                    event.setCanceled(Settings.mobNameConfigs[findMobIndex("zombie", 0)]);
+                    event.setCanceled(!Settings.mobNameConfigs[findMobIndex("zombie", 0)]);
                 }
             }
             else if (TRUNCATED_CLASS_NAME.equals("EntitySkeleton") || TRUNCATED_CLASS_NAME.equals("yl"))
