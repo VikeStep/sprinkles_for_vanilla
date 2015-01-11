@@ -3,7 +3,7 @@ package com.vikestep.sprinklesforvanilla.common.reference;
 public class Settings
 {
     //List of Mobs and the class that is checked against
-    public static final String[][] mobNames      =
+    public static final String[][] mobNames         =
             {
                     {"chicken", "EntityChicken", "wg"},
                     {"cow", "EntityCow", "wh"},
@@ -37,7 +37,7 @@ public class Settings
                     {"enderDragon", "EntityDragon", "xa"}
             };
     //Refer to http://minecraft.gamepedia.com/Particles for details
-    public static final String[]   particleNames =
+    public static final String[]   particleNames    =
             {
                     "hugeexplosion",
                     "largeexplode",
@@ -80,7 +80,7 @@ public class Settings
                     "blockBreak"
             };
     //Mob Griefing
-    public static final String[] mobGriefingTypes =
+    public static final String[]   mobGriefingTypes =
             {
                     "fallenOnFarmland",
                     "mobPickUpLoot",
@@ -96,11 +96,15 @@ public class Settings
                     "largeFireballExplosion",
                     "witherSkullExplosion"
             };
+
     public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
     public static boolean[] particleNameConfigs; //Initialized with values in ConfigurationHandler
     public static int potionEffectsShown = 0;
     public static boolean[] griefTypeConfigs;
     public static boolean mobGriefingOverride = false;
+
+    //Beacon Blocks
+    public static String[] beaconBlocks;
 
     //Overhauls
     public static boolean overhaulSleep               = true;

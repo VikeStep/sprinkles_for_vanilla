@@ -111,6 +111,12 @@ public class ConfigurationHandler
         config.setCategoryComment(CATEGORY, "Set to true to enable the sound, set to false to disable the sound");
         Settings.netherPortalsCreateSound = config.get(CATEGORY, "netherPortalsCreateSound", true).getBoolean(true);
 
+        CATEGORY = "Beacons";
+        config.setCategoryComment(CATEGORY, "This section relates to beacons");
+        COMMENT = "In this list, put in the different types of blocks you want to be usable for the base of a beacon (modname:blockname:meta). meta is optional";
+        String[] defaultBeaconBlocks = new String[] {"minecraft:iron_block", "minecraft:gold_block", "minecraft:emerald_block", "minecraft:diamond_block"};
+        Settings.beaconBlocks = config.get(CATEGORY, "beaconBlocks", defaultBeaconBlocks, COMMENT).getStringList();
+
         if (config.hasChanged())
         {
             config.save();

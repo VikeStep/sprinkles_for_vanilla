@@ -1,8 +1,10 @@
 package com.vikestep.sprinklesforvanilla.asm;
 
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
@@ -55,5 +57,28 @@ public class Hooks
             return index != -1 ? Settings.griefTypeConfigs[index] : world.getGameRules().getGameRuleBooleanValue("mobGriefing");
         }
         return world.getGameRules().getGameRuleBooleanValue("mobGriefing");
+    }
+
+    public static boolean isBeaconBase(Block block, IBlockAccess worldObj, int x, int y, int z)
+    {
+        for (String beaconBase : Settings.beaconBlocks)
+        {
+            String[] blockNameData = beaconBase.split(":");
+            if (block == Block.blockRegistry.getObject(blockNameData[0] + ":" + blockNameData[1]))
+            {
+                if (blockNameData.length > 2)
+                {
+                    if (worldObj.getBlockMetadata(x, y, z) == Integer.parseInt(blockNameData[2]))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

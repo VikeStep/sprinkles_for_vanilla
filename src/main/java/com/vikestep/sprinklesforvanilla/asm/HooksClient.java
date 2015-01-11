@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import java.util.Arrays;
 import java.util.Calendar;
 
-@SuppressWarnings("MagicConstant")
 @SideOnly(Side.CLIENT)
 public class HooksClient
 {
@@ -45,7 +44,7 @@ public class HooksClient
         switch (Settings.christmasChest)
         {
             case 0:
-                return (calendar.get(2) + 1 == 12 && calendar.get(5) >= 24 && calendar.get(5) <= 26);
+                return (calendar.get(Calendar.MONTH) + 1 == 12 && calendar.get(Calendar.DATE) >= 24 && calendar.get(Calendar.DATE) <= 26);
             case 1:
                 return true;
             case 2:

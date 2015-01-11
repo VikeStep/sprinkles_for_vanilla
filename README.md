@@ -26,6 +26,7 @@ Current Features
 - Disable/Enable nether portal sound
 - Choose to hide your own potion effect particles, everyone's particles, or see everyone's
 - Choose to enable/disable different forms of mob griefing
+- Add whitelist for beacon base block
 
 Planned Features
 ---------------------
