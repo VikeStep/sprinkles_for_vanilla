@@ -139,6 +139,7 @@ public class Settings
     public static boolean netherPortalsCreateSound = true;
 
     //Misc
-    public static int christmasChest = 0;
+    public static int     christmasChest        = 0;
+    public static boolean doEnderPearlsTeleport = true;
 
 }

@@ -87,6 +87,8 @@ public class ConfigurationHandler
         config.setCategoryComment(CATEGORY, "This section is for general/miscellaneous configs that don't fit in other categories");
         COMMENT = "Set to 0 to have christmas chest on christmas, 1 for all the time, 2 for no christmas chest on christmas (you scrooge!)";
         Settings.christmasChest = config.get(CATEGORY, "christmasChest", 0, COMMENT, 0, 2).getInt(0);
+        COMMENT = "Set to true to enable ender pearl teleportation, set to false to disable";
+        Settings.doEnderPearlsTeleport = config.get(CATEGORY, "doEnderPearlsTeleport", true, COMMENT).getBoolean(true);
 
         CATEGORY = "Mob Griefing";
         config.setCategoryComment(CATEGORY, "This section is to choose different mob griefing types you want. Set to true to enable that type, set to false to disable that type");
