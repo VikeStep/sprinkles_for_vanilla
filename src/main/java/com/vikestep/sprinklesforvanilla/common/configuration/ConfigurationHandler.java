@@ -7,6 +7,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ConfigurationHandler
 {
@@ -53,12 +55,16 @@ public class ConfigurationHandler
         COMMENT = "Set this to the time in ticks (20 ticks = 1 second) that it takes for the player to sleep (max and default is 100)";
         Settings.timeToSleep = config.get(CATEGORY, "timeToSleep", 100, COMMENT, 0, 100).getInt(100);
 
-        Settings.mobNameConfigs = new boolean[Settings.mobNames.length];
+        Settings.mobNameConfigs = new boolean[Settings.mobClasses.size()];
         CATEGORY = "Mobs";
         config.setCategoryComment(CATEGORY, "Set to true to enable the mob, set to false to disable the mob");
-        for (int i = 0; i < Settings.mobNameConfigs.length; i++)
+        Iterator iter = Settings.mobClasses.entrySet().iterator();
+        int mobIndex = 0;
+        while(iter.hasNext())
         {
-            Settings.mobNameConfigs[i] = config.get(CATEGORY, Settings.mobNames[i][0], true).getBoolean(true);
+            Map.Entry entry = (Map.Entry) iter.next();
+            Settings.mobNameConfigs[mobIndex] = config.get(CATEGORY, (String) entry.getKey(), true).getBoolean(true);
+            mobIndex++;
         }
 
         Settings.particleNameConfigs = new boolean[Settings.particleNames.length];
@@ -89,6 +95,12 @@ public class ConfigurationHandler
         Settings.christmasChest = config.get(CATEGORY, "christmasChest", 0, COMMENT, 0, 2).getInt(0);
         COMMENT = "Set to true to enable ender pearl teleportation, set to false to disable";
         Settings.doEnderPearlsTeleport = config.get(CATEGORY, "doEnderPearlsTeleport", true, COMMENT).getBoolean(true);
+        COMMENT = "Set to -1 to go back to full health on respawn, set to a value between 0 and 20 to keep health before death with the number being the minimum value";
+        Settings.keepHealth = config.get(CATEGORY, "keepHealth", -1, COMMENT, -1, 20).getInt(-1);
+        COMMENT = "Set to -1 to go back to full hunger on respawn, set to a value between 0 and 20 to keep hunger before death with the number being the minimum value";
+        Settings.keepHunger = config.get(CATEGORY, "keepHunger", -1, COMMENT, -1, 20).getInt(-1);
+        COMMENT = "Set to true to keep XP when you respawn, set to false to have XP cleared when you respawn";
+        Settings.keepXP = config.get(CATEGORY, "keepXP", false, COMMENT).getBoolean(false);
 
         CATEGORY = "Mob Griefing";
         config.setCategoryComment(CATEGORY, "This section is to choose different mob griefing types you want. Set to true to enable that type, set to false to disable that type");

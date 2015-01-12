@@ -6,58 +6,62 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public class MobHandler
 {
-    private static int findMobIndex(String searchTerm, int col)
+    //Will only check for mobs which were false
+    public HashMap<String, Class<?>> classList = new HashMap<String, Class<?>>();
+
+    public MobHandler()
     {
-        int mobIndex = -1;
-        for (int i = 0; i < Settings.mobNames.length; i++)
+        Iterator iter = Settings.mobClasses.entrySet().iterator();
+        int mobIndex = 0;
+        while (iter.hasNext())
         {
-            if (Settings.mobNames[i][col].equals(searchTerm) || (col == 1 && Settings.mobNames[i][2].equals(searchTerm)))
+            Map.Entry entry = (Map.Entry) iter.next();
+            if (!Settings.mobNameConfigs[mobIndex])
             {
-                mobIndex = i;
-                break;
+                classList.put((String) entry.getKey(), (Class<?>) entry.getValue());
             }
+            mobIndex++;
         }
-        return mobIndex;
+        System.out.println(classList.keySet());
     }
 
     @SubscribeEvent
     public void onEntityJoin(EntityJoinWorldEvent event)
     {
-        //Gets the class of the entity as a string
-        String CLASS_NAME = event.entity.getClass().getName();
-        //Removes path before and including the last "."
-        String TRUNCATED_CLASS_NAME = CLASS_NAME.substring(CLASS_NAME.lastIndexOf(".") + 1);
-        //Finds the class name in the mobNames Array. Will return -1 if the entity is not in the list
-        int mobIndex = findMobIndex(TRUNCATED_CLASS_NAME, 1);
-        if (mobIndex != -1)
+        Class<?> EntityClass = event.entity.getClass();
+        if (classList.containsValue(EntityClass))
         {
-            if (TRUNCATED_CLASS_NAME.equals("EntityZombie") || TRUNCATED_CLASS_NAME.equals("yq"))
+            if (EntityClass == EntityZombie.class)
             {
-                if (((EntityZombie) event.entity).isVillager())
+                if (classList.containsKey("zombieVillager") && ((EntityZombie) event.entity).isVillager())
                 {
-                    event.setCanceled(!Settings.mobNameConfigs[findMobIndex("zombieVillager", 0)]);
+                    event.setCanceled(true);
                 }
-                else
+                else if (classList.containsKey("zombie") && !((EntityZombie) event.entity).isVillager())
                 {
-                    event.setCanceled(!Settings.mobNameConfigs[findMobIndex("zombie", 0)]);
+                    event.setCanceled(true);
                 }
             }
-            else if (TRUNCATED_CLASS_NAME.equals("EntitySkeleton") || TRUNCATED_CLASS_NAME.equals("yl"))
+            else if (EntityClass == EntitySkeleton.class)
             {
-                if (((EntitySkeleton) event.entity).getSkeletonType() == 0)
+                if (classList.containsKey("skeleton") && ((EntitySkeleton) event.entity).getSkeletonType() == 0)
                 {
-                    event.setCanceled(!Settings.mobNameConfigs[findMobIndex("skeleton", 0)]);
+                    event.setCanceled(true);
                 }
-                else
+                else if (classList.containsKey("witherSkeleton") && ((EntitySkeleton) event.entity).getSkeletonType() == 1)
                 {
-                    event.setCanceled(!Settings.mobNameConfigs[findMobIndex("witherSkeleton", 0)]);
+                    event.setCanceled(true);
                 }
             }
             else
             {
-                event.setCanceled(!Settings.mobNameConfigs[mobIndex]);
+                event.setCanceled(true);
             }
         }
     }

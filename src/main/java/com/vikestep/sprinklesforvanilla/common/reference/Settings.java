@@ -1,41 +1,52 @@
 package com.vikestep.sprinklesforvanilla.common.reference;
 
+import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.entity.monster.*;
+import net.minecraft.entity.passive.*;
+
+import java.util.LinkedHashMap;
+
 public class Settings
 {
-    //List of Mobs and the class that is checked against
-    public static final String[][] mobNames         =
-            {
-                    {"chicken", "EntityChicken", "wg"},
-                    {"cow", "EntityCow", "wh"},
-                    {"horse", "EntityHorse", "wi"},
-                    {"ocelot", "EntityOcelot", "wn"},
-                    {"pig", "EntityPig", "wo"},
-                    {"sheep", "EntitySheep", "wp"},
-                    {"bat", "EntityBat", "we"},
-                    {"mooshroom", "EntityMooshroom", "wm"},
-                    {"squid", "EntitySquid", "ws"},
-                    {"villager", "EntityVillager", "yv"},
-                    {"caveSpider", "EntityCaveSpider", "xy"},
-                    {"enderman", "EntityEnderman", "ya"},
-                    {"spider", "EntitySpider", "yn"},
-                    {"wolf", "EntityWolf", "wv"},
-                    {"zombiePigman", "EntityPigZombie", "yh"},
-                    {"blaze", "EntityBlaze", "xx"},
-                    {"creeper", "EntityCreeper", "xz"},
-                    {"ghast", "EntityGhast", "yd"},
-                    {"magmaCube", "EntityMagmaCube", "yf"},
-                    {"silverfish", "EntitySilverfish", "yk"},
-                    {"skeleton", "EntitySkeleton", "yl"},
-                    {"slime", "EntitySlime", "ym"},
-                    {"witch", "EntityWitch", "yp"},
-                    {"witherSkeleton", "EntitySkeleton", "yl"},
-                    {"zombie", "EntityZombie", "yq"},
-                    {"zombieVillager", "EntityZombie", "yq"},
-                    {"snowGolem", "EntitySnowman", "wr"},
-                    {"ironGolem", "EntityIronGolem", "wt"},
-                    {"wither", "EntityWither", "xc"},
-                    {"enderDragon", "EntityDragon", "xa"}
-            };
+    //Mobs
+    public static final LinkedHashMap<String, Class<?>> mobClasses = new LinkedHashMap<String, Class<?>>();
+    static
+    {
+        mobClasses.put("chicken", EntityChicken.class);
+        mobClasses.put("cow", EntityCow.class);
+        mobClasses.put("horse", EntityHorse.class);
+        mobClasses.put("ocelot", EntityOcelot.class);
+        mobClasses.put("pig", EntityPig.class);
+        mobClasses.put("sheep", EntitySheep.class);
+        mobClasses.put("bat", EntityBat.class);
+        mobClasses.put("mooshroom", EntityMooshroom.class);
+        mobClasses.put("squid", EntitySquid.class);
+        mobClasses.put("villager", EntityVillager.class);
+        mobClasses.put("caveSpider", EntityCaveSpider.class);
+        mobClasses.put("enderman", EntityEnderman.class);
+        mobClasses.put("spider", EntitySpider.class);
+        mobClasses.put("wolf", EntityWolf.class);
+        mobClasses.put("zombiePigman", EntityPigZombie.class);
+        mobClasses.put("blaze", EntityBlaze.class);
+        mobClasses.put("creeper", EntityCreeper.class);
+        mobClasses.put("ghast", EntityGhast.class);
+        mobClasses.put("magmaCube", EntityMagmaCube.class);
+        mobClasses.put("silverfish", EntitySilverfish.class);
+        mobClasses.put("skeleton", EntitySkeleton.class);
+        mobClasses.put("slime", EntitySlime.class);
+        mobClasses.put("witch", EntityWitch.class);
+        mobClasses.put("witherSkeleton", EntitySkeleton.class);
+        mobClasses.put("zombie", EntityZombie.class);
+        mobClasses.put("zombieVillager", EntityZombie.class);
+        mobClasses.put("snowGolem", EntitySnowman.class);
+        mobClasses.put("ironGolem", EntityIronGolem.class);
+        mobClasses.put("wither", EntityWither.class);
+        mobClasses.put("enderDragon", EntityDragon.class);
+    }
+    public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
+
+    //Particles
     //Refer to http://minecraft.gamepedia.com/Particles for details
     public static final String[]   particleNames    =
             {
@@ -79,6 +90,8 @@ public class Settings
                     "blockdust_",
                     "blockBreak"
             };
+    public static boolean[] particleNameConfigs; //Initialized with values in ConfigurationHandler
+    public static int potionEffectsShown = 0;
     //Mob Griefing
     public static final String[]   mobGriefingTypes =
             {
@@ -96,10 +109,6 @@ public class Settings
                     "largeFireballExplosion",
                     "witherSkullExplosion"
             };
-
-    public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
-    public static boolean[] particleNameConfigs; //Initialized with values in ConfigurationHandler
-    public static int potionEffectsShown = 0;
     public static boolean[] griefTypeConfigs;
     public static boolean mobGriefingOverride = false;
 
@@ -108,6 +117,7 @@ public class Settings
 
     //Overhauls
     public static boolean overhaulSleep               = true;
+
     //Sleep
     public static boolean sleepIsEnabled              = true;
     public static boolean bedSetsSpawn                = true;
@@ -141,5 +151,8 @@ public class Settings
     //Misc
     public static int     christmasChest        = 0;
     public static boolean doEnderPearlsTeleport = true;
+    public static int     keepHealth            = -1;
+    public static int     keepHunger            = -1;
+    public static boolean keepXP                = false;
 
 }

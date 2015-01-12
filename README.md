@@ -27,6 +27,8 @@ Current Features
 - Choose to hide your own potion effect particles, everyone's particles, or see everyone's
 - Choose to enable/disable different forms of mob griefing
 - Add whitelist for beacon base block
+- Disable/Enable ender pearl teleportation
+- Toggle Health, Hunger and XP on respawn
 
 Planned Features
 ---------------------
