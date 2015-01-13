@@ -13,7 +13,7 @@ public class SprinklesForVanillaPlugin implements IFMLLoadingPlugin
     @Override
     public String[] getASMTransformerClass()
     {
-        return new String[]{ SprinklesForVanillaTransformer.class.getName() };
+        return new String[] {SprinklesForVanillaTransformer.class.getName()};
     }
 
     @Override

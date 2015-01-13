@@ -11,6 +11,7 @@ public class Settings
 {
     //Mobs
     public static final LinkedHashMap<String, Class<?>> mobClasses = new LinkedHashMap<String, Class<?>>();
+
     static
     {
         mobClasses.put("chicken", EntityChicken.class);
@@ -44,11 +45,9 @@ public class Settings
         mobClasses.put("wither", EntityWither.class);
         mobClasses.put("enderDragon", EntityDragon.class);
     }
-    public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
-
     //Particles
     //Refer to http://minecraft.gamepedia.com/Particles for details
-    public static final String[]   particleNames    =
+    public static final String[] particleNames =
             {
                     "hugeexplosion",
                     "largeexplode",
@@ -90,10 +89,8 @@ public class Settings
                     "blockdust_",
                     "blockBreak"
             };
-    public static boolean[] particleNameConfigs; //Initialized with values in ConfigurationHandler
-    public static int potionEffectsShown = 0;
     //Mob Griefing
-    public static final String[]   mobGriefingTypes =
+    public static final String[] mobGriefingTypes =
             {
                     "fallenOnFarmland",
                     "mobPickUpLoot",
@@ -109,14 +106,63 @@ public class Settings
                     "largeFireballExplosion",
                     "witherSkullExplosion"
             };
+    //DamageSources
+    public static final String[] damageSources =
+            {
+                    "inFire",
+                    "onFire",
+                    "lava",
+                    "inWall",
+                    "drown",
+                    "starve",
+                    "cactus",
+                    "fall",
+                    "outOfWorld",
+                    "generic",
+                    "fall",
+                    "magic",
+                    "wither",
+                    "anvil",
+                    "fallingBlock"
+            };
+    public static final String[] defaultFlammable =
+            {
+                    "minecraft:planks, 5, 20",
+                    "minecraft:double_wooden_slab, 5, 20",
+                    "minecraft:wooden_slab, 5, 20",
+                    "minecraft:fence, 5, 20",
+                    "minecraft:oak_stairs, 5, 20",
+                    "minecraft:birch_stairs, 5, 20",
+                    "minecraft:spruce_stairs, 5, 20",
+                    "minecraft:jungle_stairs, 5, 20",
+                    "minecraft:log, 5, 5",
+                    "minecraft:log2, 5, 5",
+                    "minecraft:leaves, 30, 60",
+                    "minecraft:leaves2, 30, 60",
+                    "minecraft:bookshelf, 30, 20",
+                    "minecraft:tnt, 15, 100",
+                    "minecraft:tallgrass, 60, 100",
+                    "minecraft:double_plant, 60, 100",
+                    "minecraft:yellow_flower, 60, 100",
+                    "minecraft:red_flower, 60, 100",
+                    "minecraft:wool, 30, 60",
+                    "minecraft:vine, 15, 100",
+                    "minecraft:coal_block, 5, 5",
+                    "minecraft:hay_block, 60, 20",
+                    "minecraft:carpet, 60, 20"
+            };
+    public static boolean[] mobNameConfigs; //Initialized with values in ConfigurationHandler
+    public static boolean[] particleNameConfigs; //Initialized with values in ConfigurationHandler
+    public static int potionEffectsShown = 0;
     public static boolean[] griefTypeConfigs;
     public static boolean mobGriefingOverride = false;
-
+    public static int[] damageSourceConfigs;
     //Beacon Blocks
     public static String[] beaconBlocks;
-
+    //Blocks that catch fire
+    public static String[] flammableBlocks;
     //Overhauls
-    public static boolean overhaulSleep               = true;
+    public static boolean overhaulSleep = true;
 
     //Sleep
     public static boolean sleepIsEnabled              = true;

@@ -29,12 +29,11 @@ Current Features
 - Add whitelist for beacon base block
 - Disable/Enable ender pearl teleportation
 - Toggle Health, Hunger and XP on respawn
+- Enable/Disable damage from non-mob sources (Cactus, Fire, Lava, Drowning etc.)
+- Set blocks which fire can spread on and their speed, flammability
 
 Planned Features
 ---------------------
-- Disable/Enable Fire spread
-- Set rate of fire spread
-- Set damage from non-mob sources (Cactus, Fire, Lava, Drowning etc.)
 - Disable/Enable Weather overall or based on biomes
 - Set Frequency/Duration of rain/thunder
 - Set which biomes should snow
@@ -43,7 +42,6 @@ Planned Features
 - Toggle between full block or chest models
 - Disable/Enable different Worldgen features
 - Disable/Enable Hunger
-- Set lives on respawn
 - Disable/Enable Sprinting
 - Disable/Enable hunger being affected by sprinting
 - Set hunger level required for sprinting
@@ -59,3 +57,5 @@ Planned Features
 - Enable/Disable Achievements
 - Set Mob drops and chances
 - Set a Respawn Time (useful for hardcore servers)
+- Ability to set speed at which spawners spawn
+- Finite Water. Will be added when CCC 1.0.4.35 becomes recommended as before it adds a conflict

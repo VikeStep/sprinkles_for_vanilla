@@ -13,7 +13,7 @@ import java.util.Map;
 public class MobHandler
 {
     //Will only check for mobs which were false
-    public HashMap<String, Class<?>> classList = new HashMap<String, Class<?>>();
+    private HashMap<String, Class<?>> classList = new HashMap<String, Class<?>>();
 
     public MobHandler()
     {
@@ -28,7 +28,6 @@ public class MobHandler
             }
             mobIndex++;
         }
-        System.out.println(classList.keySet());
     }
 
     @SubscribeEvent

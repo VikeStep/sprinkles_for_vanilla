@@ -26,6 +26,7 @@ public class ConfigurationHandler
     private static void loadConfiguration()
     {
         String COMMENT;
+        String COMMENT2; //This is incase it goes over 2 lines
         String CATEGORY;
 
         CATEGORY = "Overhauls";
@@ -60,7 +61,7 @@ public class ConfigurationHandler
         config.setCategoryComment(CATEGORY, "Set to true to enable the mob, set to false to disable the mob");
         Iterator iter = Settings.mobClasses.entrySet().iterator();
         int mobIndex = 0;
-        while(iter.hasNext())
+        while (iter.hasNext())
         {
             Map.Entry entry = (Map.Entry) iter.next();
             Settings.mobNameConfigs[mobIndex] = config.get(CATEGORY, (String) entry.getKey(), true).getBoolean(true);
@@ -130,6 +131,20 @@ public class ConfigurationHandler
         COMMENT = "In this list, put in the different types of blocks you want to be usable for the base of a beacon (modname:blockname:meta). meta is optional";
         String[] defaultBeaconBlocks = new String[] {"minecraft:iron_block", "minecraft:gold_block", "minecraft:emerald_block", "minecraft:diamond_block"};
         Settings.beaconBlocks = config.get(CATEGORY, "beaconBlocks", defaultBeaconBlocks, COMMENT).getStringList();
+
+        CATEGORY = "Damage Sources";
+        config.setCategoryComment(CATEGORY, "Set to 0 to have this damage source affect all entities, 1 to affect non-players, 2 to affect no entities");
+        Settings.damageSourceConfigs = new int[Settings.damageSources.length];
+        for (int i = 0; i < Settings.damageSources.length; i++)
+        {
+            Settings.damageSourceConfigs[i] = config.get(CATEGORY, Settings.damageSources[i], 0, "", 0, 2).getInt(0);
+        }
+
+        CATEGORY = "Flammable Blocks";
+        config.setCategoryComment(CATEGORY, "This section relates to flammable blocks");
+        COMMENT = "In this list, put the blocks you wish to be flammable. Presets are default vanilla, removing them will remove them from being flammable. You may also edit the speed and flammability of the default options";
+        COMMENT2 = "Format: (modname:blockname, speed, flammability). The higher the speed, the higher chance of fire spreading to neighbours. Chance of the block catching fire is (flammability / 300)";
+        Settings.flammableBlocks = config.get(CATEGORY, "flammableBlocks", Settings.defaultFlammable, COMMENT + "\n" + COMMENT2).getStringList();
 
         if (config.hasChanged())
         {

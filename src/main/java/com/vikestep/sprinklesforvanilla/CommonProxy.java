@@ -1,6 +1,7 @@
 package com.vikestep.sprinklesforvanilla;
 
 import com.vikestep.sprinklesforvanilla.common.handlers.*;
+import com.vikestep.sprinklesforvanilla.common.init.initFireInfo;
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,7 +33,15 @@ public class CommonProxy
             MinecraftForge.EVENT_BUS.register(respawnHandler);
             FMLCommonHandler.instance().bus().register(respawnHandler);
         }
+        if (ArrayUtils.contains(Settings.damageSourceConfigs, 1) || ArrayUtils.contains(Settings.damageSourceConfigs, 2))
+        {
+            MinecraftForge.EVENT_BUS.register(new LivingHurtHandler());
+        }
         //If I ever turn Explosion configs into a boolean array, I'll check if they are turned on
         MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
+        if (Settings.defaultFlammable != Settings.flammableBlocks)
+        {
+            initFireInfo.init();
+        }
     }
 }

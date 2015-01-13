@@ -28,7 +28,7 @@ public class RespawnHandler
         if (event.entity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) event.entity;
-            if (player.getHealth() - event.ammount <= 0 && !event.entity.worldObj.isRemote )
+            if (player.getHealth() - event.ammount <= 0 && !event.entity.worldObj.isRemote)
             {
                 PlayerProperties props = (PlayerProperties) player.getExtendedProperties(ModInfo.MOD_NAME);
                 props.health = player.getHealth();
@@ -52,8 +52,8 @@ public class RespawnHandler
 
         if (oldPlayerProps != null)
         {
-            props.health  = oldPlayerProps.health;
-            props.hunger  = oldPlayerProps.hunger;
+            props.health = oldPlayerProps.health;
+            props.hunger = oldPlayerProps.hunger;
             props.experience = oldPlayerProps.experience;
             props.experienceLevel = oldPlayerProps.experienceLevel;
             props.experienceTotal = oldPlayerProps.experienceTotal;
@@ -73,7 +73,7 @@ public class RespawnHandler
         }
         if (Settings.keepXP)
         {
-            player.experience      = props.experience;
+            player.experience = props.experience;
             player.experienceLevel = props.experienceLevel;
             player.experienceTotal = props.experienceTotal;
         }

@@ -9,6 +9,9 @@ public class EnderPearlHandler
     @SubscribeEvent
     public void onEnderPearlImpact(EnderTeleportEvent event)
     {
-        event.setCanceled(!Settings.doEnderPearlsTeleport);
+        if (!Settings.doEnderPearlsTeleport)
+        {
+            event.setCanceled(true);
+        }
     }
 }
