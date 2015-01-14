@@ -1,5 +1,6 @@
 package com.vikestep.sprinklesforvanilla.common.handlers;
 
+import com.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -34,7 +35,7 @@ public class MobHandler
     public void onEntityJoin(EntityJoinWorldEvent event)
     {
         Class<?> EntityClass = event.entity.getClass();
-        if (classList.containsValue(EntityClass))
+        if (classList.containsValue(EntityClass) && SprinklesForVanilla.isOnServer)
         {
             if (EntityClass == EntityZombie.class)
             {

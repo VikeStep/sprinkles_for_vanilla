@@ -1,7 +1,6 @@
 package com.vikestep.sprinklesforvanilla;
 
 import com.vikestep.sprinklesforvanilla.common.handlers.*;
-import com.vikestep.sprinklesforvanilla.common.init.initFireInfo;
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -11,6 +10,7 @@ public class CommonProxy
 {
     public void init()
     {
+        FMLCommonHandler.instance().bus().register(new NetworkHandler());
         //To reduce lag I will only register an event handler if the config value is modified
         if (Settings.overhaulSleep)
         {
@@ -35,13 +35,9 @@ public class CommonProxy
         }
         if (ArrayUtils.contains(Settings.damageSourceConfigs, 1) || ArrayUtils.contains(Settings.damageSourceConfigs, 2))
         {
-            MinecraftForge.EVENT_BUS.register(new LivingHurtHandler());
+            MinecraftForge.EVENT_BUS.register(new LivingAttackHandler());
         }
         //If I ever turn Explosion configs into a boolean array, I'll check if they are turned on
         MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
-        if (Settings.defaultFlammable != Settings.flammableBlocks)
-        {
-            initFireInfo.init();
-        }
     }
 }

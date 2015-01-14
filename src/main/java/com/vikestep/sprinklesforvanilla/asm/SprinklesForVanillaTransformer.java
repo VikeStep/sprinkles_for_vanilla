@@ -209,6 +209,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         final String PLAY_AUX_SFX = isObfuscated ? "a" : "playAuxSFX";
         final String SPAWN_PARTICLE_DESC = isObfuscated ? "(Ljava/lang/String;DDDDDD)Lbkm;" : "(Ljava/lang/String;DDDDDD)Lnet/minecraft/client/particle/EntityFX;";
         final String PLAY_AUX_SFX_DESC = isObfuscated ? "(Lyz;IIIII)V" : "(Lnet/minecraft/entity/player/EntityPlayer;IIIII)V";
+        final String BROADCAST_SOUND = isObfuscated ? "a" : "broadcastSound";
+        final String BROADCAST_SOUND_DESC = "(IIIII)V";
 
         for (MethodNode method : renderGlobalClass.methods)
         {
@@ -253,6 +255,27 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 method.instructions.insertBefore(injectNode, toInject);
                 method.instructions.insert(endIfNode, ifParticleNode);
+            }
+            else if (method.name.equals(BROADCAST_SOUND) && method.desc.equals(BROADCAST_SOUND_DESC))
+            {
+                /*
+                Inserting in start:
+                    If(!HooksClient.broadcastSound(int p_82746_1_)
+                    {
+                        return;
+                    }
+                 */
+                AbstractInsnNode firstNode = method.instructions.getFirst();
+                LabelNode endIfLabel = new LabelNode();
+
+                InsnList toInject = new InsnList();
+                toInject.add(new VarInsnNode(ILOAD, 1));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "broadcastSound", "(I)Z", false));
+                toInject.add(new JumpInsnNode(IFNE, endIfLabel));
+                toInject.add(new InsnNode(RETURN));
+                toInject.add(endIfLabel);
+
+                method.instructions.insertBefore(firstNode, toInject);
             }
         }
     }

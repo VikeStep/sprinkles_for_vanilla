@@ -1,17 +1,18 @@
 package com.vikestep.sprinklesforvanilla.common.handlers;
 
+import com.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 import java.util.HashMap;
 
-public class LivingHurtHandler
+public class LivingAttackHandler
 {
     private HashMap<String, Integer> stoppedDamageSources = new HashMap<String, Integer>();
 
-    public LivingHurtHandler()
+    public LivingAttackHandler()
     {
         for (int i = 0; i < Settings.damageSourceConfigs.length; i++)
         {
@@ -25,13 +26,12 @@ public class LivingHurtHandler
                 stoppedDamageSources.put(Settings.damageSources[i], 2);
             }
         }
-        System.out.println(stoppedDamageSources);
     }
 
     @SubscribeEvent
-    public void onLivingHurt(LivingHurtEvent event)
+    public void onLivingAttack(LivingAttackEvent event)
     {
-        if (stoppedDamageSources.keySet().contains(event.source.damageType))
+        if (stoppedDamageSources.keySet().contains(event.source.damageType) && SprinklesForVanilla.isOnServer)
         {
             int value = stoppedDamageSources.get(event.source.damageType);
             if (value == 2)

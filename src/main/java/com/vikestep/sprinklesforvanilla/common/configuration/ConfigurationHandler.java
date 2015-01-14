@@ -125,6 +125,8 @@ public class ConfigurationHandler
         CATEGORY = "Sound";
         config.setCategoryComment(CATEGORY, "Set to true to enable the sound, set to false to disable the sound");
         Settings.netherPortalsCreateSound = config.get(CATEGORY, "netherPortalsCreateSound", true).getBoolean(true);
+        Settings.enderDragonSpawnSound = config.get(CATEGORY, "enderDragonSpawnMakesSound", true).getBoolean(true);
+        Settings.witherSpawnSound = config.get(CATEGORY, "witherSpawnMakesSound", true).getBoolean(true);
 
         CATEGORY = "Beacons";
         config.setCategoryComment(CATEGORY, "This section relates to beacons");

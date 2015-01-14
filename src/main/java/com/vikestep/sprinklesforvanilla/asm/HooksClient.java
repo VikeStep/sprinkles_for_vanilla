@@ -54,4 +54,17 @@ public class HooksClient
                 return false;
         }
     }
+
+    public static boolean broadcastSound(int soundType)
+    {
+        LogHelper.log(soundType);
+        switch (soundType)
+        {
+            case 1013: //Wither
+                return Settings.witherSpawnSound;
+            case 1018: //Ender Dragon
+                return Settings.enderDragonSpawnSound;
+        }
+        return true;
+    }
 }

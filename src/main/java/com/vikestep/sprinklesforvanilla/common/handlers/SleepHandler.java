@@ -1,5 +1,6 @@
 package com.vikestep.sprinklesforvanilla.common.handlers;
 
+import com.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -72,7 +73,7 @@ public class SleepHandler
     @SubscribeEvent
     public void onPlayerSleep(PlayerSleepInBedEvent event)
     {
-        if (getEnumStatus(event.entityPlayer, event.x, event.y, event.z) == null)
+        if (getEnumStatus(event.entityPlayer, event.x, event.y, event.z) == null && SprinklesForVanilla.isOnServer)
         {
             if (!Settings.sleepIsEnabled)
             {
@@ -112,7 +113,7 @@ public class SleepHandler
     @SubscribeEvent
     public void onBedActivated(PlayerInteractEvent event)
     {
-        if (!Settings.playerMustSleepInOverworld && event.world.getBlock(event.x, event.y, event.z).isBed(event.world, event.x, event.y, event.z, event.entityPlayer) && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
+        if (!Settings.playerMustSleepInOverworld && event.world.getBlock(event.x, event.y, event.z).isBed(event.world, event.x, event.y, event.z, event.entityPlayer) && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && SprinklesForVanilla.isOnServer)
         {
             if (!event.world.isRemote && !event.world.provider.canRespawnHere() && event.world.getBiomeGenForCoords(event.x, event.z) == BiomeGenBase.hell)
             {
@@ -176,7 +177,7 @@ public class SleepHandler
     {
         try
         {
-            if (resetSpawn && spawnCoordinates != spawnChunk.get(playerResettingSpawn))
+            if (resetSpawn && spawnCoordinates != spawnChunk.get(playerResettingSpawn) && SprinklesForVanilla.isOnServer)
             {
                 playerResettingSpawn.setSpawnChunk(spawnCoordinates, true);
                 if (oldSpawnWasBed)

@@ -45,9 +45,10 @@ public class Settings
         mobClasses.put("wither", EntityWither.class);
         mobClasses.put("enderDragon", EntityDragon.class);
     }
+
     //Particles
     //Refer to http://minecraft.gamepedia.com/Particles for details
-    public static final String[] particleNames =
+    public static final String[] particleNames    =
             {
                     "hugeexplosion",
                     "largeexplode",
@@ -107,7 +108,7 @@ public class Settings
                     "witherSkullExplosion"
             };
     //DamageSources
-    public static final String[] damageSources =
+    public static final String[] damageSources    =
             {
                     "inFire",
                     "onFire",
@@ -156,7 +157,7 @@ public class Settings
     public static int potionEffectsShown = 0;
     public static boolean[] griefTypeConfigs;
     public static boolean mobGriefingOverride = false;
-    public static int[] damageSourceConfigs;
+    public static int[]    damageSourceConfigs;
     //Beacon Blocks
     public static String[] beaconBlocks;
     //Blocks that catch fire
@@ -193,6 +194,8 @@ public class Settings
 
     //Sounds
     public static boolean netherPortalsCreateSound = true;
+    public static boolean enderDragonSpawnSound    = true;
+    public static boolean witherSpawnSound         = true;
 
     //Misc
     public static int     christmasChest        = 0;

@@ -1,5 +1,6 @@
 package com.vikestep.sprinklesforvanilla.common.handlers;
 
+import com.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import com.vikestep.sprinklesforvanilla.common.reference.ModInfo;
 import com.vikestep.sprinklesforvanilla.common.reference.Settings;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -25,7 +26,7 @@ public class RespawnHandler
     @SubscribeEvent
     public void onHurt(LivingHurtEvent event)
     {
-        if (event.entity instanceof EntityPlayer)
+        if (event.entity instanceof EntityPlayer && SprinklesForVanilla.isOnServer)
         {
             EntityPlayer player = (EntityPlayer) event.entity;
             if (player.getHealth() - event.ammount <= 0 && !event.entity.worldObj.isRemote)
@@ -45,44 +46,47 @@ public class RespawnHandler
     @SubscribeEvent
     public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event)
     {
-        System.out.println(FMLCommonHandler.instance().getEffectiveSide());
-        PlayerProperties oldPlayerProps = playerMap.remove(event.player.getPersistentID());
-        PlayerProperties props = (PlayerProperties) event.player.getExtendedProperties(ModInfo.MOD_NAME);
-        EntityPlayer player = event.player;
+        if (SprinklesForVanilla.isOnServer)
+        {
+            System.out.println(FMLCommonHandler.instance().getEffectiveSide());
+            PlayerProperties oldPlayerProps = playerMap.remove(event.player.getPersistentID());
+            PlayerProperties props = (PlayerProperties) event.player.getExtendedProperties(ModInfo.MOD_NAME);
+            EntityPlayer player = event.player;
 
-        if (oldPlayerProps != null)
-        {
-            props.health = oldPlayerProps.health;
-            props.hunger = oldPlayerProps.hunger;
-            props.experience = oldPlayerProps.experience;
-            props.experienceLevel = oldPlayerProps.experienceLevel;
-            props.experienceTotal = oldPlayerProps.experienceTotal;
-        }
-
-        if (Settings.keepHunger >= 0)
-        {
-            player.setHealth(Math.max(props.health, (float) Settings.keepHealth));
-        }
-        if (Settings.keepHunger >= 0)
-        {
-            player.getFoodStats().addStats(Math.max(props.hunger, Settings.keepHunger) - 20, 0);
-            if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+            if (oldPlayerProps != null)
             {
-                player.getFoodStats().setFoodLevel(Math.max(props.hunger, Settings.keepHunger));
+                props.health = oldPlayerProps.health;
+                props.hunger = oldPlayerProps.hunger;
+                props.experience = oldPlayerProps.experience;
+                props.experienceLevel = oldPlayerProps.experienceLevel;
+                props.experienceTotal = oldPlayerProps.experienceTotal;
             }
-        }
-        if (Settings.keepXP)
-        {
-            player.experience = props.experience;
-            player.experienceLevel = props.experienceLevel;
-            player.experienceTotal = props.experienceTotal;
+
+            if (Settings.keepHunger >= 0)
+            {
+                player.setHealth(Math.max(props.health, (float) Settings.keepHealth));
+            }
+            if (Settings.keepHunger >= 0)
+            {
+                player.getFoodStats().addStats(Math.max(props.hunger, Settings.keepHunger) - 20, 0);
+                if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+                {
+                    player.getFoodStats().setFoodLevel(Math.max(props.hunger, Settings.keepHunger));
+                }
+            }
+            if (Settings.keepXP)
+            {
+                player.experience = props.experience;
+                player.experienceLevel = props.experienceLevel;
+                player.experienceTotal = props.experienceTotal;
+            }
         }
     }
 
     @SubscribeEvent
     public void onConstruction(EntityEvent.EntityConstructing event)
     {
-        if (event.entity instanceof EntityPlayer && event.entity.getExtendedProperties(ModInfo.MOD_NAME) == null)
+        if (event.entity instanceof EntityPlayer && event.entity.getExtendedProperties(ModInfo.MOD_NAME) == null && SprinklesForVanilla.isOnServer)
         {
             event.entity.registerExtendedProperties(ModInfo.MOD_NAME, new PlayerProperties());
         }
