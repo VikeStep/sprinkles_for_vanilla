@@ -26,7 +26,7 @@ public class ConfigurationHandler
     private static void loadConfiguration()
     {
         String COMMENT;
-        String COMMENT2; //This is incase it goes over 2 lines
+        String COMMENT2; //This is in case it goes over 2 lines
         String CATEGORY;
 
         CATEGORY = "Overhauls";
@@ -70,7 +70,7 @@ public class ConfigurationHandler
 
         Settings.particleNameConfigs = new boolean[Settings.particleNames.length];
         CATEGORY = "Particles";
-        config.setCategoryComment(CATEGORY, "Set to true to enable the particle, set to false to disable the particle. Refer to http://minecraft.gamepedia.com/Particles for details");
+        config.setCategoryComment(CATEGORY, "CLIENTSIDE\nSet to true to enable the particle, set to false to disable the particle. Refer to http://minecraft.gamepedia.com/Particles for details");
         for (int i = 0; i < Settings.particleNameConfigs.length; i++)
         {
             Settings.particleNameConfigs[i] = config.get(CATEGORY, Settings.particleNames[i], true).getBoolean(true);
@@ -92,7 +92,7 @@ public class ConfigurationHandler
 
         CATEGORY = "General";
         config.setCategoryComment(CATEGORY, "This section is for general/miscellaneous configs that don't fit in other categories");
-        COMMENT = "Set to 0 to have christmas chest on christmas, 1 for all the time, 2 for no christmas chest on christmas (you scrooge!)";
+        COMMENT = "CLIENTSIDE: Set to 0 to have christmas chest on christmas, 1 for all the time, 2 for no christmas chest on christmas (you scrooge!)";
         Settings.christmasChest = config.get(CATEGORY, "christmasChest", 0, COMMENT, 0, 2).getInt(0);
         COMMENT = "Set to true to enable ender pearl teleportation, set to false to disable";
         Settings.doEnderPearlsTeleport = config.get(CATEGORY, "doEnderPearlsTeleport", true, COMMENT).getBoolean(true);
@@ -123,10 +123,11 @@ public class ConfigurationHandler
         Settings.netherPortalPigmenSpawnMult = config.get(CATEGORY, "netherPortalPigmenSpawnMult", 1.0, COMMENT, 0, Double.MAX_VALUE).getDouble(1.0);
 
         CATEGORY = "Sound";
-        config.setCategoryComment(CATEGORY, "Set to true to enable the sound, set to false to disable the sound");
-        Settings.netherPortalsCreateSound = config.get(CATEGORY, "netherPortalsCreateSound", true).getBoolean(true);
-        Settings.enderDragonSpawnSound = config.get(CATEGORY, "enderDragonSpawnMakesSound", true).getBoolean(true);
-        Settings.witherSpawnSound = config.get(CATEGORY, "witherSpawnMakesSound", true).getBoolean(true);
+        config.setCategoryComment(CATEGORY, "CLIENTSIDE\nThis section relates to sounds");
+        COMMENT = "In this list you must put the names of the sounds you wish to not play in the format (modname:soundpath). Place a # before the entry to ignore it in the list and play the sound";
+        COMMENT2 = "e.g. Wither Spawn is minecraft:mob.wither.spawn, a list of vanilla sounds are here http://minecraft.gamepedia.com/Sounds.json, to find the path for another mod look in the assets folder of the mod jar";
+        String[] defaultVals = new String[] {"#minecraft:mob.wither.spawn", "#minecraft:mob.enderdragon.end", "#minecraft:portal.portal"};
+        Settings.disabledSounds = config.get(CATEGORY, "disabledSounds", defaultVals, COMMENT + "\n" + COMMENT2).getStringList();
 
         CATEGORY = "Beacons";
         config.setCategoryComment(CATEGORY, "This section relates to beacons");

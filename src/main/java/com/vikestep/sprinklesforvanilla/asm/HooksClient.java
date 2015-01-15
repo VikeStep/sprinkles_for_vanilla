@@ -18,7 +18,7 @@ public class HooksClient
     public static boolean particleIsAllowed(String particle)
     {
         EntityPlayer currentPlayer = Minecraft.getMinecraft().thePlayer;
-        if (Settings.potionEffectsShown != 0)
+        if (Settings.potionEffectsShown != 0 && particlePlayerOrigin != null)
         {
             if (currentPlayer == particlePlayerOrigin)
             {
@@ -53,18 +53,5 @@ public class HooksClient
                 LogHelper.log("It seems that you have set the config christmasChest to " + Settings.christmasChest + ". The range for that is integers between 0 and 2");
                 return false;
         }
-    }
-
-    public static boolean broadcastSound(int soundType)
-    {
-        LogHelper.log(soundType);
-        switch (soundType)
-        {
-            case 1013: //Wither
-                return Settings.witherSpawnSound;
-            case 1018: //Ender Dragon
-                return Settings.enderDragonSpawnSound;
-        }
-        return true;
     }
 }

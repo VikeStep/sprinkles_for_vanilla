@@ -17,7 +17,7 @@ public class NetworkHandler
     @SubscribeEvent
     public void onConnectServer(FMLNetworkEvent.ClientConnectedToServerEvent event)
     {
-        LogHelper.log(SprinklesForVanilla.isOnServer ? "sprinkles_for_vanilla found on server" : "sprinkles_for_vanilla not found on server");
+        LogHelper.log(SprinklesForVanilla.isOnServer ? "sprinkles_for_vanilla found on server" : "sprinkles_for_vanilla not found on server, will only use clientside features");
         initFireInfo.addFireInfo();
     }
 }

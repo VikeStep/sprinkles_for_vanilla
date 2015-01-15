@@ -29,7 +29,7 @@ public class RespawnHandler
         if (event.entity instanceof EntityPlayer && SprinklesForVanilla.isOnServer)
         {
             EntityPlayer player = (EntityPlayer) event.entity;
-            if (player.getHealth() - event.ammount <= 0 && !event.entity.worldObj.isRemote)
+            if (player.getHealth() - event.ammount <= 0)
             {
                 PlayerProperties props = (PlayerProperties) player.getExtendedProperties(ModInfo.MOD_NAME);
                 props.health = player.getHealth();

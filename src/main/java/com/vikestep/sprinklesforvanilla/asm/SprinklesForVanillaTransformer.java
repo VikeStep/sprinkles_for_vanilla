@@ -109,11 +109,9 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     private static void transformBlockPortal(ClassNode blockPortalClass, boolean isObfuscated)
     {
         final String UPDATE_TICK = isObfuscated ? "a" : "updateTick";
-        final String RANDOM_DISPLAY_TICK = isObfuscated ? "b" : "randomDisplayTick";
         final String GET_SIZE = isObfuscated ? "e" : "func_150000_e";
         final String ENTITY_COLLIDE = isObfuscated ? "a" : "onEntityCollidedWithBlock";
         final String UPDATE_TICK_DESC = isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V";
-        final String RANDOM_DISPLAY_TICK_DESC = isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V";
         final String GET_SIZE_DESC = isObfuscated ? "(Lahb;III)Z" : "(Lnet/minecraft/world/World;III)Z";
         final String ENTITY_COLLIDE_DESC = isObfuscated ? "(Lahb;IIILsa;)V" : "(Lnet/minecraft/world/World;IIILnet/minecraft/entity/Entity;)V";
 
@@ -145,25 +143,6 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 toInject.add(new JumpInsnNode(IFEQ, newConditionalEndLabel));
 
                 method.instructions.insert(injectPoint, toInject);
-            }
-            else if (method.name.equals(RANDOM_DISPLAY_TICK) && method.desc.equals(RANDOM_DISPLAY_TICK_DESC))
-            {
-                /*
-                FROM: if (p_149734_5_.nextInt(100) == 0)
-                TO: if (p_149734_5_.nextInt(100) == 0 && HookBlockPortal.netherPortalPlaysSound())
-                */
-
-                //Finds the if statement we are inserting the condition into
-                JumpInsnNode ifSoundNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFNE);
-                //And the label we will point to
-                LabelNode ifSoundEndLabel = ifSoundNode.label;
-
-                //if(HookBlockPortal.netherPortalPlaysSound())
-                InsnList toInject = new InsnList();
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "netherPortalPlaysSound", "()Z", false));
-                toInject.add(new JumpInsnNode(IFEQ, ifSoundEndLabel));
-
-                method.instructions.insert(ifSoundNode, toInject);
             }
             else if (method.name.equals(GET_SIZE) && method.desc.equals(GET_SIZE_DESC))
             {
@@ -209,8 +188,6 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         final String PLAY_AUX_SFX = isObfuscated ? "a" : "playAuxSFX";
         final String SPAWN_PARTICLE_DESC = isObfuscated ? "(Ljava/lang/String;DDDDDD)Lbkm;" : "(Ljava/lang/String;DDDDDD)Lnet/minecraft/client/particle/EntityFX;";
         final String PLAY_AUX_SFX_DESC = isObfuscated ? "(Lyz;IIIII)V" : "(Lnet/minecraft/entity/player/EntityPlayer;IIIII)V";
-        final String BROADCAST_SOUND = isObfuscated ? "a" : "broadcastSound";
-        final String BROADCAST_SOUND_DESC = "(IIIII)V";
 
         for (MethodNode method : renderGlobalClass.methods)
         {
@@ -255,27 +232,6 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 method.instructions.insertBefore(injectNode, toInject);
                 method.instructions.insert(endIfNode, ifParticleNode);
-            }
-            else if (method.name.equals(BROADCAST_SOUND) && method.desc.equals(BROADCAST_SOUND_DESC))
-            {
-                /*
-                Inserting in start:
-                    If(!HooksClient.broadcastSound(int p_82746_1_)
-                    {
-                        return;
-                    }
-                 */
-                AbstractInsnNode firstNode = method.instructions.getFirst();
-                LabelNode endIfLabel = new LabelNode();
-
-                InsnList toInject = new InsnList();
-                toInject.add(new VarInsnNode(ILOAD, 1));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "broadcastSound", "(I)Z", false));
-                toInject.add(new JumpInsnNode(IFNE, endIfLabel));
-                toInject.add(new InsnNode(RETURN));
-                toInject.add(endIfLabel);
-
-                method.instructions.insertBefore(firstNode, toInject);
             }
         }
     }

@@ -20,7 +20,7 @@ public class initFireInfo
     private static List<String[]> checkedEntries  = new ArrayList<String[]>();
 
     //This will use configs if it is on server, use defaults if not (to allow this to be clientside only yet not have server desync
-    //Will be called everytime the player connects to the server
+    //Will be called every time the player connects to the server
     public static void addFireInfo()
     {
         List<String[]> defaultFlammableArr = new ArrayList<String[]>();

@@ -8,36 +8,44 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class CommonProxy
 {
+    private static void registerHandler(Object eventHandler, boolean fml, boolean forge)
+    {
+        if (fml)
+        {
+            FMLCommonHandler.instance().bus().register(eventHandler);
+        }
+        if (forge)
+        {
+            MinecraftForge.EVENT_BUS.register(eventHandler);
+        }
+    }
+
     public void init()
     {
-        FMLCommonHandler.instance().bus().register(new NetworkHandler());
+        registerHandler(new NetworkHandler(), true, false);
         //To reduce lag I will only register an event handler if the config value is modified
         if (Settings.overhaulSleep)
         {
-            SleepHandler sleepHandler = new SleepHandler();
-            MinecraftForge.EVENT_BUS.register(sleepHandler);
-            FMLCommonHandler.instance().bus().register(sleepHandler);
+            registerHandler(new SleepHandler(), true, true);
         }
         //Arrays.asList doesn't seem to like boolean[] so we use ArrayUtils
         if (ArrayUtils.contains(Settings.mobNameConfigs, false))
         {
-            MinecraftForge.EVENT_BUS.register(new MobHandler());
+            registerHandler(new MobHandler(), false, true);
         }
         if (!Settings.doEnderPearlsTeleport)
         {
-            MinecraftForge.EVENT_BUS.register(new EnderPearlHandler());
+            registerHandler(new EnderPearlHandler(), false, true);
         }
         if (Settings.keepHealth >= 0 || Settings.keepXP || Settings.keepHunger >= 0)
         {
-            RespawnHandler respawnHandler = new RespawnHandler();
-            MinecraftForge.EVENT_BUS.register(respawnHandler);
-            FMLCommonHandler.instance().bus().register(respawnHandler);
+            registerHandler(new RespawnHandler(), true, true);
         }
         if (ArrayUtils.contains(Settings.damageSourceConfigs, 1) || ArrayUtils.contains(Settings.damageSourceConfigs, 2))
         {
-            MinecraftForge.EVENT_BUS.register(new LivingAttackHandler());
+            registerHandler(new LivingAttackHandler(), false, true);
         }
         //If I ever turn Explosion configs into a boolean array, I'll check if they are turned on
-        MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
+        registerHandler(new ExplosionHandler(), false, true);
     }
 }

@@ -5,10 +5,21 @@ This is a mod that adds a config for vanilla. An example config is shown in [spr
 
 If you have any feature requests please make an issue on the github with the tag 'enhancement' and I will look into it. If you don't have a github account you can PM me on reddit/FTB Forums/curseforge/MC Forums.
 
-This mod also uses ASMHelper by squeek to help me tweak some of these classes. Since this mod uses class transformers it may causes issues with other mods but I have not ran into any major compatibility issues
+This mod also uses ASMHelper by squeek to help me tweak some of these classes. Since this mod uses class transformers it may causes issues with other mods but I have not ran into any major compatibility issues.
+
+This mod has features that will work if not on the serverside, but most of them will require
 
 Current Features
 ---------------------
+Features that will work even if the mod is not on the server (will even work if server doesnt have forge):
+
+- Disable any sound (including from other mods)
+- Disable/Enable any particle (only from vanilla)
+- Choose to hide your own potion effect particles, everyone's particles, or see everyone's
+- Choose when to have christmas chest texture
+
+Must be on server for these to work:
+
 - Disable/Enable sleep
 - Disable/Enable beds being able to set spawn
 - Disable/Enable nearby mobs preventing sleep
@@ -19,14 +30,11 @@ Current Features
 - Set distance you need to be away from bed to sleep in it
 - Disable/Enable any mob of your choice
 - Disable/Enable any explosion of your choice
-- Disable/Enable any particle of your choice
 - Disable/Enable nether portals being generated when caught on fire
 - Disable/Enable nether portals teleporting to the nether
 - Set a multiplier on the chance of zombie pigmen being spawned at a nether portal
-- Disable/Enable nether portal sound
-- Choose to hide your own potion effect particles, everyone's particles, or see everyone's
 - Choose to enable/disable different forms of mob griefing
-- Add whitelist for beacon base block
+- Add whitelist for what can be used as the beacon base block
 - Disable/Enable ender pearl teleportation
 - Toggle Health, Hunger and XP on respawn
 - Enable/Disable damage from non-mob sources (Cactus, Fire, Lava, Drowning etc.)
@@ -43,7 +51,6 @@ Planned Features
 - Disable/Enable different Worldgen features
 - Disable/Enable Hunger
 - Disable/Enable Sprinting
-- Disable/Enable hunger being affected by sprinting
 - Set hunger level required for sprinting
 - Set gravity
 - Disable/Enable Night
@@ -59,3 +66,4 @@ Planned Features
 - Set a Respawn Time (useful for hardcore servers)
 - Ability to set speed at which spawners spawn
 - Finite Water. Will be added when CCC 1.0.4.35 becomes recommended as before it adds a conflict
+- Set health regeneration rate

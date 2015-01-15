@@ -193,9 +193,7 @@ public class Settings
     public static double  netherPortalPigmenSpawnMult = 1.0;
 
     //Sounds
-    public static boolean netherPortalsCreateSound = true;
-    public static boolean enderDragonSpawnSound    = true;
-    public static boolean witherSpawnSound         = true;
+    public static String[] disabledSounds;
 
     //Misc
     public static int     christmasChest        = 0;

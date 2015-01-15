@@ -32,11 +32,6 @@ public class Hooks
         return Settings.netherPortalsCanTeleport || !SprinklesForVanilla.isOnServer;
     }
 
-    public static boolean netherPortalPlaysSound()
-    {
-        return Settings.netherPortalsCreateSound || !SprinklesForVanilla.isOnServer;
-    }
-
     public static boolean portalBlocksAreCreated()
     {
         return Settings.netherPortalsAreGenerated || !SprinklesForVanilla.isOnServer;
