@@ -17,13 +17,9 @@ public class Hooks
     //String name is passed in case we use it in the future
     public static void particleSpawnedFromEntity(EntityLivingBase entity, String particle)
     {
-        if (entity instanceof EntityPlayer && entity.worldObj.isRemote)
+        if (entity.worldObj.isRemote)
         {
-            HooksClient.particlePlayerOrigin = (EntityPlayer) entity;
-        }
-        else if (entity.worldObj.isRemote)
-        {
-            HooksClient.particlePlayerOrigin = null;
+            HooksClient.particlePlayerOrigin = entity;
         }
     }
 

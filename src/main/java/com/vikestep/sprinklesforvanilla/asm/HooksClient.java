@@ -5,6 +5,7 @@ import com.vikestep.sprinklesforvanilla.common.util.LogHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.Calendar;
 @SideOnly(Side.CLIENT)
 public class HooksClient
 {
-    public static EntityPlayer particlePlayerOrigin;
+    public static Entity particlePlayerOrigin;
 
     public static boolean particleIsAllowed(String particle)
     {
