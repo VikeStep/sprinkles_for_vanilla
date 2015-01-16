@@ -54,7 +54,7 @@ public class SprinklesForVanilla
     @NetworkCheckHandler
     public boolean checkIfServer(Map<String, String> serverMods, Side remoteSide)
     {
-        for (Object modName : serverMods.keySet())
+        for (String modName : serverMods.keySet())
         {
             if (modName.equals("sprinkles_for_vanilla"))
             {

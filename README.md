@@ -67,3 +67,8 @@ Planned Features
 - Ability to set speed at which spawners spawn
 - Finite Water. Will be added when CCC 1.0.4.35 becomes recommended as before it adds a conflict
 - Set health regeneration rate
+- Disable/Enable enchanting, brewing and using the anvil
+- Disable/Enable being able to press F3 or toggle what is shown in F3
+- Disable/Enable ability to boost minecarts
+- Ability to force a gamerule
+- In-Game Config Editor and command to reload configs

@@ -1,6 +1,7 @@
 package com.vikestep.sprinklesforvanilla.asm;
 
 import com.vikestep.sprinklesforvanilla.common.util.LogHelper;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Type;
@@ -465,16 +466,17 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         {
             if (method.name.equals(EXPLODE) && method.desc.equals(EXPLODE_DESC))
             {
-                AbstractInsnNode getGameRuleStart = ASMHelper.findFirstInstructionWithOpcode(method, INVOKEVIRTUAL).getPrevious();
-                AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
-
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                AbstractInsnNode iStoreNode = ASMHelper.findFirstInstructionWithOpcode(method, ISTORE);
 
                 InsnList toInject = new InsnList();
+                toInject.add(new VarInsnNode(ILOAD, 1));
+                toInject.add(new VarInsnNode(ALOAD, 0));
+                toInject.add(new FieldInsnNode(GETFIELD, isObfuscated ? "xz" : "net/minecraft/entity/monster/EntityCreeper", isObfuscated ? "o" : "worldObj", isObfuscated ? "Lahb;" : "Lnet/minecraft/world/World;"));
                 toInject.add(new LdcInsnNode("creeperExplosion"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObfuscated ? "(ILahb;Ljava/lang/String;)Z" : "(ILnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new VarInsnNode(ISTORE, 1));
 
-                method.instructions.insert(getGameRuleStart, toInject);
+                method.instructions.insert(iStoreNode, toInject);
             }
         }
     }

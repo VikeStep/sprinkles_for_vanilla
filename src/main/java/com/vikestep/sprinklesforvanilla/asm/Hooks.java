@@ -52,6 +52,11 @@ public class Hooks
         return world.getGameRules().getGameRuleBooleanValue("mobGriefing");
     }
 
+    public static boolean canMobGrief(int preset, World world, String griefType)
+    {
+        return preset == 1 && canMobGrief(world, griefType);
+    }
+
     public static boolean isBeaconBase(Block block, IBlockAccess worldObj, int x, int y, int z)
     {
         if (SprinklesForVanilla.isOnServer)
