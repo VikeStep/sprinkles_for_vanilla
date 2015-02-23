@@ -17,27 +17,19 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.1.1"
-group= "com.vikestep.sprinklesforvanilla" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = "1.7.10-1.2.0"
+group= "io.github.vikestep.sprinklesforvanilla" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "sprinklesforvanilla"
 
 minecraft {
-    version = "1.7.10-10.13.2.1286"
+    version = "1.7.10-10.13.2.1291"
     runDir = "run"
 }
 
 jar {
     manifest {
-        attributes 'FMLCorePlugin': 'com.vikestep.sprinklesforvanilla.asm.SprinklesForVanillaPlugin'
-        attributes 'FMLCorePluginContainsFMLMod': 'true'
+        attributes 'FMLAT': 'sprinklesforvanilla_at.cfg'
     }
-}
-
-sourceSets.main{
-	java {
-		srcDirs 'java'
-        exclude '**/tests/**'
-	}
 }
 
 dependencies {
