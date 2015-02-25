@@ -8,7 +8,6 @@ import cpw.mods.fml.relauncher.Side;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.reference.ModInfo;
-import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -148,6 +147,7 @@ public class PlayerHandlers
             }
         }
 
+        @SuppressWarnings("SimplifiableIfStatement")
         public boolean wouldSleepInVanilla(EntityPlayer player, double x, double y, double z)
         {
             if (player.isPlayerSleeping() || !player.isEntityAlive() || !player.worldObj.provider.isSurfaceWorld() || player.worldObj.isDaytime())
