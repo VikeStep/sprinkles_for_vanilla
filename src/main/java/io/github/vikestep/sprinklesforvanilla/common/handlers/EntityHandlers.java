@@ -8,9 +8,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,9 +22,13 @@ public class EntityHandlers
     public static class EnderPearlHandler
     {
         @SubscribeEvent
-        public void onEnderPearlImpact(EnderTeleportEvent event)
+        public void onPlayerInteract(PlayerInteractEvent event)
         {
-            if (Settings.enderPearlsTeleport[1] && SprinklesForVanilla.isOnServer)
+            if (event.entityPlayer.getCurrentEquippedItem() == null)
+            {
+                return;
+            }
+            if (!Settings.enderPearlsTeleport[1] && SprinklesForVanilla.isOnServer && event.entityPlayer.getCurrentEquippedItem().getItem() == Items.ender_pearl && event.action != PlayerInteractEvent.Action.LEFT_CLICK_BLOCK)
             {
                 event.setCanceled(true);
             }
@@ -84,7 +89,7 @@ public class EntityHandlers
                 Map.Entry entry = (Map.Entry) iter.next();
                 if (!Settings.mobConfigs[1].get(mobIndex))
                 {
-                    Settings.mobClasses.put((String) entry.getKey(), (Class<?>) entry.getValue());
+                    blockedMobClasses.put((String) entry.getKey(), (Class<?>) entry.getValue());
                 }
                 mobIndex++;
             }
@@ -108,21 +113,21 @@ public class EntityHandlers
                         event.setCanceled(true);
                     }
                 }
-            }
-            else if (entityClass == EntitySkeleton.class)
-            {
-                if (blockedMobClasses.containsKey("skeleton") && ((EntitySkeleton) entity).getSkeletonType() == 0)
+                else if (entityClass == EntitySkeleton.class)
+                {
+                    if (blockedMobClasses.containsKey("skeleton") && ((EntitySkeleton) entity).getSkeletonType() == 0)
+                    {
+                        event.setCanceled(true);
+                    }
+                    else if (blockedMobClasses.containsKey("witherSkeleton") && ((EntitySkeleton) entity).getSkeletonType() == 1)
+                    {
+                        event.setCanceled(true);
+                    }
+                }
+                else
                 {
                     event.setCanceled(true);
                 }
-                else if (blockedMobClasses.containsKey("witherSkeleton") && ((EntitySkeleton) entity).getSkeletonType() == 1)
-                {
-                    event.setCanceled(true);
-                }
-            }
-            else
-            {
-                event.setCanceled(true);
             }
         }
     }

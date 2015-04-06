@@ -32,7 +32,6 @@ public class ConfigurationHandler
 
         //If its the clientside, save the config value in array value 0, if its server-side, save it in array value 1
         int side = SprinklesForVanilla.isClient ? 0 : 1;
-        LogHelper.info(side);
 
         /*******************************************
          *
@@ -130,6 +129,46 @@ public class ConfigurationHandler
                   "Set this to true to have experience kept when respawning, set to false to have experience reset to 0 on death";
         Settings.playerKeepsXPOnRespawn[side] = config.get(CATEGORY, "playerKeepsXPOnRespawn", false, COMMENT).getBoolean(false);
         propOrder.add("playerKeepsXPOnRespawn");
+
+        COMMENT = "Set this to true to enable placing water in the nether. Set to false to have water evaporated";
+        Settings.allowWaterInNether[side] = config.get(CATEGORY, "allowWaterInNether", false, COMMENT).getBoolean(false);
+        propOrder.add("allowWaterInNether");
+
+        COMMENT = "Set this to true to allow water and lave to create obsidian. Set to false to have water evaporate";
+        Settings.waterAndLavaMakesObsidian[side] = config.get(CATEGORY, "waterAndLavaMakesObsidian", true, COMMENT).getBoolean(false);
+        propOrder.add("waterAndLavaMakesObsidian");
+
+        COMMENT = "Set this to true to allow water and lave to create cobblestone. Set to false to have water evaporate";
+        Settings.waterAndLavaMakesCobble[side] = config.get(CATEGORY, "waterAndLavaMakesCobble", true, COMMENT).getBoolean(false);
+        propOrder.add("waterAndLavaMakesCobble");
+
+        config.setCategoryPropertyOrder(CATEGORY, propOrder);
+
+        /************
+         * Spawning
+         ************/
+
+        propOrder = new ArrayList<String>();
+        CATEGORY = "global.spawning";
+        config.setCategoryComment(CATEGORY, "This section handles various spawning configs");
+
+        COMMENT = "Set this to true to allow spawn being set in the nether. Set to false to disable. Spawn can only be set if sleeping\n" +
+                  "in other dimensions is enabled by setting otherDimensionsCancelSleep to false";
+        Settings.allowNetherRespawn[side] = config.get(CATEGORY, "allowNetherRespawn", false, COMMENT).getBoolean(false);
+        propOrder.add("allowNetherRespawn");
+
+        COMMENT = "Set this to true to allow spawn being set in the end. Set to false to disable. Spawn can only be set if sleeping\n" +
+                  "in other dimensions is enabled by setting otherDimensionsCancelSleep to false";
+        Settings.allowEndRespawn[side] = config.get(CATEGORY, "allowEndRespawn", false, COMMENT).getBoolean(false);
+        propOrder.add("allowEndRespawn");
+
+        COMMENT = "Set these values to what you wish the spawn to be in their respective dimensions. Non-overworld dimensions must have spawning\n" +
+                  "allowed for these spawns to be spawned at. If you wish to not set a value, then set the value to DEFAULT. Should be formatted as\n" +
+                  "'x, y, z'";
+        Settings.overworldSpawnDefault[side] = config.get(CATEGORY, "overworldSpawnDefault", "DEFAULT", COMMENT).getString();
+        Settings.netherSpawnDefault[side] = config.get(CATEGORY, "netherSpawnDefault", "DEFAULT").getString();
+        Settings.endSpawnDefault[side] = config.get(CATEGORY, "endSpawnDefault", "DEFAULT").getString();
+        propOrder.addAll(Arrays.asList("overworldSpawnDefault", "netherSpawnDefault", "endSpawnDefault"));
 
         config.setCategoryPropertyOrder(CATEGORY, propOrder);
 
@@ -238,6 +277,11 @@ public class ConfigurationHandler
         Settings.bedSetsSpawn[side] = config.get(CATEGORY, "bedSetsSpawn", true, COMMENT).getBoolean(true);
         propOrder.add("bedSetsSpawn");
 
+        COMMENT = "Set this to true if you want beds to explode and cancel sleep when in dimensions such as the nether. Set this to false to allow sleep in other dimensions.\n" +
+                  "It should be noted that having this to false will allow you to set a spawn in other dimensions";
+        Settings.otherDimensionsCancelSleep[side] = config.get(CATEGORY, "otherDimensionsCancelSleep", true ,COMMENT).getBoolean(true);
+        propOrder.add("otherDimensionsCancelSleep");
+
         COMMENT = "Set this to true if you want nearby mobs to cancel sleep, set to false to sleep even if mobs are nearby";
         Settings.nearbyMobsCancelSleep[side] = config.get(CATEGORY, "nearbyMobsCancelSleep", true, COMMENT).getBoolean(true);
         propOrder.add("nearbyMobsCancelSleep");
@@ -269,11 +313,9 @@ public class ConfigurationHandler
 
         COMMENT = "Set to true to allow the mob to be spawned, set to false to disable that mob from being spawned";
         Settings.mobConfigs[side] = new ArrayList<Boolean>();
-        int index = 0;
         for (String mobName : Settings.mobClasses.keySet())
         {
-            Settings.mobConfigs[side].add(config.get(CATEGORY, mobName, true, index == 0 ? COMMENT : null).getBoolean(true));
-            index++;
+            Settings.mobConfigs[side].add(config.get(CATEGORY, mobName, true, mobName.equals("bat") ? COMMENT : null).getBoolean(true));
         }
 
         propOrder = new ArrayList<String>();

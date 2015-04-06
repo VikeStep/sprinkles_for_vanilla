@@ -1,9 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.ModMetadata;
-import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
@@ -63,6 +60,11 @@ public class SprinklesForVanilla
     public void init(FMLInitializationEvent event)
     {
         MetadataHelper.transformMetadata(metadata);
+
+        if (!isOnServer)
+        {
+            Settings.copyClientToServer();
+        }
 
         proxy.init();
     }

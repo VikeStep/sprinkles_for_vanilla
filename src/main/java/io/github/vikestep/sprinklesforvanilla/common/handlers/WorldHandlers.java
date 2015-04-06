@@ -1,19 +1,36 @@
 package io.github.vikestep.sprinklesforvanilla.common.handlers;
 
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.projectile.EntityLargeFireball;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.Explosion;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.storage.DerivedWorldInfo;
+import net.minecraft.world.storage.WorldInfo;
+import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.event.world.WorldEvent;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class WorldHandlers
 {
     public static class ExplosionHandler
     {
+        private static boolean playerSleepInNether = false;
+
         @SubscribeEvent
         public void onExplosionStart(ExplosionEvent.Start event)
         {
@@ -40,7 +57,7 @@ public class WorldHandlers
                 boolean isFlaming = Boolean.parseBoolean(data[4]);
                 boolean isSmoking = Boolean.parseBoolean(data[5]);
 
-                if (isNotCorrectConfig(exploderName, explosion.exploder))
+                if (isNotCorrectConfig(exploderName, explosion.exploder, event.explosion.explosionX, event.explosion.explosionY, event.explosion.explosionZ, event.world))
                 {
                     continue;
                 }
@@ -72,6 +89,16 @@ public class WorldHandlers
                     }
                 }
                 explosion.isFlaming = isFlaming;
+                // This is because the user may have disabled creeper explosions in mob griefing section
+                if (event.explosion.exploder instanceof EntityCreeper && !Settings.mobGriefingConfigs[1].get(Arrays.asList(Settings.mobGriefingTypes).indexOf("creeperExplosion")))
+                {
+                    return;
+                }
+                // This is because the user may have disabled ghast fireball explosions in mob griefing section
+                if (exploderName.equals("GhastFireball") && !Settings.mobGriefingConfigs[1].get(Arrays.asList(Settings.mobGriefingTypes).indexOf("largeFireballExplosion")))
+                {
+                    return;
+                }
                 explosion.isSmoking = isSmoking;
                 return;
             }
@@ -91,7 +118,7 @@ public class WorldHandlers
                 String exploderName = data[0];
                 boolean doesDamage = Boolean.parseBoolean(data[3]);
 
-                if (isNotCorrectConfig(exploderName, explosion.exploder))
+                if (isNotCorrectConfig(exploderName, explosion.exploder, event.explosion.explosionX, event.explosion.explosionY, event.explosion.explosionZ, event.world))
                 {
                     continue;
                 }
@@ -105,9 +132,22 @@ public class WorldHandlers
             }
         }
 
-        public boolean isNotCorrectConfig(String configExploderName, Entity exploder)
+        @SubscribeEvent
+        public void onBedActivated(PlayerInteractEvent event)
         {
-            String exploderInternalName = EntityList.getEntityString(exploder);
+            if (event.world.getBlock(event.x, event.y, event.z).isBed(event.world, event.x, event.y, event.z, event.entityPlayer) && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && SprinklesForVanilla.isOnServer)
+            {
+                if (!event.world.isRemote && ((!event.world.provider.canRespawnHere() || event.world.getBiomeGenForCoords(event.x, event.z) == BiomeGenBase.hell) && Settings.otherDimensionsCancelSleep[1]))
+                {
+                    playerSleepInNether = true;
+                }
+            }
+        }
+
+        @SuppressWarnings("unchecked")
+        public boolean isNotCorrectConfig(String configExploderName, Entity exploder, double x, double y, double z, World world)
+        {
+            String exploderInternalName = exploder != null ? EntityList.getEntityString(exploder) : "";
             if (!configExploderName.equals(exploderInternalName))
             {
                 //Charged Creeper Handling
@@ -118,7 +158,35 @@ public class WorldHandlers
                         return false;
                     }
                 }
-                //TODO Add events for Ender Crystal, Bed and Ghast Fireball
+
+                List<Entity> entityList = world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(x, y, z, x, y, z));
+                for (Entity entity : entityList)
+                {
+                    if (entity instanceof EntityLargeFireball && configExploderName.equals("GhastFireball"))
+                    {
+                        if (((EntityLargeFireball) entity).shootingEntity instanceof EntityGhast)
+                        {
+                            return false;
+                        }
+                    }
+                    else if (entity instanceof EntityEnderCrystal && configExploderName.equals("EnderCrystal"))
+                    {
+                        if (((EntityEnderCrystal) entity).health <= 0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                if (playerSleepInNether && configExploderName.equals("Bed"))
+                {
+                    return false;
+                }
+                /*if (Hooks.fireballsExploding.size() > 0 && exploder == (Entity)     null)
+                {
+                    Hooks.fireballsExploding.remove(0);
+                    return false;
+                }*/
             }
             else
             {
@@ -136,6 +204,53 @@ public class WorldHandlers
                 }
             }
             return true;
+        }
+    }
+
+    public static class WorldLoadHandler
+    {
+        @SubscribeEvent
+        public void onWorldLoad(WorldEvent.Load event)
+        {
+            if (!event.world.isRemote)
+            {
+                int dimID = event.world.provider.dimensionId;
+                String[] coordinates;
+                switch (dimID)
+                {
+                    case -1:
+                        coordinates = Settings.netherSpawnDefault[1].split(", ");
+                        break;
+                    case 0:
+                        coordinates = Settings.overworldSpawnDefault[1].split(", ");
+                        break;
+                    case 1:
+                        coordinates = Settings.endSpawnDefault[1].split(", ");
+                        break;
+                    default:
+                        return;
+                }
+                if (coordinates.length == 3)
+                {
+                    try
+                    {
+                        int SpawnX = Integer.parseInt(coordinates[0]);
+                        int SpawnY = Integer.parseInt(coordinates[1]);
+                        int SpawnZ = Integer.parseInt(coordinates[2]);
+                        LogHelper.info("Setting Spawn Position for " + dimID);
+                        WorldInfo worldInfo = DimensionManager.getWorld(dimID).getWorldInfo();
+                        if (worldInfo instanceof DerivedWorldInfo)
+                        {
+                            worldInfo = ObfuscationReflectionHelper.getPrivateValue(DerivedWorldInfo.class, (DerivedWorldInfo) worldInfo, "theWorldInfo", "field_76115_a");
+                        }
+                        worldInfo.setSpawnPosition(SpawnX, SpawnY, SpawnZ);
+                    }
+                    catch (NumberFormatException e)
+                    {
+                        LogHelper.warn("INCORRECT FORMATTING FOR DEFAULT SPAWN WITH DIM ID " + dimID);
+                    }
+                }
+            }
         }
     }
 }

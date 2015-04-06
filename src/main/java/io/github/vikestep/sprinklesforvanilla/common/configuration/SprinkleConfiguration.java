@@ -25,7 +25,6 @@ public class SprinkleConfiguration extends Configuration
     @Override
     public void load()
     {
-        LogHelper.info("Loading Config");
         //This will remove the description from the config file while the config is loaded
         File file = getConfigFile();
         boolean hasDescription = false;
@@ -71,7 +70,6 @@ public class SprinkleConfiguration extends Configuration
     @Override
     public void save()
     {
-        LogHelper.info("Saving Config File");
         super.save();
         File file = getConfigFile();
         try
@@ -92,7 +90,6 @@ public class SprinkleConfiguration extends Configuration
 
     public void setConfigDescription(List<String> configDescription)
     {
-        LogHelper.info("Setting Config Description");
         if (configDescription != null && this.configDescription == null)
         {
             this.configDescription = configDescription;

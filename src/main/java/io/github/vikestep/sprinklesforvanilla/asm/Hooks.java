@@ -4,15 +4,19 @@ import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 public class Hooks
 {
+    public static ArrayList<EntityLargeFireball> fireballsExploding = new ArrayList<EntityLargeFireball>();
+
     //String name is passed in case we use it in the future
     public static void particleSpawnedFromEntity(EntityLivingBase entity, String particle)
     {
@@ -84,5 +88,35 @@ public class Hooks
         {
             return block == Blocks.emerald_block || block == Blocks.gold_block || block == Blocks.diamond_block || block == Blocks.iron_block;
         }
+    }
+
+    public static boolean allowOtherDimensions()
+    {
+        return !SprinklesForVanilla.isOnServer || Settings.otherDimensionsCancelSleep[1];
+    }
+
+    public static boolean respawnInNether()
+    {
+        return SprinklesForVanilla.isOnServer && Settings.allowNetherRespawn[1];
+    }
+
+    public static boolean respawnInEnd()
+    {
+       return SprinklesForVanilla.isOnServer && Settings.allowEndRespawn[1];
+    }
+
+    public static boolean allowWater()
+    {
+        return SprinklesForVanilla.isOnServer && Settings.allowWaterInNether[1];
+    }
+
+    public static boolean createObsidian()
+    {
+        return !SprinklesForVanilla.isOnServer || Settings.waterAndLavaMakesObsidian[1];
+    }
+
+    public static boolean createCobblestone()
+    {
+        return !SprinklesForVanilla.isOnServer || Settings.waterAndLavaMakesCobble[1];
     }
 }

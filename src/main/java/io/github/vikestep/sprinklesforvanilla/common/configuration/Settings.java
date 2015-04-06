@@ -1,5 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla.common.configuration;
 
+import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
@@ -85,6 +86,16 @@ public class Settings
     public static int[]     playerKeepsHealthOnRespawn = new int[2];
     public static int[]     playerKeepsHungerOnRespawn = new int[2];
     public static boolean[] playerKeepsXPOnRespawn     = new boolean[2];
+    public static boolean[] allowWaterInNether         = new boolean[2];
+    public static boolean[] waterAndLavaMakesObsidian  = new boolean[2];
+    public static boolean[] waterAndLavaMakesCobble    = new boolean[2];
+
+    //SPAWNING
+    public static boolean[] allowNetherRespawn    = new boolean[2];
+    public static boolean[] allowEndRespawn       = new boolean[2];
+    public static String[]  overworldSpawnDefault = new String[2];
+    public static String[]  netherSpawnDefault    = new String[2];
+    public static String[]  endSpawnDefault       = new String[2];
 
     //BEACONS
     public static final String[] defaultBeaconBaseBlocks =
@@ -180,6 +191,7 @@ public class Settings
     public static boolean[]  bedSetsSpawn                = new boolean[2];
     public static boolean[]  nearbyMobsCancelSleep       = new boolean[2];
     public static boolean[]  dayCancelsSleep             = new boolean[]{true, true}; //Currently not in the configs. Either use coremodding or request a Forge PR to fix this
+    public static boolean[]  otherDimensionsCancelSleep  = new boolean[2];
     public static boolean[]  distanceFromBedCancelsSleep = new boolean[2];
     public static double[][] nearbyMobDistance           = new double[3][2]; //{x, y, z}
     public static double[][] distanceFromBed             = new double[3][2]; //{x, y, z}
@@ -249,6 +261,14 @@ public class Settings
         playerKeepsHealthOnRespawn[1] = playerKeepsHealthOnRespawn[0];
         playerKeepsHungerOnRespawn[1] = playerKeepsHungerOnRespawn[0];
         playerKeepsXPOnRespawn[1] = playerKeepsXPOnRespawn[0];
+        allowWaterInNether[1] = allowWaterInNether[0];
+        waterAndLavaMakesObsidian[1] = waterAndLavaMakesObsidian[0];
+        waterAndLavaMakesCobble[1] = waterAndLavaMakesCobble[0];
+        allowNetherRespawn[1] = allowNetherRespawn[0];
+        allowEndRespawn[1] = allowEndRespawn[0];
+        overworldSpawnDefault[1] = overworldSpawnDefault[0];
+        netherSpawnDefault[1] = netherSpawnDefault[0];
+        endSpawnDefault[1] = endSpawnDefault[0];
         beaconBaseBlocks[1] = new ArrayList<String>(beaconBaseBlocks[0]);
         flammableBlocks[1] = new ArrayList<String>(flammableBlocks[0]);
         damageSourceConfigs[1] = new ArrayList<Integer>(damageSourceConfigs[0]);
@@ -261,6 +281,7 @@ public class Settings
         bedSetsSpawn[1] = bedSetsSpawn[0];
         nearbyMobsCancelSleep[1] = nearbyMobsCancelSleep[0];
         dayCancelsSleep[1] = dayCancelsSleep[0];
+        otherDimensionsCancelSleep[1] = otherDimensionsCancelSleep[0];
         distanceFromBedCancelsSleep[1] = distanceFromBedCancelsSleep[0];
         nearbyMobDistance[1] = nearbyMobDistance[0].clone();
         distanceFromBed[1] = distanceFromBed[0].clone();

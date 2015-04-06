@@ -38,6 +38,11 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityLargeFireball", SprinklesForVanillaTransformer.class.getMethod("transformEntityLargeFireball", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityWitherSkull", SprinklesForVanillaTransformer.class.getMethod("transformEntityWitherSkull", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.block.Block", SprinklesForVanillaTransformer.class.getMethod("transformBlock", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.BlockBed", SprinklesForVanillaTransformer.class.getMethod("transformBlockBed", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.world.WorldProviderHell", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderHell", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.world.WorldProviderEnd", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderEnd", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.item.ItemBucket", SprinklesForVanillaTransformer.class.getMethod("transformItemBucket", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.BlockLiquid", SprinklesForVanillaTransformer.class.getMethod("transformBlockLiquid", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -271,7 +276,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, INSTANCEOF), ALOAD);
                 AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFNE).getPrevious();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("fallenOnFarmland"));
@@ -294,7 +299,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IFEQ), INVOKEVIRTUAL).getPrevious();
                 AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFEQ).getPrevious();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("mobPickUpLoot"));
@@ -317,7 +322,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findFirstInstructionWithOpcode(method, GETFIELD).getNext();
                 AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFNE).getPrevious();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("mobBreakDoor"));
@@ -340,7 +345,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPNE), GETFIELD);
                 AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFEQ).getPrevious();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("mobEatTallGrass"));
@@ -351,7 +356,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IF_ACMPNE), GETFIELD);
                 getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFEQ).getPrevious();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 toInject = new InsnList();
                 toInject.add(new LdcInsnNode("mobEatGrassBlock"));
@@ -374,7 +379,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, INVOKEVIRTUAL), IFEQ).getNext().getNext();
                 AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFEQ).getPrevious();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("enderDragonBreakBlock"));
@@ -397,7 +402,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findFirstInstructionWithOpcode(method, ICONST_0).getNext().getNext();
                 AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("witherExplode"));
@@ -408,7 +413,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 getGameRuleStart = ASMHelper.findPreviousInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, ICONST_M1), IFNE).getNext().getNext();
                 getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 toInject = new InsnList();
                 toInject.add(new LdcInsnNode("witherBreakBlock"));
@@ -455,7 +460,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findFirstInstructionWithOpcode(method, IFNE).getNext().getNext();
                 AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("endermanStealBlock"));
@@ -478,7 +483,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPNE), GETFIELD);
                 AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("silverfishBreakBlock"));
@@ -498,10 +503,18 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         {
             if (method.name.equals(ON_IMPACT) && method.desc.equals(ON_IMPACT_DESC))
             {
+                /*AbstractInsnNode ifNodeStart = ASMHelper.findFirstInstructionWithOpcode(method, IFNE);
+
+                InsnList toInject = new InsnList();
+                toInject.add(new VarInsnNode(ALOAD, 0));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "fireballExplode", isObf ? "(Lzg;)V" : "(Lnet/minecraft/entity/projectile/EntityLargeFireball;)V", false));
+
+                method.instructions.insert(ifNodeStart, toInject);*/
+
                 AbstractInsnNode getGameRuleStart = ASMHelper.findLastInstructionWithOpcode(method, GETFIELD);
                 AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("largeFireballExplosion"));
@@ -524,7 +537,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode getGameRuleStart = ASMHelper.findLastInstructionWithOpcode(method, GETFIELD);
                 AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
+                ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("witherSkullExplosion"));
@@ -556,7 +569,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode startNode = ASMHelper.findFirstInstructionWithOpcode(method, ALOAD);
                 AbstractInsnNode endNode = ASMHelper.findNextInstructionWithOpcode(startNode, IRETURN);
 
-                ASMHelper.removeFromInsnListUntil(method.instructions, startNode, endNode);
+                ASMHelper.skipInstructions(method.instructions, startNode, endNode);
 
                 InsnList toInject = new InsnList();
                 toInject.add(new VarInsnNode(ALOAD, 0));
@@ -567,6 +580,109 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "isBeaconBase", isObf ? "(Laji;Lahl;III)Z" : "(Lnet/minecraft/block/Block;Lnet/minecraft/world/IBlockAccess;III)Z", false));
 
                 method.instructions.insertBefore(endNode, toInject);
+            }
+        }
+    }
+
+    public static void transformBlockBed(ClassNode classNode, boolean isObf)
+    {
+        final String ON_BLOCK_ACTIVATED = isObf ? "a" : "onBlockActivated";
+        final String ON_BLOCK_ACTIVATED_DESC = isObf ? "(Lahb;IIILyz;IFFF)Z" : "(Lnet/minecraft/world/World;IIILnet/minecraft/entity/player/EntityPlayer;IFFF)Z";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(ON_BLOCK_ACTIVATED) && method.desc.equals(ON_BLOCK_ACTIVATED_DESC))
+            {
+                AbstractInsnNode endIfNode = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPEQ), IF_ACMPEQ);
+                AbstractInsnNode startIfNode = ASMHelper.findPreviousInstructionWithOpcode(endIfNode, GETFIELD).getPrevious();
+
+                LabelNode jumpLabel = new LabelNode();
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "allowOtherDimensions", "()Z", false));
+                toInject.add(new JumpInsnNode(IFEQ, jumpLabel));
+
+                method.instructions.insertBefore(startIfNode, toInject);
+                method.instructions.insert(endIfNode, jumpLabel);
+            }
+        }
+    }
+
+    public static void transformWorldProviderHell(ClassNode classNode, boolean isObf)
+    {
+        final String CAN_RESPAWN_HERE = isObf ? "e" : "canRespawnHere";
+        final String CAN_RESPAWN_HERE_DESC = "()Z";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(CAN_RESPAWN_HERE) && method.desc.equals(CAN_RESPAWN_HERE_DESC))
+            {
+                AbstractInsnNode falseNode = ASMHelper.findFirstInstructionWithOpcode(method, ICONST_0);
+                method.instructions.insert(falseNode, new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "respawnInNether", "()Z", false));
+                ASMHelper.skipInstructions(method.instructions, falseNode, falseNode.getNext());
+            }
+        }
+    }
+
+    public static void transformWorldProviderEnd(ClassNode classNode, boolean isObf)
+    {
+        final String CAN_RESPAWN_HERE = isObf ? "e" : "canRespawnHere";
+        final String CAN_RESPAWN_HERE_DESC = "()Z";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(CAN_RESPAWN_HERE) && method.desc.equals(CAN_RESPAWN_HERE_DESC))
+            {
+                AbstractInsnNode falseNode = ASMHelper.findFirstInstructionWithOpcode(method, ICONST_0);
+                method.instructions.insert(falseNode, new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "respawnInEnd", "()Z", false));
+                ASMHelper.skipInstructions(method.instructions, falseNode, falseNode.getNext());
+            }
+        }
+    }
+
+    public static void transformItemBucket(ClassNode classNode, boolean isObf)
+    {
+        final String TRY_PLACE_LIQUID = isObf ? "a" : "tryPlaceContainedLiquid";
+        final String TRY_PLACE_LIQUID_DESC = isObf ? "(Lahb;III)Z" : "(Lnet/minecraft/world/World;III)Z";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(TRY_PLACE_LIQUID) && method.desc.equals(TRY_PLACE_LIQUID_DESC))
+            {
+                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFEQ);
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "allowWater", "()Z", false));
+                toInject.add(new JumpInsnNode(IFNE, ifNode.label));
+
+                method.instructions.insert(ifNode, toInject);
+            }
+        }
+    }
+
+    public static void transformBlockLiquid(ClassNode classNode, boolean isObf)
+    {
+        final String INTERACT_WATER = isObf ? "n" : "func_149805_n";
+        final String INTERACT_WATER_DESC = isObf ? "(Lahb;III)V" : "(Lnet/minecraft/world/World;III)V";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(INTERACT_WATER) && method.desc.equals(INTERACT_WATER_DESC))
+            {
+                JumpInsnNode cobbleIfNode = (JumpInsnNode) ASMHelper.findLastInstructionWithOpcode(method, IF_ICMPGT);
+                JumpInsnNode obsidianIfNode = (JumpInsnNode) ASMHelper.findPreviousInstructionWithOpcode(cobbleIfNode, IFNE);
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "createObsidian", "()Z", false));
+                toInject.add(new JumpInsnNode(IFEQ, obsidianIfNode.label));
+
+                method.instructions.insert(obsidianIfNode, toInject);
+
+                toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "createCobblestone", "()Z", false));
+                toInject.add(new JumpInsnNode(IFEQ, cobbleIfNode.label));
+
+                method.instructions.insert(cobbleIfNode, toInject);
             }
         }
     }

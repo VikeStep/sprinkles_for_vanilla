@@ -70,10 +70,10 @@ public class PlayerHandlers
                 return;
             }
 
-            //This checks if it is day or if it is in a surface world
-            if ((player.worldObj.isDaytime() && Settings.dayCancelsSleep[1]) || !player.worldObj.provider.isSurfaceWorld())
+            //This checks if if its day time or not sleeping overworld and returns if it should continue to cancel sleep
+            if ((player.worldObj.isDaytime() && Settings.dayCancelsSleep[1]) || (!player.worldObj.provider.isSurfaceWorld() && Settings.otherDimensionsCancelSleep[1]))
             {
-                //We let vanilla handle setting the result
+                //We let vanilla handle setting the result as of this time
                 return;
             }
 
@@ -247,7 +247,6 @@ public class PlayerHandlers
                     props.experienceLevel = player.experienceLevel;
                     props.experienceTotal = player.experienceTotal;
                     playerMap.put(player.getPersistentID(), props);
-                    System.out.println(FMLCommonHandler.instance().getEffectiveSide());
                 }
             }
         }
@@ -257,7 +256,6 @@ public class PlayerHandlers
         {
             if (SprinklesForVanilla.isOnServer)
             {
-                System.out.println(FMLCommonHandler.instance().getEffectiveSide());
                 PlayerProperties oldPlayerProps = playerMap.remove(event.player.getPersistentID());
                 PlayerProperties props = (PlayerProperties) event.player.getExtendedProperties(ModInfo.MOD_NAME);
                 EntityPlayer player = event.player;
@@ -271,11 +269,11 @@ public class PlayerHandlers
                     props.experienceTotal = oldPlayerProps.experienceTotal;
                 }
 
-                if (Settings.playerKeepsHealthOnRespawn[1] >= 0)
+                if (Settings.playerKeepsHealthOnRespawn[1] >= 1)
                 {
                     player.setHealth(Math.max(props.health, (float) Settings.playerKeepsHealthOnRespawn[1]));
                 }
-                if (Settings.playerKeepsHungerOnRespawn[1] >= 0)
+                if (Settings.playerKeepsHungerOnRespawn[1] >= 1)
                 {
                     player.getFoodStats().addStats(Math.max(props.hunger, Settings.playerKeepsHungerOnRespawn[1]) - 20, 0);
                     if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)

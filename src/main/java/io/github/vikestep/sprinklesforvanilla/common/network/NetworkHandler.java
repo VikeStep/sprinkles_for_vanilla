@@ -82,6 +82,10 @@ public class NetworkHandler
         {
             configSendValue = Double.toString(((double[]) configValue)[1]);
         }
+        else if (configValue instanceof String[])
+        {
+            configSendValue = ((String[])configValue)[1];
+        }
         else if (configValue instanceof double[][])
         {
             double[] sendList = ((double[][]) configValue)[1];
@@ -107,6 +111,7 @@ public class NetworkHandler
 
         if(configSendValue != null)
         {
+            LogHelper.info("Sending Config " + configName);
             SprinklesForVanilla.network.sendTo(new ConfigPacket(configName, configSendValue), player);
         }
         else
