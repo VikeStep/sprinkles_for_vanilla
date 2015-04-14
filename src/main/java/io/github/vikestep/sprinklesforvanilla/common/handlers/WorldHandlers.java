@@ -1,29 +1,38 @@
 package io.github.vikestep.sprinklesforvanilla.common.handlers;
 
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
+import io.github.vikestep.sprinklesforvanilla.common.init.InitMobRegistry;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.projectile.EntityLargeFireball;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.storage.DerivedWorldInfo;
 import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.event.world.WorldEvent;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class WorldHandlers
 {
@@ -180,6 +189,7 @@ public class WorldHandlers
 
                 if (playerSleepInNether && configExploderName.equals("Bed"))
                 {
+                    playerSleepInNether = false;
                     return false;
                 }
                 /*if (Hooks.fireballsExploding.size() > 0 && exploder == (Entity)     null)
@@ -248,6 +258,50 @@ public class WorldHandlers
                     catch (NumberFormatException e)
                     {
                         LogHelper.warn("INCORRECT FORMATTING FOR DEFAULT SPAWN WITH DIM ID " + dimID);
+                    }
+                }
+            }
+        }
+    }
+
+    public static class WorldPotentialSpawnsHandler
+    {
+        @SubscribeEvent
+        public void checkSpawn(LivingSpawnEvent.CheckSpawn event)
+        {
+            if (event.getResult() == Event.Result.DEFAULT && !((EntityLiving) event.entity).getCanSpawnHere() && InitMobRegistry.modificationMap.get(event.entity.getClass()) != null)
+            {
+                boolean shouldAllowIfRule = false;
+                EntityLiving entity = (EntityLiving) event.entity;
+                if (entity instanceof EntityAnimal)
+                {
+                    int i = MathHelper.floor_double(entity.posX);
+                    int j = MathHelper.floor_double(entity.boundingBox.minY);
+                    int k = MathHelper.floor_double(entity.posZ);
+                    if (entity.worldObj.getBlock(i, j - 1, k) != Blocks.grass && entity.dimension != 0)
+                    {
+                       shouldAllowIfRule = true;
+                    }
+                    else if (entity instanceof EntityOcelot && !entity.worldObj.getBlock(i, j - 1, k).isLeaves(event.world, i, j - 1, k))
+                    {
+                        shouldAllowIfRule = true;
+                    }
+                }
+                if (shouldAllowIfRule)
+                {
+                    for (Map.Entry entry : InitMobRegistry.modificationMap.entrySet())
+                    {
+                        Class entityClass = (Class) entry.getKey();
+                        BiomeGenBase[] biomesChecked = (BiomeGenBase[])entry.getValue();
+                        String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+                        String entitySpawnedName = EntityList.getEntityString(entity);
+                        if (entityName.equals(entitySpawnedName))
+                        {
+                            if (Arrays.asList(biomesChecked).contains(event.world.getBiomeGenForCoords((int) event.x, (int) event.z)))
+                            {
+                                event.setResult(Event.Result.ALLOW);
+                            }
+                        }
                     }
                 }
             }

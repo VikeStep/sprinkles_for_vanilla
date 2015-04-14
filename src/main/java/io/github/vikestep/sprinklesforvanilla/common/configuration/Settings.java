@@ -1,6 +1,5 @@
 package io.github.vikestep.sprinklesforvanilla.common.configuration;
 
-import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
@@ -109,7 +108,7 @@ public class Settings
     public static List<String>[] beaconBaseBlocks = (ArrayList<String>[])new ArrayList[2];
 
     //FLAMMABLE BLOCKS
-    public static final String[] defaultFlammable =
+    /*public static final String[] defaultFlammable =
             {
                     "minecraft:planks, 5, 20",
                     "minecraft:double_wooden_slab, 5, 20",
@@ -136,7 +135,7 @@ public class Settings
                     "minecraft:carpet, 60, 20"
             };
 
-    public static List<String>[] flammableBlocks = (ArrayList<String>[])new ArrayList[2];
+    public static List<String>[] flammableBlocks = (ArrayList<String>[])new ArrayList[2];*/
 
     //DAMAGE SOURCES
     public static final String[] damageSources =
@@ -236,6 +235,14 @@ public class Settings
 
     public static List<Boolean>[] mobConfigs = (ArrayList<Boolean>[])new ArrayList[2];
 
+    public static final String[] defaultModifications =
+            {
+                    "#add: Sheep, 200, 4, 4, {Hell}",
+                    "#modify: Skeleton, 200, 4, 4, {Plains, Jungle}",
+                    "#remove: PigZombie, {Hell}"
+            };
+    public static List<String>[] mobSpawnRulesModifications = (ArrayList<String>[])new ArrayList[2];
+
     //EXPLOSIONS
 
     public static final String[] defaultExplosionData =
@@ -269,8 +276,9 @@ public class Settings
         overworldSpawnDefault[1] = overworldSpawnDefault[0];
         netherSpawnDefault[1] = netherSpawnDefault[0];
         endSpawnDefault[1] = endSpawnDefault[0];
+        mobSpawnRulesModifications[1] = new ArrayList<String>(mobSpawnRulesModifications[0]);
         beaconBaseBlocks[1] = new ArrayList<String>(beaconBaseBlocks[0]);
-        flammableBlocks[1] = new ArrayList<String>(flammableBlocks[0]);
+        //flammableBlocks[1] = new ArrayList<String>(flammableBlocks[0]);
         damageSourceConfigs[1] = new ArrayList<Integer>(damageSourceConfigs[0]);
         mobGriefingOverride[1] = mobGriefingOverride[0];
         mobGriefingConfigs[1] = new ArrayList<Boolean>(mobGriefingConfigs[0]);

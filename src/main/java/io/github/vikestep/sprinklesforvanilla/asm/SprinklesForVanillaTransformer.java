@@ -593,17 +593,28 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         {
             if (method.name.equals(ON_BLOCK_ACTIVATED) && method.desc.equals(ON_BLOCK_ACTIVATED_DESC))
             {
-                AbstractInsnNode endIfNode = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPEQ), IF_ACMPEQ);
-                AbstractInsnNode startIfNode = ASMHelper.findPreviousInstructionWithOpcode(endIfNode, GETFIELD).getPrevious();
-
-                LabelNode jumpLabel = new LabelNode();
-
                 InsnList toInject = new InsnList();
                 toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "allowOtherDimensions", "()Z", false));
-                toInject.add(new JumpInsnNode(IFEQ, jumpLabel));
+                if (!isObf)
+                {
+                    AbstractInsnNode endIfNode = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPEQ), IF_ACMPEQ);
+                    AbstractInsnNode startIfNode = ASMHelper.findPreviousInstructionWithOpcode(endIfNode, GETFIELD).getPrevious();
 
-                method.instructions.insertBefore(startIfNode, toInject);
-                method.instructions.insert(endIfNode, jumpLabel);
+                    LabelNode jumpLabel = new LabelNode();
+                    toInject.add(new JumpInsnNode(IFEQ, jumpLabel));
+
+                    method.instructions.insertBefore(startIfNode, toInject);
+                    method.instructions.insert(endIfNode, jumpLabel);
+                }
+                else
+                {
+                    AbstractInsnNode endIfNode = ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPNE);
+                    AbstractInsnNode startIfNode = ASMHelper.findPreviousInstructionWithOpcode(endIfNode, GETFIELD).getPrevious();
+
+                    toInject.add(new JumpInsnNode(IFEQ, ((JumpInsnNode) endIfNode).label));
+
+                    method.instructions.insertBefore(startIfNode, toInject);
+                }
             }
         }
     }

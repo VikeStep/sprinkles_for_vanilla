@@ -1,7 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla.common.configuration;
 
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
-import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ public class ConfigurationHandler
 
         propOrder = new ArrayList<String>();
         CATEGORY = "clientside.general";
-        config.setCategoryComment(CATEGORY, "This section holds all the general/miscellaneous config options that are able to be clientside only");
 
         COMMENT = "Set to 0 to have christmas chest on christmas, 1 for all the time, 2 for no christmas chest on christmas (you scrooge!)";
         Settings.displayChristmasChest = config.get(CATEGORY, "displayChristmasChest", 0, COMMENT, 0, 2).getInt(0);
@@ -59,7 +57,6 @@ public class ConfigurationHandler
 
         propOrder = new ArrayList<String>();
         CATEGORY = "clientside.sounds";
-        config.setCategoryComment(CATEGORY, "This section relates to sounds");
 
         COMMENT = "In this list you must put the name of every sound you wish to not hear. The format for each entry must be of type (modname:soundpath)\n" +
                   "For example Wither Spawn is minecraft:mob.wither.spawn. A list of vanilla sounds are here: http://minecraft.gamepedia.com/Sounds.json\n" +
@@ -77,7 +74,6 @@ public class ConfigurationHandler
 
         propOrder = new ArrayList<String>();
         CATEGORY = "clientside.particles";
-        config.setCategoryComment(CATEGORY, "This section relates to particles");
 
         COMMENT = "This config allows you to hide your own potion particles, hide everyone's or go by default of other configs.\n" +
                   "Set to 0 to go by default. Set to 1 to hide your own potion particles. Set to 2 to hide everyone's potion particles (including mobs)";
@@ -107,7 +103,6 @@ public class ConfigurationHandler
 
         propOrder = new ArrayList<String>();
         CATEGORY = "global.general";
-        config.setCategoryComment(CATEGORY, "This section holds all the general/miscellaneous config options that are not clientside");
 
         COMMENT = "Set this to true to have ender pearls teleport, set to false to disallow teleportation via ender pearls";
         Settings.enderPearlsTeleport[side] = config.get(CATEGORY, "enderPearlsTeleport", true, COMMENT).getBoolean(true);
@@ -122,8 +117,8 @@ public class ConfigurationHandler
         COMMENT = "This config changes how much hunger you respawn with after dying. If you wish to go back to full hunger after dying, leave this value at 0\n" +
                   "If you wish to go back to the same hunger you had before you died, set this to a number between 1 and 20\n" +
                   "If you set it to 1 you will always respawn with at least half a shank (hunger unit) whereas setting this to 10 will respawn you with at least 5 shanks even if you had less before you died";
-        Settings.playerKeepsHungerOnRespawn[side] = config.get(CATEGORY, "playerKeepsHealthOnRespawn", 0, COMMENT, 0, 20).getInt(0);
-        propOrder.add("playerKeepsHealthOnRespawn");
+        Settings.playerKeepsHungerOnRespawn[side] = config.get(CATEGORY, "playerKeepsHungerOnRespawn", 0, COMMENT, 0, 20).getInt(0);
+        propOrder.add("playerKeepsHungerOnRespawn");
 
         COMMENT = "This config changes whether or not you lose your experience (xp) when you respawn after dying.\n" +
                   "Set this to true to have experience kept when respawning, set to false to have experience reset to 0 on death";
@@ -150,7 +145,6 @@ public class ConfigurationHandler
 
         propOrder = new ArrayList<String>();
         CATEGORY = "global.spawning";
-        config.setCategoryComment(CATEGORY, "This section handles various spawning configs");
 
         COMMENT = "Set this to true to allow spawn being set in the nether. Set to false to disable. Spawn can only be set if sleeping\n" +
                   "in other dimensions is enabled by setting otherDimensionsCancelSleep to false";
@@ -178,7 +172,6 @@ public class ConfigurationHandler
 
         propOrder = new ArrayList<String>();
         CATEGORY = "global.beacons";
-        config.setCategoryComment(CATEGORY, "This section relates to beacons");
 
         COMMENT = "In this list you must put a the blocks you wish to be used as the base for beacon blocks\n" +
                   "In here by default are the ones vanilla used. Each entry must be of the form (modname:blockname)\n" +
@@ -188,20 +181,22 @@ public class ConfigurationHandler
 
         config.setCategoryPropertyOrder(CATEGORY, propOrder);
 
+
         /************
          * Flammable Blocks
          ************/
 
-        propOrder = new ArrayList<String>();
+        /*propOrder = new ArrayList<String>();
         CATEGORY = "global.flammable blocks";
 
+        COMMENT = "NOT IMPLEMENTED YET";
         COMMENT = "In this list you must put the blocks you wish to be flammable. The format for an entry is \"modname:blockname, speed, flammability\"\n" +
                   "The Higher the speed, the higher the chance of fire spreading. The chance of a block catching fire is given by (flammability / 300)\n" +
                   "Therefore flammability must be between 0 and 300, and the speed must be 0 or higher. You can put a \"#\" before an entry to disable it without removing the line";
         Settings.flammableBlocks[side] = new ArrayList<String>(Arrays.asList(config.get(CATEGORY, "flammableBlocks", Settings.defaultFlammable, COMMENT, false, -1, Pattern.compile(".*:.*,.*,.*")).getStringList()));
         propOrder.add("flammableBlocks");
 
-        config.setCategoryPropertyOrder(CATEGORY, propOrder);
+        config.setCategoryPropertyOrder(CATEGORY, propOrder);*/
 
         /************
          * Damage Sources
@@ -317,6 +312,17 @@ public class ConfigurationHandler
         {
             Settings.mobConfigs[side].add(config.get(CATEGORY, mobName, true, mobName.equals("bat") ? COMMENT : null).getBoolean(true));
         }
+
+        COMMENT = "In this list you will put a list of commands which will change the spawn conditions. The format is \"command: arg1, arg2, {biome1, biome2}\".\n" +
+                  "The commands available are: add, modify, and remove. if you use add or modify, you will need 4 arguments: mob name, weight, min group size, max\n" +
+                  "group size. If you use remove, you will need 1 argument: mob name. The biome list is the list of biomes which these changes will affect. A \"#\"\n" +
+                  "can be used to comment out commands for testing if you wish for them not to be used.";
+        Settings.mobSpawnRulesModifications[side] = new ArrayList<String>(Arrays.asList(config.get(CATEGORY, "mobSpawnRules", Settings.defaultModifications, COMMENT).getStringList()));
+        propOrder.add("mobSpawnRules");
+
+        /************
+         * Explosions
+         ************/
 
         propOrder = new ArrayList<String>();
         CATEGORY = "global.explosions";

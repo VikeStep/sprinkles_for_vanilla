@@ -21,10 +21,11 @@ public class NetworkHandler
             {
                     "particleNames",
                     "defaultBeaconBaseBlocks",
-                    "defaultFlammable",
+                    //"defaultFlammable",
                     "damageSources",
                     "mobGriefingTypes",
-                    "defaultExplosionData"
+                    "defaultExplosionData",
+                    "defaultModifications"
             };
 
     //Fired on the client when they are disconnected from a server
@@ -111,7 +112,6 @@ public class NetworkHandler
 
         if(configSendValue != null)
         {
-            LogHelper.info("Sending Config " + configName);
             SprinklesForVanilla.network.sendTo(new ConfigPacket(configName, configSendValue), player);
         }
         else

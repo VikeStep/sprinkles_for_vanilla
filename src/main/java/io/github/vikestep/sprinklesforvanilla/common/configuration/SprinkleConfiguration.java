@@ -1,7 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla.common.configuration;
 
 import io.github.vikestep.sprinklesforvanilla.common.reference.ModInfo;
-import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.commons.io.FileUtils;
 
