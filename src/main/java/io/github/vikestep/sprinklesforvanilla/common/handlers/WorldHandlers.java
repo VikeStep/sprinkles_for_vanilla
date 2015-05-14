@@ -157,6 +157,10 @@ public class WorldHandlers
         public boolean isNotCorrectConfig(String configExploderName, Entity exploder, double x, double y, double z, World world)
         {
             String exploderInternalName = exploder != null ? EntityList.getEntityString(exploder) : "";
+            if (exploderInternalName == null)
+            {
+                return true;
+            }
             if (!configExploderName.equals(exploderInternalName))
             {
                 //Charged Creeper Handling

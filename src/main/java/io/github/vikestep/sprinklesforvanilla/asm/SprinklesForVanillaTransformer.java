@@ -684,13 +684,15 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 JumpInsnNode obsidianIfNode = (JumpInsnNode) ASMHelper.findPreviousInstructionWithOpcode(cobbleIfNode, IFNE);
 
                 InsnList toInject = new InsnList();
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "createObsidian", "()Z", false));
+                toInject.add(new VarInsnNode(ALOAD, 1));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "createObsidian", isObf ? "(Lahb;)Z" : "(Lnet/minecraft/world/World;)Z", false));
                 toInject.add(new JumpInsnNode(IFEQ, obsidianIfNode.label));
 
                 method.instructions.insert(obsidianIfNode, toInject);
 
                 toInject = new InsnList();
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "createCobblestone", "()Z", false));
+                toInject.add(new VarInsnNode(ALOAD, 1));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "createCobblestone", isObf ? "(Lahb;)Z" : "(Lnet/minecraft/world/World;)Z", false));
                 toInject.add(new JumpInsnNode(IFEQ, cobbleIfNode.label));
 
                 method.instructions.insert(cobbleIfNode, toInject);

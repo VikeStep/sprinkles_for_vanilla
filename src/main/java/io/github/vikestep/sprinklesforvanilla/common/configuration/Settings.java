@@ -81,15 +81,17 @@ public class Settings
      */
 
     //GENERAL
-    public static boolean[] enderPearlsTeleport        = new boolean[2];
-    public static int[]     playerKeepsHealthOnRespawn = new int[2];
-    public static int[]     playerKeepsHungerOnRespawn = new int[2];
-    public static boolean[] playerKeepsXPOnRespawn     = new boolean[2];
-    public static boolean[] allowWaterInNether         = new boolean[2];
-    public static boolean[] waterAndLavaMakesObsidian  = new boolean[2];
-    public static boolean[] waterAndLavaMakesCobble    = new boolean[2];
+    public static boolean[] enderPearlsTeleport                 = new boolean[2];
+    public static int[]     playerKeepsHealthOnRespawn          = new int[2];
+    public static int[]     playerKeepsHungerOnRespawn          = new int[2];
+    public static boolean[] playerKeepsXPOnRespawn              = new boolean[2];
+    public static boolean[] allowWaterInNether                  = new boolean[2];
+
+    public static List<Integer>[] waterAndLavaMakesObsidianBlacklist = (ArrayList<Integer>[])new ArrayList[2];
+    public static List<Integer>[] waterAndLavaMakesCobbleBlacklist = (ArrayList<Integer>[])new ArrayList[2];
 
     //SPAWNING
+    public static boolean[] enableSpawnFuzz       = new boolean[2];
     public static boolean[] allowNetherRespawn    = new boolean[2];
     public static boolean[] allowEndRespawn       = new boolean[2];
     public static String[]  overworldSpawnDefault = new String[2];
@@ -269,8 +271,9 @@ public class Settings
         playerKeepsHungerOnRespawn[1] = playerKeepsHungerOnRespawn[0];
         playerKeepsXPOnRespawn[1] = playerKeepsXPOnRespawn[0];
         allowWaterInNether[1] = allowWaterInNether[0];
-        waterAndLavaMakesObsidian[1] = waterAndLavaMakesObsidian[0];
-        waterAndLavaMakesCobble[1] = waterAndLavaMakesCobble[0];
+        waterAndLavaMakesObsidianBlacklist[1] = new ArrayList<Integer>(waterAndLavaMakesObsidianBlacklist[0]);
+        waterAndLavaMakesCobbleBlacklist[1] = new ArrayList<Integer>(waterAndLavaMakesCobbleBlacklist[0]);
+        enableSpawnFuzz[1] = enableSpawnFuzz[0];
         allowNetherRespawn[1] = allowNetherRespawn[0];
         allowEndRespawn[1] = allowEndRespawn[0];
         overworldSpawnDefault[1] = overworldSpawnDefault[0];

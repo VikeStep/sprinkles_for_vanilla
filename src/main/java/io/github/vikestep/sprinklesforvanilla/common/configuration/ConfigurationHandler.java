@@ -1,6 +1,9 @@
 package io.github.vikestep.sprinklesforvanilla.common.configuration;
 
+import com.google.common.primitives.Ints;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
+import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -129,13 +132,17 @@ public class ConfigurationHandler
         Settings.allowWaterInNether[side] = config.get(CATEGORY, "allowWaterInNether", false, COMMENT).getBoolean(false);
         propOrder.add("allowWaterInNether");
 
+        int[] DEFAULT = new int[]{-1};
         COMMENT = "Set this to true to allow water and lave to create obsidian. Set to false to have water evaporate";
-        Settings.waterAndLavaMakesObsidian[side] = config.get(CATEGORY, "waterAndLavaMakesObsidian", true, COMMENT).getBoolean(false);
-        propOrder.add("waterAndLavaMakesObsidian");
+        int[] result = config.get(CATEGORY, "waterAndLavaMakesObsidianBlacklist", DEFAULT, COMMENT).getIntList();
+        LogHelper.info(Arrays.toString(result));
+        Settings.waterAndLavaMakesObsidianBlacklist[side] = result.length == 0 ? new ArrayList<Integer>() : new ArrayList<Integer>(Arrays.asList(ArrayUtils.toObject(result)));
+        propOrder.add("waterAndLavaMakesObsidianBlacklist");
 
         COMMENT = "Set this to true to allow water and lave to create cobblestone. Set to false to have water evaporate";
-        Settings.waterAndLavaMakesCobble[side] = config.get(CATEGORY, "waterAndLavaMakesCobble", true, COMMENT).getBoolean(false);
-        propOrder.add("waterAndLavaMakesCobble");
+        result = config.get(CATEGORY, "waterAndLavaMakesCobbleBlacklist", DEFAULT, COMMENT).getIntList();
+        Settings.waterAndLavaMakesCobbleBlacklist[side] = result.length == 0 ? new ArrayList<Integer>() : new ArrayList<Integer>(Arrays.asList(ArrayUtils.toObject(result)));
+        propOrder.add("waterAndLavaMakesCobbleBlacklist");
 
         config.setCategoryPropertyOrder(CATEGORY, propOrder);
 
@@ -145,6 +152,10 @@ public class ConfigurationHandler
 
         propOrder = new ArrayList<String>();
         CATEGORY = "global.spawning";
+
+        COMMENT = "Set this to true to enable spawn fuzz which will make the spawn a spawn radius rather than a specific location";
+        Settings.enableSpawnFuzz[side] = config.get(CATEGORY, "enableSpawnFuzz", true, COMMENT).getBoolean(true);
+        propOrder.add("enableSpawnFuzz");
 
         COMMENT = "Set this to true to allow spawn being set in the nether. Set to false to disable. Spawn can only be set if sleeping\n" +
                   "in other dimensions is enabled by setting otherDimensionsCancelSleep to false";
@@ -308,9 +319,12 @@ public class ConfigurationHandler
 
         COMMENT = "Set to true to allow the mob to be spawned, set to false to disable that mob from being spawned";
         Settings.mobConfigs[side] = new ArrayList<Boolean>();
+        int index = 0;
         for (String mobName : Settings.mobClasses.keySet())
         {
-            Settings.mobConfigs[side].add(config.get(CATEGORY, mobName, true, mobName.equals("bat") ? COMMENT : null).getBoolean(true));
+            Settings.mobConfigs[side].add(config.get(CATEGORY, mobName, true, index == 0 ? COMMENT : null).getBoolean(true));
+            propOrder.add(mobName);
+            index++;
         }
 
         COMMENT = "In this list you will put a list of commands which will change the spawn conditions. The format is \"command: arg1, arg2, {biome1, biome2}\".\n" +
@@ -319,6 +333,8 @@ public class ConfigurationHandler
                   "can be used to comment out commands for testing if you wish for them not to be used.";
         Settings.mobSpawnRulesModifications[side] = new ArrayList<String>(Arrays.asList(config.get(CATEGORY, "mobSpawnRules", Settings.defaultModifications, COMMENT).getStringList()));
         propOrder.add("mobSpawnRules");
+
+        config.setCategoryPropertyOrder(CATEGORY, propOrder);
 
         /************
          * Explosions

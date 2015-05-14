@@ -115,7 +115,7 @@ public class ConfigPacket implements IMessage
                 {
                     String[] stringListsNames  = new String[]{/*"flammableBlocks", */"beaconBaseBlocks", "explosionData", "mobSpawnRulesModifications"};
                     String[] booleanListsNames = new String[]{"mobGriefingConfigs", "mobConfigs"};
-                    String[] intListNames      = new String[]{"damageSourceConfigs"};
+                    String[] intListNames      = new String[]{"damageSourceConfigs", "waterAndLavaMakesObsidianBlacklist", "waterAndLavaMakesCobbleBlacklist"};
                     if (Arrays.asList(stringListsNames).contains(message.getKey()))
                     {
                         String[] stringArr = message.getValue().split(";");
