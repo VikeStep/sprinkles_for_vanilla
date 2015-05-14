@@ -1,8 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla.common.configuration;
 
-import com.google.common.primitives.Ints;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
-import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.File;
@@ -132,10 +130,9 @@ public class ConfigurationHandler
         Settings.allowWaterInNether[side] = config.get(CATEGORY, "allowWaterInNether", false, COMMENT).getBoolean(false);
         propOrder.add("allowWaterInNether");
 
-        int[] DEFAULT = new int[]{-1};
+        int[] DEFAULT = new int[]{};
         COMMENT = "Set this to true to allow water and lave to create obsidian. Set to false to have water evaporate";
         int[] result = config.get(CATEGORY, "waterAndLavaMakesObsidianBlacklist", DEFAULT, COMMENT).getIntList();
-        LogHelper.info(Arrays.toString(result));
         Settings.waterAndLavaMakesObsidianBlacklist[side] = result.length == 0 ? new ArrayList<Integer>() : new ArrayList<Integer>(Arrays.asList(ArrayUtils.toObject(result)));
         propOrder.add("waterAndLavaMakesObsidianBlacklist");
 

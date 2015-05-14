@@ -2,7 +2,6 @@ package io.github.vikestep.sprinklesforvanilla.asm;
 
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
-import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityLargeFireball;

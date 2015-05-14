@@ -251,7 +251,6 @@ public class WorldHandlers
                         int SpawnX = Integer.parseInt(coordinates[0]);
                         int SpawnY = Integer.parseInt(coordinates[1]);
                         int SpawnZ = Integer.parseInt(coordinates[2]);
-                        LogHelper.info("Setting Spawn Position for " + dimID);
                         WorldInfo worldInfo = DimensionManager.getWorld(dimID).getWorldInfo();
                         if (worldInfo instanceof DerivedWorldInfo)
                         {
