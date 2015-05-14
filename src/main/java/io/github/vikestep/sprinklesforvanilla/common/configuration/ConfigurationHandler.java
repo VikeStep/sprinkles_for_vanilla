@@ -131,12 +131,12 @@ public class ConfigurationHandler
         propOrder.add("allowWaterInNether");
 
         int[] DEFAULT = new int[]{};
-        COMMENT = "Set this to true to allow water and lave to create obsidian. Set to false to have water evaporate";
+        COMMENT = "Set this to a list of dimension ids which should not allow obsidian from water and lava";
         int[] result = config.get(CATEGORY, "waterAndLavaMakesObsidianBlacklist", DEFAULT, COMMENT).getIntList();
         Settings.waterAndLavaMakesObsidianBlacklist[side] = result.length == 0 ? new ArrayList<Integer>() : new ArrayList<Integer>(Arrays.asList(ArrayUtils.toObject(result)));
         propOrder.add("waterAndLavaMakesObsidianBlacklist");
 
-        COMMENT = "Set this to true to allow water and lave to create cobblestone. Set to false to have water evaporate";
+        COMMENT = "Set this to a list of dimension ids which should not allow cobblestone from water and lava";
         result = config.get(CATEGORY, "waterAndLavaMakesCobbleBlacklist", DEFAULT, COMMENT).getIntList();
         Settings.waterAndLavaMakesCobbleBlacklist[side] = result.length == 0 ? new ArrayList<Integer>() : new ArrayList<Integer>(Arrays.asList(ArrayUtils.toObject(result)));
         propOrder.add("waterAndLavaMakesCobbleBlacklist");
