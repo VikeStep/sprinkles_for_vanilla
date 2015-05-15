@@ -79,6 +79,7 @@ public class ConfigPacket implements IMessage
             try
             {
                 Field field = Settings.class.getDeclaredField(message.getKey());
+                boolean emptyList = message.getValue().equals("EMPTY_LIST");
                 if (field == null)
                 {
                     return null;
@@ -111,56 +112,65 @@ public class ConfigPacket implements IMessage
                     field.set(null, newValue);
                 }
                 //Because Screw Type Erasure
-                else if (configValue instanceof List<?>[])
+                else if (configValue instanceof List<?>[] || emptyList)
                 {
                     String[] stringListsNames  = new String[]{/*"flammableBlocks", */"beaconBaseBlocks", "explosionData", "mobSpawnRulesModifications"};
                     String[] booleanListsNames = new String[]{"mobGriefingConfigs", "mobConfigs"};
                     String[] intListNames      = new String[]{"damageSourceConfigs", "waterAndLavaMakesObsidianBlacklist", "waterAndLavaMakesCobbleBlacklist"};
                     if (Arrays.asList(stringListsNames).contains(message.getKey()))
                     {
-                        String[] stringArr = message.getValue().split(";");
                         List<String>[] newValues = (ArrayList<String>[])new ArrayList[2];
-                        newValues[0] = new ArrayList<String>();
-                        newValues[1] = new ArrayList<String>();
-                        for(String entry : stringArr)
+                        if (!emptyList)
                         {
-                            newValues[1].add(entry);
-                        }
-                        for (String originalEntry : ((ArrayList<String>[]) configValue)[0])
-                        {
-                            newValues[0].add(originalEntry);
+                            String[] stringArr = message.getValue().split(";");
+                            newValues[0] = new ArrayList<String>();
+                            newValues[1] = new ArrayList<String>();
+                            for(String entry : stringArr)
+                            {
+                                newValues[1].add(entry);
+                            }
+                            for (String originalEntry : ((ArrayList<String>[]) configValue)[0])
+                            {
+                                newValues[0].add(originalEntry);
+                            }
                         }
                         field.set(null, newValues);
                     }
                     else if (Arrays.asList(booleanListsNames).contains(message.getKey()))
                     {
-                        String[] stringArr = message.getValue().split(";");
                         List<Boolean>[] newValues = (ArrayList<Boolean>[])new ArrayList[2];
-                        newValues[0] = new ArrayList<Boolean>();
-                        newValues[1] = new ArrayList<Boolean>();
-                        for(String entry : stringArr)
+                        if (!emptyList)
                         {
-                            newValues[1].add(Boolean.parseBoolean(entry));
-                        }
-                        for (Boolean originalEntry : ((ArrayList<Boolean>[]) configValue)[0])
-                        {
-                            newValues[0].add(originalEntry);
+                            String[] stringArr = message.getValue().split(";");
+                            newValues[0] = new ArrayList<Boolean>();
+                            newValues[1] = new ArrayList<Boolean>();
+                            for (String entry : stringArr)
+                            {
+                                newValues[1].add(Boolean.parseBoolean(entry));
+                            }
+                            for (Boolean originalEntry : ((ArrayList<Boolean>[]) configValue)[0])
+                            {
+                                newValues[0].add(originalEntry);
+                            }
                         }
                         field.set(null, newValues);
                     }
                     else if (Arrays.asList(intListNames).contains(message.getKey()))
                     {
-                        String[] stringArr = message.getValue().split(";");
                         List<Integer>[] newValues = (ArrayList<Integer>[])new ArrayList[2];
-                        newValues[0] = new ArrayList<Integer>();
-                        newValues[1] = new ArrayList<Integer>();
-                        for(String entry : stringArr)
+                        if (!emptyList)
                         {
-                            newValues[1].add(Integer.parseInt(entry));
-                        }
-                        for (Integer originalEntry : ((ArrayList<Integer>[]) configValue)[0])
-                        {
-                            newValues[0].add(originalEntry);
+                            String[] stringArr = message.getValue().split(";");
+                            newValues[0] = new ArrayList<Integer>();
+                            newValues[1] = new ArrayList<Integer>();
+                            for (String entry : stringArr)
+                            {
+                                newValues[1].add(Integer.parseInt(entry));
+                            }
+                            for (Integer originalEntry : ((ArrayList<Integer>[]) configValue)[0])
+                            {
+                                newValues[0].add(originalEntry);
+                            }
                         }
                         field.set(null, newValues);
                     }

@@ -101,13 +101,20 @@ public class NetworkHandler
         else if (configValue instanceof List<?>[])
         {
             List<?> sendList = ((List<?>[]) configValue)[1];
-            StringBuilder sb = new StringBuilder();
-            for (Object obj : sendList)
+            if (sendList.size() == 0)
             {
-                sb.append(obj);
-                sb.append(";");
+                configSendValue = "EMPTY_LIST";
             }
-            configSendValue = sb.toString();
+            else
+            {
+                StringBuilder sb = new StringBuilder();
+                for (Object obj : sendList)
+                {
+                    sb.append(obj);
+                    sb.append(";");
+                }
+                configSendValue = sb.toString();
+            }
         }
 
         if(configSendValue != null)
