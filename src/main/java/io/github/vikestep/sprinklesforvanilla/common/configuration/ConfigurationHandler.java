@@ -126,6 +126,10 @@ public class ConfigurationHandler
         Settings.playerKeepsXPOnRespawn[side] = config.get(CATEGORY, "playerKeepsXPOnRespawn", false, COMMENT).getBoolean(false);
         propOrder.add("playerKeepsXPOnRespawn");
 
+        COMMENT = "Set this to true to check for bed if spawn was set by bed. Set this to false to force the spawn set by a bed.";
+        // Settings.playerChecksBedRespawn[side] = config.get(CATEGORY, "checkForBedWhenRespawning", true, COMMENT).getBoolean(true);
+        // propOrder.add("checkForBedWhenRespawning");
+
         COMMENT = "Set this to true to enable placing water in the nether. Set to false to have water evaporated";
         Settings.allowWaterInNether[side] = config.get(CATEGORY, "allowWaterInNether", false, COMMENT).getBoolean(false);
         propOrder.add("allowWaterInNether");

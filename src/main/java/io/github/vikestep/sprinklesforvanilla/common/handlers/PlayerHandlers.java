@@ -8,6 +8,7 @@ import cpw.mods.fml.relauncher.Side;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.reference.ModInfo;
+import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -95,7 +96,7 @@ public class PlayerHandlers
                         verifiedCoordinates = new ChunkCoordinates(chunkCoordinates.posX, chunkCoordinates.posY, chunkCoordinates.posZ);
                     }
 
-                    player.setSpawnChunk(verifiedCoordinates, false);
+                    player.setSpawnChunk(verifiedCoordinates, false); //!Settings.playerChecksBedRespawn[1]);
                 }
                 return;
             }
@@ -117,10 +118,17 @@ public class PlayerHandlers
         public void onWakeUp(PlayerWakeUpEvent event)
         {
             boolean willSleep = event.setSpawn;
-            if (!willSleep && playersToNotSetSpawn.get(event.entityPlayer.getPersistentID()) != null)
+            EntityPlayer player = event.entityPlayer;
+            if (!willSleep && playersToNotSetSpawn.get(player.getPersistentID()) != null)
             {
-                playersToNotSetSpawn.remove(event.entityPlayer.getUniqueID());
+                playersToNotSetSpawn.remove(player.getUniqueID());
             }
+            /*else if (!Settings.playerChecksBedRespawn[1])
+            {
+                LogHelper.info("Forcing bed spawn location");
+                ChunkCoordinates bedLocation = player.getBedLocation(player.dimension);
+                player.setSpawnChunk(bedLocation, true);
+            }*/
         }
 
         //TODO: Possibly add my own event for when the player's spawn is set via ASM. Need to profile to see if there is much benefit
