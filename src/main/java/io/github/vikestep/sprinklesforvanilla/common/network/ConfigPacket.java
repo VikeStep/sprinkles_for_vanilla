@@ -120,11 +120,11 @@ public class ConfigPacket implements IMessage
                     if (Arrays.asList(stringListsNames).contains(message.getKey()))
                     {
                         List<String>[] newValues = (ArrayList<String>[])new ArrayList[2];
+                        newValues[0] = new ArrayList<String>();
+                        newValues[1] = new ArrayList<String>();
                         if (!emptyList)
                         {
                             String[] stringArr = message.getValue().split(";");
-                            newValues[0] = new ArrayList<String>();
-                            newValues[1] = new ArrayList<String>();
                             for(String entry : stringArr)
                             {
                                 newValues[1].add(entry);
@@ -139,11 +139,11 @@ public class ConfigPacket implements IMessage
                     else if (Arrays.asList(booleanListsNames).contains(message.getKey()))
                     {
                         List<Boolean>[] newValues = (ArrayList<Boolean>[])new ArrayList[2];
+                        newValues[0] = new ArrayList<Boolean>();
+                        newValues[1] = new ArrayList<Boolean>();
                         if (!emptyList)
                         {
                             String[] stringArr = message.getValue().split(";");
-                            newValues[0] = new ArrayList<Boolean>();
-                            newValues[1] = new ArrayList<Boolean>();
                             for (String entry : stringArr)
                             {
                                 newValues[1].add(Boolean.parseBoolean(entry));
@@ -158,11 +158,11 @@ public class ConfigPacket implements IMessage
                     else if (Arrays.asList(intListNames).contains(message.getKey()))
                     {
                         List<Integer>[] newValues = (ArrayList<Integer>[])new ArrayList[2];
+                        newValues[0] = new ArrayList<Integer>();
+                        newValues[1] = new ArrayList<Integer>();
                         if (!emptyList)
                         {
                             String[] stringArr = message.getValue().split(";");
-                            newValues[0] = new ArrayList<Integer>();
-                            newValues[1] = new ArrayList<Integer>();
                             for (String entry : stringArr)
                             {
                                 newValues[1].add(Integer.parseInt(entry));

@@ -2,6 +2,7 @@ package io.github.vikestep.sprinklesforvanilla.asm;
 
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
+import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityLargeFireball;
@@ -11,6 +12,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Hooks
@@ -112,11 +114,15 @@ public class Hooks
 
     public static boolean createObsidian(World world)
     {
-        return !SprinklesForVanilla.isOnServer || !Settings.waterAndLavaMakesObsidianBlacklist[1].contains(world.provider.dimensionId);
+        boolean notOnServer = !SprinklesForVanilla.isOnServer;
+        boolean doesNotContain = !Settings.waterAndLavaMakesObsidianBlacklist[1].contains(world.provider.dimensionId);
+        return notOnServer || doesNotContain;
     }
 
     public static boolean createCobblestone(World world)
     {
-        return !SprinklesForVanilla.isOnServer || !Settings.waterAndLavaMakesCobbleBlacklist[1].contains(world.provider.dimensionId);
+        boolean notOnServer = !SprinklesForVanilla.isOnServer;
+        boolean doesNotContain = !Settings.waterAndLavaMakesCobbleBlacklist[1].contains(world.provider.dimensionId);
+        return notOnServer || doesNotContain;
     }
 }
