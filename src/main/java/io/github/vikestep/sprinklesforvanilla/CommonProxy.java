@@ -28,7 +28,6 @@ public class CommonProxy
         MinecraftForge.EVENT_BUS.register(new EntityHandlers.MobHandler());
 
         MinecraftForge.EVENT_BUS.register(new WorldHandlers.ExplosionHandler());
-        MinecraftForge.EVENT_BUS.register(new WorldHandlers.WorldLoadHandler());
         MinecraftForge.EVENT_BUS.register(new WorldHandlers.WorldPotentialSpawnsHandler());
 
         InitMobRegistry.init();

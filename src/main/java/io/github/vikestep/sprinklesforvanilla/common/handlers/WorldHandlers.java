@@ -21,6 +21,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.storage.DerivedWorldInfo;
 import net.minecraft.world.storage.WorldInfo;
@@ -218,52 +219,6 @@ public class WorldHandlers
                 }
             }
             return true;
-        }
-    }
-
-    public static class WorldLoadHandler
-    {
-        @SubscribeEvent
-        public void onWorldLoad(WorldEvent.Load event)
-        {
-            if (!event.world.isRemote)
-            {
-                int dimID = event.world.provider.dimensionId;
-                String[] coordinates;
-                switch (dimID)
-                {
-                    case -1:
-                        coordinates = Settings.netherSpawnDefault[1].split(", ");
-                        break;
-                    case 0:
-                        coordinates = Settings.overworldSpawnDefault[1].split(", ");
-                        break;
-                    case 1:
-                        coordinates = Settings.endSpawnDefault[1].split(", ");
-                        break;
-                    default:
-                        return;
-                }
-                if (coordinates.length == 3)
-                {
-                    try
-                    {
-                        int SpawnX = Integer.parseInt(coordinates[0]);
-                        int SpawnY = Integer.parseInt(coordinates[1]);
-                        int SpawnZ = Integer.parseInt(coordinates[2]);
-                        WorldInfo worldInfo = DimensionManager.getWorld(dimID).getWorldInfo();
-                        if (worldInfo instanceof DerivedWorldInfo)
-                        {
-                            worldInfo = ObfuscationReflectionHelper.getPrivateValue(DerivedWorldInfo.class, (DerivedWorldInfo) worldInfo, "theWorldInfo", "field_76115_a");
-                        }
-                        worldInfo.setSpawnPosition(SpawnX, SpawnY, SpawnZ);
-                    }
-                    catch (NumberFormatException e)
-                    {
-                        LogHelper.warn("INCORRECT FORMATTING FOR DEFAULT SPAWN WITH DIM ID " + dimID);
-                    }
-                }
-            }
         }
     }
 
