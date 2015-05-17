@@ -11,6 +11,8 @@ This mod has features that will work if not on the serverside, but most of them 
 
 Current Features
 ---------------------
+This mod has config syncing which means that clients will always use the config values from the server except for client only configs
+
 Features that will work even if the mod is not on the server (will even work if server doesnt have forge):
 
 - Disable any sound (including from other mods)
@@ -20,25 +22,31 @@ Features that will work even if the mod is not on the server (will even work if 
 
 Must be on server for these to work:
 
-- Disable/Enable sleep
-- Disable/Enable beds being able to set spawn
-- Disable/Enable nearby mobs preventing sleep
-- Disable/Enable sleeping in other dimensions than overworld
-- Disable/Enable being able to hop in bed when you are not directly close to bed
-- Set time taken to be fully asleep (Currently can only decrease the amount)
-- Set distance checked away from bed for nearby mobs
-- Set distance you need to be away from bed to sleep in it
-- Disable/Enable any mob of your choice
-- Disable/Enable any explosion of your choice
-- Disable/Enable nether portals being generated when caught on fire
-- Disable/Enable nether portals teleporting to the nether
-- Set a multiplier on the chance of zombie pigmen being spawned at a nether portal
-- Choose to enable/disable different forms of mob griefing
-- Add whitelist for what can be used as the beacon base block
-- Disable/Enable ender pearl teleportation
-- Toggle Health, Hunger and XP on respawn
-- Enable/Disable damage from non-mob sources (Cactus, Fire, Lava, Drowning etc.)
-- Set blocks which fire can spread on and their speed, flammability
+- Disable/Enable Ender Pearl teleportation
+- Keep hunger on respawn (with minimum value)
+- Keep health on respawn (with minimum value)
+- Keep XP on respawn
+- Disable/Enable water placement in nether
+- Dimension blacklist for water and lava to make obsidian or cobblestone
+- Disable/Enable Spawn fuzz
+- Disable/Enable ability to spawn in nether or end
+- Set default spawn in overworld, nether, or end
+- Whitelist of blocks which can be used as beacon base
+- Disable/Enable different types of damage sources (e.g. cactus, fire, suffocation)
+- Disable/Enable the different types of mob griefing
+- Disable/Enable nether teleportation
+- Disable/Enable creation of portal blocks
+- Set multiplier for frequency of zombie pigmen spawning from nether portal
+- Disable/Enable Sleep
+- Disable/Enable beds setting spawn
+- Disable/Enable sleep in other dimensions
+- Disable/Enable nearby mobs cancelling sleep or set the area to check for nearby mobs
+- Disable/Enable having to be a certain distance from the bed or set area you have to be in
+- Set time in ticks to sleep (currently max is 100 ticks which is default)
+- Disable/Enable different types of mobs spawning
+- Configure mob spawn rules for different biomes (add, modify or remove)
+- Disable/Enable all explosions
+- Configure values for different types of explosions (including from other mods)
 
 Planned Features
 ---------------------
@@ -65,10 +73,10 @@ Planned Features
 - Set Mob drops and chances
 - Set a Respawn Time (useful for hardcore servers)
 - Ability to set speed at which spawners spawn
-- Finite Water. Will be added when CCC 1.0.4.35 becomes recommended as before it adds a conflict
 - Set health regeneration rate
 - Disable/Enable enchanting, brewing and using the anvil
 - Disable/Enable being able to press F3 or toggle what is shown in F3
 - Disable/Enable ability to boost minecarts
 - Ability to force a gamerule
 - In-Game Config Editor and command to reload configs
+- Configure flammability of blocks

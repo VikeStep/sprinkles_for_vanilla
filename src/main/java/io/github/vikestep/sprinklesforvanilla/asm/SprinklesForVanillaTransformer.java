@@ -43,6 +43,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("net.minecraft.world.WorldProviderEnd", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderEnd", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.item.ItemBucket", SprinklesForVanillaTransformer.class.getMethod("transformItemBucket", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.block.BlockLiquid", SprinklesForVanillaTransformer.class.getMethod("transformBlockLiquid", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("cofh.asmhooks.block.BlockWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("cofh.asmhooks.block.BlockTickingWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -696,6 +698,27 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 toInject.add(new JumpInsnNode(IFEQ, cobbleIfNode.label));
 
                 method.instructions.insert(cobbleIfNode, toInject);
+            }
+        }
+    }
+
+    public static void transformCoFHBlockWater(ClassNode classNode, boolean isObf)
+    {
+        final String ON_BLOCK_ADDED = "onBlockAdded";
+        final String ON_BLOCK_ADDED_DESC = isObf ? "(Lahb;III)V" : "(Lnet/minecraft/world/World;III)V";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(ON_BLOCK_ADDED) && method.desc.equals(ON_BLOCK_ADDED_DESC))
+            {
+                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFEQ);
+                VarInsnNode aLoadNode = (VarInsnNode) ASMHelper.findPreviousInstructionWithOpcode(ifNode, ALOAD);
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "allowWater", "()Z", false));
+                toInject.add(new JumpInsnNode(IFNE, ifNode.label));
+
+                method.instructions.insertBefore(aLoadNode, toInject);
             }
         }
     }
