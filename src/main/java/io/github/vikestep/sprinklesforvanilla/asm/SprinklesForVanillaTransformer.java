@@ -45,6 +45,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("net.minecraft.block.BlockLiquid", SprinklesForVanillaTransformer.class.getMethod("transformBlockLiquid", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("cofh.asmhooks.block.BlockWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("cofh.asmhooks.block.BlockTickingWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.server.management.ServerConfigurationManager", SprinklesForVanillaTransformer.class.getMethod("transformServerConfigurationManager", ClassNode.class, boolean.class));
+
         }
         catch (NoSuchMethodException e)
         {
@@ -719,6 +721,29 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 toInject.add(new JumpInsnNode(IFNE, ifNode.label));
 
                 method.instructions.insertBefore(aLoadNode, toInject);
+            }
+        }
+    }
+
+    public static void transformServerConfigurationManager(ClassNode classNode, boolean isObf)
+    {
+        final String RESPAWN_PLAYER = isObf ? "a" : "respawnPlayer";
+        final String RESPAWN_PLAYER_DESC = isObf ? "(Lmw;IZ)Lmw;" : "(Lnet/minecraft/entity/player/EntityPlayerMP;IZ)Lnet/minecraft/entity/player/EntityPlayerMP;";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(RESPAWN_PLAYER) && method.desc.equals(RESPAWN_PLAYER_DESC))
+            {
+                AbstractInsnNode aStoreNode = ASMHelper.findLastInstructionWithOpcode(method, ASTORE);
+
+                InsnList toInject = new InsnList();
+                String desc = isObf ? "(Lr;Lmw;)Lr;" : "(Lnet/minecraft/util/ChunkCoordinates;Lnet/minecraft/entity/player/EntityPlayerMP;)Lnet/minecraft/util/ChunkCoordinates;";
+                toInject.add(new VarInsnNode(ALOAD, 10));
+                toInject.add(new VarInsnNode(ALOAD, 8));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getSpawnPoint", desc, false));
+                toInject.add(new VarInsnNode(ASTORE, 10));
+
+                method.instructions.insert(aStoreNode, toInject);
             }
         }
     }

@@ -296,8 +296,6 @@ public class PlayerHandlers
                     player.experienceLevel = props.experienceLevel;
                     player.experienceTotal = props.experienceTotal;
                 }
-
-                alternateSpawn(player);
             }
         }
 
@@ -337,51 +335,5 @@ public class PlayerHandlers
             }
         }
 
-        public void alternateSpawn(EntityPlayer player)
-        {
-            if (player.worldObj.isRemote)
-            {
-                return;
-            }
-            EntityPlayerMP entityPlayerMP = (EntityPlayerMP) player;
-            int dimID = entityPlayerMP.dimension;
-            ChunkCoordinates bedLocation = entityPlayerMP.getBedLocation(dimID);
-            if (bedLocation != null)
-            {
-                if (EntityPlayer.verifyRespawnCoordinates(entityPlayerMP.worldObj, bedLocation, false) != null)
-                {
-                    return;
-                }
-            }
-            String[] coordinates;
-            switch (dimID)
-            {
-                case -1:
-                    coordinates = Settings.netherSpawnDefault[1].split(", ");
-                    break;
-                case 0:
-                    coordinates = Settings.overworldSpawnDefault[1].split(", ");
-                    break;
-                case 1:
-                    coordinates = Settings.endSpawnDefault[1].split(", ");
-                    break;
-                default:
-                    return;
-            }
-            if (coordinates.length == 3)
-            {
-                try
-                {
-                    int SpawnX = Integer.parseInt(coordinates[0]);
-                    int SpawnY = Integer.parseInt(coordinates[1]);
-                    int SpawnZ = Integer.parseInt(coordinates[2]);
-                    entityPlayerMP.playerNetServerHandler.setPlayerLocation(SpawnX, SpawnY, SpawnZ, entityPlayerMP.rotationYaw, entityPlayerMP.rotationPitch);
-                }
-                catch (NumberFormatException e)
-                {
-                    LogHelper.warn("INCORRECT FORMATTING FOR DEFAULT SPAWN WITH DIM ID " + dimID);
-                }
-            }
-        }
     }
 }

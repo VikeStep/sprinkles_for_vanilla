@@ -5,8 +5,11 @@ import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.init.Blocks;
+import net.minecraft.network.play.server.S05PacketSpawnPosition;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -124,5 +127,54 @@ public class Hooks
         boolean notOnServer = !SprinklesForVanilla.isOnServer;
         boolean doesNotContain = !Settings.waterAndLavaMakesCobbleBlacklist[1].contains(world.provider.dimensionId);
         return notOnServer || doesNotContain;
+    }
+
+    public static ChunkCoordinates getSpawnPoint(ChunkCoordinates chunkCoordinates, EntityPlayerMP player)
+    {
+        if (player.worldObj.isRemote)
+        {
+            return chunkCoordinates;
+        }
+        int dimID = player.dimension;
+        ChunkCoordinates bedLocation = player.getBedLocation(dimID);
+        if (bedLocation != null)
+        {
+            if (EntityPlayerMP.verifyRespawnCoordinates(player.worldObj, bedLocation, player.isSpawnForced(dimID)) != null)
+            {
+                return chunkCoordinates;
+            }
+        }
+        String[] coordinates;
+        switch (dimID)
+        {
+            case -1:
+                coordinates = Settings.netherSpawnDefault[1].split(", ");
+                break;
+            case 0:
+                coordinates = Settings.overworldSpawnDefault[1].split(", ");
+                break;
+            case 1:
+                coordinates = Settings.endSpawnDefault[1].split(", ");
+                break;
+            default:
+                return chunkCoordinates;
+        }
+        if (coordinates.length == 3)
+        {
+            try
+            {
+                int SpawnX = Integer.parseInt(coordinates[0]);
+                int SpawnY = Integer.parseInt(coordinates[1]);
+                int SpawnZ = Integer.parseInt(coordinates[2]);
+                player.setPosition(SpawnX, SpawnY, SpawnZ);
+                return new ChunkCoordinates(SpawnX, SpawnY, SpawnZ);
+            }
+            catch (NumberFormatException e)
+            {
+                LogHelper.warn("INCORRECT FORMATTING FOR DEFAULT SPAWN WITH DIM ID " + dimID);
+                return chunkCoordinates;
+            }
+        }
+        return chunkCoordinates;
     }
 }
