@@ -46,7 +46,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("cofh.asmhooks.block.BlockWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("cofh.asmhooks.block.BlockTickingWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.server.management.ServerConfigurationManager", SprinklesForVanillaTransformer.class.getMethod("transformServerConfigurationManager", ClassNode.class, boolean.class));
-
+            classToTransformMethodMap.put("net.minecraft.tileentity.TileEntityBeacon", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityBeacon", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -744,6 +744,27 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 toInject.add(new VarInsnNode(ASTORE, 10));
 
                 method.instructions.insert(aStoreNode, toInject);
+            }
+        }
+    }
+
+    public static void transformTileEntityBeacon(ClassNode classNode, boolean isObf)
+    {
+        final String INIT_METHOD = isObf ? "y" : "func_146003_y";
+        final String INIT_METHOD_DESC = "()V";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(INIT_METHOD) && method.desc.equals(INIT_METHOD_DESC))
+            {
+                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFNE);
+                AbstractInsnNode insertNode = ASMHelper.findPreviousInstructionWithOpcode(ifNode, ISTORE);
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "shouldBeaconCheckForSky", "()Z", false));
+                toInject.add(new JumpInsnNode(IFEQ, ifNode.label));
+
+                method.instructions.insert(insertNode, toInject);
             }
         }
     }

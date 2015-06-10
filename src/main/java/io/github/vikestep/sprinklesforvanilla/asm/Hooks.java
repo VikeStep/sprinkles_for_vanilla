@@ -131,7 +131,7 @@ public class Hooks
 
     public static ChunkCoordinates getSpawnPoint(ChunkCoordinates chunkCoordinates, EntityPlayerMP player)
     {
-        if (player.worldObj.isRemote)
+        if (player.worldObj.isRemote || !SprinklesForVanilla.isOnServer)
         {
             return chunkCoordinates;
         }
@@ -176,5 +176,10 @@ public class Hooks
             }
         }
         return chunkCoordinates;
+    }
+
+    public static boolean shouldBeaconCheckForSky()
+    {
+        return SprinklesForVanilla.isOnServer && Settings.shouldBeaconCheckForSunlight[1];
     }
 }

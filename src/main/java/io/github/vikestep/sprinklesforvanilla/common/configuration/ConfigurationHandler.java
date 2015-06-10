@@ -185,6 +185,10 @@ public class ConfigurationHandler
         propOrder = new ArrayList<String>();
         CATEGORY = "global.beacons";
 
+        COMMENT = "Set this to false to ignore sunlight checks for beacons. Set to true to check for sunlight";
+        Settings.shouldBeaconCheckForSunlight[side] = config.get(CATEGORY, "shouldBeaconCheckForSunlight", true, COMMENT).getBoolean(true);
+        propOrder.add("shouldBeaconCheckForSunlight");
+
         COMMENT = "In this list you must put a the blocks you wish to be used as the base for beacon blocks\n" +
                   "In here by default are the ones vanilla used. Each entry must be of the form (modname:blockname)\n" +
                   "You can put a \"#\" before an entry if you wish to disable it without removing the line";

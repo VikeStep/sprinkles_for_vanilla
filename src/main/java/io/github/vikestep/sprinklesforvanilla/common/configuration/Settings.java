@@ -100,6 +100,7 @@ public class Settings
     public static String[]  endSpawnDefault       = new String[2];
 
     //BEACONS
+    public static boolean[] shouldBeaconCheckForSunlight = new boolean[2];
     public static final String[] defaultBeaconBaseBlocks =
             {
                     "minecraft:iron_block",
@@ -282,6 +283,7 @@ public class Settings
         netherSpawnDefault[1] = netherSpawnDefault[0];
         endSpawnDefault[1] = endSpawnDefault[0];
         mobSpawnRulesModifications[1] = new ArrayList<String>(mobSpawnRulesModifications[0]);
+        shouldBeaconCheckForSunlight[1] = shouldBeaconCheckForSunlight[0];
         beaconBaseBlocks[1] = new ArrayList<String>(beaconBaseBlocks[0]);
         //flammableBlocks[1] = new ArrayList<String>(flammableBlocks[0]);
         damageSourceConfigs[1] = new ArrayList<Integer>(damageSourceConfigs[0]);
