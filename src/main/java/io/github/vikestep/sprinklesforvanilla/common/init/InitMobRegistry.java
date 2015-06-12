@@ -88,10 +88,14 @@ public class InitMobRegistry
                     {
                         for (BiomeGenBase biomeGenBase : BiomeGenBase.getBiomeGenArray())
                         {
-                            if (biomeGenBase.biomeName.equals(biome))
+                            if (biomeGenBase == null)
+                            {
+                                continue;
+                            }
+                            String b = biomeGenBase.biomeName;
+                            if (b.equals(biome) || (biome.equals("Overworld") && !b.equals("Hell")))
                             {
                                 biomeGenBases.add(biomeGenBase);
-                                break;
                             }
                         }
                     }

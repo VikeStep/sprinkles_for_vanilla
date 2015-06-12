@@ -182,4 +182,9 @@ public class Hooks
     {
         return SprinklesForVanilla.isOnServer && Settings.shouldBeaconCheckForSunlight[1];
     }
+
+    public static long getSpawnTicksWait()
+    {
+        return SprinklesForVanilla.isOnServer ? Settings.timeBetweenCreatureSpawns[1] : 400L;
+    }
 }

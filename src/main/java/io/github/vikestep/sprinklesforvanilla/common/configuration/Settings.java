@@ -201,6 +201,7 @@ public class Settings
     public static int[]      timeToSleep                 = new int[2]; //Max is 100 Ticks
 
     //MOBS
+    public static int[] timeBetweenCreatureSpawns = new int[2];
     public static final LinkedHashMap<String, Class<?>> mobClasses = new LinkedHashMap<String, Class<?>>();
 
     static
@@ -282,6 +283,7 @@ public class Settings
         overworldSpawnDefault[1] = overworldSpawnDefault[0];
         netherSpawnDefault[1] = netherSpawnDefault[0];
         endSpawnDefault[1] = endSpawnDefault[0];
+        timeBetweenCreatureSpawns[1] = timeBetweenCreatureSpawns[0];
         mobSpawnRulesModifications[1] = new ArrayList<String>(mobSpawnRulesModifications[0]);
         shouldBeaconCheckForSunlight[1] = shouldBeaconCheckForSunlight[0];
         beaconBaseBlocks[1] = new ArrayList<String>(beaconBaseBlocks[0]);

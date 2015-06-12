@@ -47,6 +47,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("cofh.asmhooks.block.BlockTickingWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.server.management.ServerConfigurationManager", SprinklesForVanillaTransformer.class.getMethod("transformServerConfigurationManager", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.tileentity.TileEntityBeacon", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityBeacon", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.world.WorldServer", SprinklesForVanillaTransformer.class.getMethod("transformWorldServer", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -765,6 +766,29 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 toInject.add(new JumpInsnNode(IFEQ, ifNode.label));
 
                 method.instructions.insert(insertNode, toInject);
+            }
+        }
+    }
+
+    public static void transformWorldServer(ClassNode classNode, boolean isObf)
+    {
+        final String TICK = isObf ? "b" : "tick";
+        final String TICK_DESC = "()V";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(TICK) && method.desc.equals(TICK_DESC))
+            {
+                AbstractInsnNode ldcNode = ASMHelper.findPreviousInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, POP), LDC);
+
+                LabelNode jump = new LabelNode();
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getSpawnTicksWait", "()J", false));
+                toInject.add(new JumpInsnNode(GOTO, jump));
+
+                method.instructions.insertBefore(ldcNode, toInject);
+                method.instructions.insert(ldcNode, jump);
             }
         }
     }

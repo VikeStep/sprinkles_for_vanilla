@@ -322,6 +322,11 @@ public class ConfigurationHandler
         //No property order since I want the mobs to be ordered alphabetically
         CATEGORY = "global.mob spawning";
 
+        COMMENT = "Set this to the number of ticks between when creatures (everything except mobs, bats and squids) will" +
+                  "spawn. Default value in minecraft is 400 ticks.";
+        Settings.timeBetweenCreatureSpawns[side] = config.get(CATEGORY, "ticksBetweenCreatureSpawns", 400, COMMENT, 1, Integer.MAX_VALUE).getInt();
+        propOrder.add("ticksBetweenCreatureSpawns");
+
         COMMENT = "Set to true to allow the mob to be spawned, set to false to disable that mob from being spawned";
         Settings.mobConfigs[side] = new ArrayList<Boolean>();
         int index = 0;
@@ -335,7 +340,7 @@ public class ConfigurationHandler
         COMMENT = "In this list you will put a list of commands which will change the spawn conditions. The format is \"command: arg1, arg2, {biome1, biome2}\".\n" +
                   "The commands available are: add, modify, and remove. if you use add or modify, you will need 4 arguments: mob name, weight, min group size, max\n" +
                   "group size. If you use remove, you will need 1 argument: mob name. The biome list is the list of biomes which these changes will affect. A \"#\"\n" +
-                  "can be used to comment out commands for testing if you wish for them not to be used.";
+                  "can be used to comment out commands for testing if you wish for them not to be used. Using \"Overworld\" as the biome will add all overworld biomes";
         Settings.mobSpawnRulesModifications[side] = new ArrayList<String>(Arrays.asList(config.get(CATEGORY, "mobSpawnRules", Settings.defaultModifications, COMMENT).getStringList()));
         propOrder.add("mobSpawnRules");
 
