@@ -2,6 +2,7 @@ package io.github.vikestep.sprinklesforvanilla.asm;
 
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
+import io.github.vikestep.sprinklesforvanilla.common.init.InitMobRegistry;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
@@ -185,6 +186,6 @@ public class Hooks
 
     public static long getSpawnTicksWait()
     {
-        return SprinklesForVanilla.isOnServer ? Settings.timeBetweenCreatureSpawns[1] : 400L;
+        return SprinklesForVanilla.isOnServer ? InitMobRegistry.gcdPassiveSpawn : 400L;
     }
 }

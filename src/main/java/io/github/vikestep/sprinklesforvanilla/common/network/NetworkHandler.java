@@ -25,7 +25,9 @@ public class NetworkHandler
                     "damageSources",
                     "mobGriefingTypes",
                     "defaultExplosionData",
-                    "defaultModifications"
+                    "defaultModifications",
+                    "defaultHeights",
+                    "defaultRates"
             };
 
     //Fired on the client when they are disconnected from a server

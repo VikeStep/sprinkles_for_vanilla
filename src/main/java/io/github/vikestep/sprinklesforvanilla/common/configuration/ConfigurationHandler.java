@@ -322,11 +322,6 @@ public class ConfigurationHandler
         //No property order since I want the mobs to be ordered alphabetically
         CATEGORY = "global.mob spawning";
 
-        COMMENT = "Set this to the number of ticks between when creatures (everything except mobs, bats and squids) will" +
-                  "spawn. Default value in minecraft is 400 ticks.";
-        Settings.timeBetweenCreatureSpawns[side] = config.get(CATEGORY, "ticksBetweenCreatureSpawns", 400, COMMENT, 1, Integer.MAX_VALUE).getInt();
-        propOrder.add("ticksBetweenCreatureSpawns");
-
         COMMENT = "Set to true to allow the mob to be spawned, set to false to disable that mob from being spawned";
         Settings.mobConfigs[side] = new ArrayList<Boolean>();
         int index = 0;
@@ -343,6 +338,19 @@ public class ConfigurationHandler
                   "can be used to comment out commands for testing if you wish for them not to be used. Using \"Overworld\" as the biome will add all overworld biomes";
         Settings.mobSpawnRulesModifications[side] = new ArrayList<String>(Arrays.asList(config.get(CATEGORY, "mobSpawnRules", Settings.defaultModifications, COMMENT).getStringList()));
         propOrder.add("mobSpawnRules");
+
+        COMMENT = "In this list you will put a list of commands which will change the spawn height for mobs. The format is \"mobtype, height, {dim1, dim2}\". A \"#\"\n" +
+                  "can be used to comment out commands for testing if you wish for them not to be used. The valid mob types are: creature, monster, ambient, and waterCreature.\n" +
+                  "the height is the maximum height that mob will spawn in that dimension. The dimensions arguments are the dimension IDs";
+        Settings.mobSpawnHeightRules[side] = new ArrayList<String>(Arrays.asList(config.get(CATEGORY, "mobSpawnHeightRules", Settings.defaultHeights, COMMENT).getStringList()));
+        propOrder.add("mobSpawnHeightRules");
+
+        COMMENT = "In this list you will put a list of commands which will change the spawn rate (in ticks) for mobs. The format is \"mobtype, rate, {dim1, dim2}\". A \"#\"\n" +
+                  "can be used to comment out commands for testing if you wish for them not to be used. The valid mob types are: creature, monster, ambient, and waterCreature.\n" +
+                  "the height is the maximum height that mob will spawn in that dimension. The dimensions arguments are the dimension IDs. By default, passive mobs have a spawn rate\n" +
+                  "of 400 ticks unless overridden in this setting.";
+        Settings.mobSpawnRateRules[side] = new ArrayList<String>(Arrays.asList(config.get(CATEGORY, "mobSpawnRateRules", Settings.defaultRates, COMMENT).getStringList()));
+        propOrder.add("mobSpawnRateRules");
 
         config.setCategoryPropertyOrder(CATEGORY, propOrder);
 

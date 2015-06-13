@@ -7,14 +7,19 @@ import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.init.InitMobRegistry;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
+import io.github.vikestep.sprinklesforvanilla.server.utils.ServerHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
@@ -227,41 +232,113 @@ public class WorldHandlers
         @SubscribeEvent
         public void checkSpawn(LivingSpawnEvent.CheckSpawn event)
         {
-            if (event.getResult() == Event.Result.DEFAULT && !((EntityLiving) event.entity).getCanSpawnHere() && InitMobRegistry.modificationMap.get(event.entity.getClass()) != null)
+            EntityLiving entity = (EntityLiving) event.entity;
+            boolean canSpawn = entity.getCanSpawnHere();
+            if (SprinklesForVanilla.isOnServer && event.getResult() == Event.Result.DEFAULT && !entity.worldObj.isRemote && canSpawn)
             {
-                boolean shouldAllowIfRule = false;
-                EntityLiving entity = (EntityLiving) event.entity;
-                if (entity instanceof EntityAnimal)
+                int dim = entity.dimension;
+                EnumCreatureType creatureType = getCreatureType(entity);
+                Map<EnumCreatureType, Integer> heightMap = InitMobRegistry.heightMap.get(dim);
+                Map<EnumCreatureType, Integer> rateMap = InitMobRegistry.rateMap.get(dim);
+                boolean shouldCheck = InitMobRegistry.gcdPassiveSpawn != 400 && creatureType == EnumCreatureType.creature;
+                if (heightMap != null)
                 {
-                    int i = MathHelper.floor_double(entity.posX);
-                    int j = MathHelper.floor_double(entity.boundingBox.minY);
-                    int k = MathHelper.floor_double(entity.posZ);
-                    if (entity.worldObj.getBlock(i, j - 1, k) != Blocks.grass && entity.dimension != 0)
+                    Integer max = heightMap.get(creatureType);
+                    if (max != null)
                     {
-                       shouldAllowIfRule = true;
-                    }
-                    else if (entity instanceof EntityOcelot && !entity.worldObj.getBlock(i, j - 1, k).isLeaves(event.world, i, j - 1, k))
-                    {
-                        shouldAllowIfRule = true;
+                        double y = entity.posY;
+                        if (y > max)
+                        {
+                            event.setResult(Event.Result.DENY);
+                            return;
+                        }
                     }
                 }
-                if (shouldAllowIfRule)
+                if (rateMap != null)
                 {
-                    for (Map.Entry entry : InitMobRegistry.modificationMap.entrySet())
+                    Integer rate = rateMap.get(creatureType);
+                    if (rate != null)
                     {
-                        Class entityClass = (Class) entry.getKey();
-                        BiomeGenBase[] biomesChecked = (BiomeGenBase[])entry.getValue();
-                        String entityName = (String) EntityList.classToStringMapping.get(entityClass);
-                        String entitySpawnedName = EntityList.getEntityString(entity);
-                        if (entityName.equals(entitySpawnedName))
+                        WorldServer world = ServerHelper.getWorldServer(entity);
+                        long time = world.getWorldInfo().getWorldTotalTime();
+                        if (time % rate != 0)
                         {
-                            if (Arrays.asList(biomesChecked).contains(event.world.getBiomeGenForCoords((int) event.x, (int) event.z)))
+                            event.setResult(Event.Result.DENY);
+                            return;
+                        }
+                        shouldCheck = false;
+                    }
+                }
+                if (shouldCheck)
+                {
+                    WorldServer world = ServerHelper.getWorldServer(entity);
+                    long time = world.getWorldInfo().getWorldTotalTime();
+                    if (time % 400 != 0)
+                    {
+                        event.setResult(Event.Result.DENY);
+                        return;
+                    }
+                }
+                if (InitMobRegistry.modificationMap.get(entity.getClass()) != null)
+                {
+                    boolean shouldAllowIfRule = false;
+                    if (entity instanceof EntityAnimal)
+                    {
+                        int i = MathHelper.floor_double(entity.posX);
+                        int j = MathHelper.floor_double(entity.boundingBox.minY);
+                        int k = MathHelper.floor_double(entity.posZ);
+                        if (dim != 0 && entity.worldObj.getBlock(i, j - 1, k) != Blocks.grass)
+                        {
+                            shouldAllowIfRule = true;
+                        }
+                        else if (entity instanceof EntityOcelot && !entity.worldObj.getBlock(i, j - 1, k).isLeaves(event.world, i, j - 1, k))
+                        {
+                            shouldAllowIfRule = true;
+                        }
+                    }
+                    if (shouldAllowIfRule)
+                    {
+                        for (Map.Entry entry : InitMobRegistry.modificationMap.entrySet())
+                        {
+                            Class entityClass = (Class) entry.getKey();
+                            BiomeGenBase[] biomesChecked = (BiomeGenBase[])entry.getValue();
+                            String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+                            String entitySpawnedName = EntityList.getEntityString(entity);
+                            if (entityName.equals(entitySpawnedName))
                             {
-                                event.setResult(Event.Result.ALLOW);
+                                if (Arrays.asList(biomesChecked).contains(event.world.getBiomeGenForCoords((int) event.x, (int) event.z)))
+                                {
+                                    event.setResult(Event.Result.ALLOW);
+                                }
                             }
                         }
                     }
                 }
+            }
+        }
+
+        private static EnumCreatureType getCreatureType(EntityLiving entity)
+        {
+            Class<? extends EntityLiving> entityClass = entity.getClass();
+            if (IMob.class.isAssignableFrom(entityClass))
+            {
+                return EnumCreatureType.monster;
+            }
+            else if (EntityAnimal.class.isAssignableFrom(entityClass))
+            {
+                return EnumCreatureType.creature;
+            }
+            else if (EntityAmbientCreature.class.isAssignableFrom(entityClass))
+            {
+                return EnumCreatureType.ambient;
+            }
+            else if (EntityWaterMob.class.isAssignableFrom(entityClass))
+            {
+                return EnumCreatureType.waterCreature;
+            }
+            else
+            {
+                return null;
             }
         }
     }

@@ -201,7 +201,6 @@ public class Settings
     public static int[]      timeToSleep                 = new int[2]; //Max is 100 Ticks
 
     //MOBS
-    public static int[] timeBetweenCreatureSpawns = new int[2];
     public static final LinkedHashMap<String, Class<?>> mobClasses = new LinkedHashMap<String, Class<?>>();
 
     static
@@ -246,7 +245,19 @@ public class Settings
                     "#modify: Skeleton, 200, 4, 4, {Plains, Jungle}",
                     "#remove: PigZombie, {Hell}"
             };
+    public static final String[] defaultHeights =
+            {
+                    "#creature, 200, {0, 1}",
+                    "#monster, 60, {-1}"
+            };
+    public static final String[] defaultRates =
+            {
+                    "#creature, 20, {0, 1}",
+                    "#monster, 20, {-1}"
+            };
     public static List<String>[] mobSpawnRulesModifications = (ArrayList<String>[])new ArrayList[2];
+    public static List<String>[] mobSpawnHeightRules  = (ArrayList<String>[])new ArrayList[2];
+    public static List<String>[] mobSpawnRateRules  = (ArrayList<String>[])new ArrayList[2];
 
     //EXPLOSIONS
 
@@ -283,8 +294,9 @@ public class Settings
         overworldSpawnDefault[1] = overworldSpawnDefault[0];
         netherSpawnDefault[1] = netherSpawnDefault[0];
         endSpawnDefault[1] = endSpawnDefault[0];
-        timeBetweenCreatureSpawns[1] = timeBetweenCreatureSpawns[0];
         mobSpawnRulesModifications[1] = new ArrayList<String>(mobSpawnRulesModifications[0]);
+        mobSpawnHeightRules[1] = new ArrayList<String>(mobSpawnHeightRules[0]);
+        mobSpawnRateRules[1] = new ArrayList<String>(mobSpawnRateRules[0]);
         shouldBeaconCheckForSunlight[1] = shouldBeaconCheckForSunlight[0];
         beaconBaseBlocks[1] = new ArrayList<String>(beaconBaseBlocks[0]);
         //flammableBlocks[1] = new ArrayList<String>(flammableBlocks[0]);

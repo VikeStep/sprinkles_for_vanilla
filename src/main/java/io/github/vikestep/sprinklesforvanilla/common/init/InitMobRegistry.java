@@ -1,5 +1,7 @@
 package io.github.vikestep.sprinklesforvanilla.common.init;
 
+import com.google.common.math.IntMath;
+import com.google.common.primitives.Ints;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
@@ -19,6 +21,10 @@ public class InitMobRegistry
     public static final String[] commands = {"add", "remove", "modify"};
 
     public static Map<Class<? extends EntityLiving>, BiomeGenBase[]> modificationMap = new HashMap<Class<? extends EntityLiving>, BiomeGenBase[]>();
+    public static Map<Integer, Map<EnumCreatureType, Integer>>                 heightMap       = new HashMap<Integer, Map<EnumCreatureType, Integer>>();
+    public static Map<Integer, Map<EnumCreatureType, Integer>>                 rateMap         = new HashMap<Integer, Map<EnumCreatureType, Integer>>();
+
+    public static int gcdPassiveSpawn = 400;
 
     public static void init()
     {
@@ -124,7 +130,113 @@ public class InitMobRegistry
                     e.printStackTrace();
                 }
             }
-
         }
+        for (String entry : Settings.mobSpawnHeightRules[1])
+        {
+            try
+            {
+                if (entry.startsWith("#"))
+                {
+                    continue;
+                }
+                String[] a = entry.split("\\{");
+                String[] b = a[0].split(", ");
+                String[] c = a[1].split("\\}")[0].split(", ");
+                for (String dim : c)
+                {
+                    Integer dimID = Integer.parseInt(dim);
+                    Integer height = Integer.parseInt(b[1]);
+                    EnumCreatureType type = getCreatureFromString(b[0]);
+                    if (type == null)
+                    {
+                        LogHelper.warn(b[0] + " is an invalid mob type");
+                        continue;
+                    }
+                    Map<EnumCreatureType, Integer> map = heightMap.get(dimID);
+                    if (map == null)
+                    {
+                        map = new HashMap<EnumCreatureType, Integer>();
+                    }
+                    map.put(type, height);
+                    heightMap.put(dimID, map);
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.warn("Invalid Spawn Setting: " + entry);
+                e.printStackTrace();
+            }
+        }
+        List<Integer> rates = new ArrayList<Integer>();
+        for (String entry : Settings.mobSpawnRateRules[1])
+        {
+            try
+            {
+                if (entry.startsWith("#"))
+                {
+                    continue;
+                }
+                String[] a = entry.split("\\{");
+                String[] b = a[0].split(", ");
+                String[] c = a[1].split("\\}")[0].split(", ");
+                for (String dim : c)
+                {
+                    Integer dimID = Integer.parseInt(dim);
+                    Integer rate = Integer.parseInt(b[1]);
+                    EnumCreatureType type = getCreatureFromString(b[0]);
+                    if (type == null)
+                    {
+                        LogHelper.warn(b[0] + " is an invalid mob type");
+                        continue;
+                    }
+                    if (type == EnumCreatureType.creature)
+                    {
+                        rates.add(rate);
+                    }
+                    Map<EnumCreatureType, Integer> map = rateMap.get(dimID);
+                    if (map == null)
+                    {
+                        map = new HashMap<EnumCreatureType, Integer>();
+                    }
+                    map.put(type, rate);
+                    rateMap.put(dimID, map);
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.warn("Invalid Spawn Setting: " + entry);
+                e.printStackTrace();
+            }
+        }
+        if (rates.size() > 0)
+        {
+            int[] r = Ints.toArray(rates);
+            int result = r[0];
+            for(int i = 1; i < r.length; i++){
+                result = IntMath.gcd(result, r[i]);
+            }
+            gcdPassiveSpawn = result;
+        }
+    }
+
+    private static EnumCreatureType getCreatureFromString(String type)
+    {
+        if (type.toLowerCase().equals("creature"))
+        {
+            return EnumCreatureType.creature;
+        }
+        else if (type.toLowerCase().equals("monster"))
+        {
+            return EnumCreatureType.monster;
+        }
+        else if (type.toLowerCase().equals("ambient"))
+        {
+            return EnumCreatureType.ambient;
+        }
+        else if (type.toLowerCase().equals("watercreature"))
+        {
+            return EnumCreatureType.waterCreature;
+        }
+        return null;
     }
 }
