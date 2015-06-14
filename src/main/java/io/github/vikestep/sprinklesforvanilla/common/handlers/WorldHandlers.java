@@ -1,6 +1,5 @@
 package io.github.vikestep.sprinklesforvanilla.common.handlers;
 
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
@@ -28,13 +27,9 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.storage.DerivedWorldInfo;
-import net.minecraft.world.storage.WorldInfo;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
-import net.minecraftforge.event.world.WorldEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +51,8 @@ public class WorldHandlers
             Explosion explosion = event.explosion;
             if (Settings.enableExplosionLogging[1])
             {
-                LogHelper.info("Explosion: " + EntityList.getEntityString(explosion.exploder) + ", " + explosion.explosionSize + ", " + !event.isCanceled() + ", " + Boolean.toString(true) + ", " + explosion.isFlaming + ", " + explosion.isSmoking);
+                String name = explosion.exploder == null ? "null" : EntityList.getEntityString(explosion.exploder);
+                LogHelper.info("Explosion: " + name + ", " + explosion.explosionSize + ", " + !event.isCanceled() + ", " + Boolean.toString(true) + ", " + explosion.isFlaming + ", " + explosion.isSmoking);
             }
             if (Settings.disableAllExplosions[1])
             {
@@ -170,7 +166,7 @@ public class WorldHandlers
             if (!configExploderName.equals(exploderInternalName))
             {
                 //Charged Creeper Handling
-                if (configExploderName.equals("ChargedCreeper") && exploderInternalName.equals("Creeper"))
+                if (configExploderName.equals("ChargedCreeper") && exploderInternalName.equals("Creeper") && exploder != null)
                 {
                     if (((EntityCreeper) exploder).getPowered())
                     {
@@ -211,7 +207,7 @@ public class WorldHandlers
             else
             {
                 //Handles detecting a charged creeper explosion when under Creeper exploderName
-                if (configExploderName.equals("Creeper"))
+                if (configExploderName.equals("Creeper") & exploder != null)
                 {
                     if (!((EntityCreeper) exploder).getPowered())
                     {
