@@ -70,6 +70,10 @@ public class Hooks
         {
             for (String beaconBase : Settings.beaconBaseBlocks[1])
             {
+                if (beaconBase.startsWith("#"))
+                {
+                    continue;
+                }
                 String[] blockNameData = beaconBase.split(":");
                 if (block == Block.blockRegistry.getObject(blockNameData[0] + ":" + blockNameData[1]))
                 {

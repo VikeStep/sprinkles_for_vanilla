@@ -230,7 +230,7 @@ public class WorldHandlers
         {
             EntityLiving entity = (EntityLiving) event.entity;
             boolean canSpawn = entity.getCanSpawnHere();
-            if (SprinklesForVanilla.isOnServer && event.getResult() == Event.Result.DEFAULT && !entity.worldObj.isRemote && canSpawn)
+            if (SprinklesForVanilla.isOnServer && event.getResult() == Event.Result.DEFAULT && !entity.worldObj.isRemote)
             {
                 int dim = entity.dimension;
                 EnumCreatureType creatureType = getCreatureType(entity);
@@ -275,7 +275,7 @@ public class WorldHandlers
                         return;
                     }
                 }
-                if (InitMobRegistry.modificationMap.get(entity.getClass()) != null)
+                if (InitMobRegistry.modificationMap.get(entity.getClass()) != null && !canSpawn)
                 {
                     boolean shouldAllowIfRule = false;
                     if (entity instanceof EntityAnimal)
