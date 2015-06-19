@@ -48,6 +48,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("net.minecraft.server.management.ServerConfigurationManager", SprinklesForVanillaTransformer.class.getMethod("transformServerConfigurationManager", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.tileentity.TileEntityBeacon", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityBeacon", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.world.WorldServer", SprinklesForVanillaTransformer.class.getMethod("transformWorldServer", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.BlockSapling", SprinklesForVanillaTransformer.class.getMethod("transformBlockSapling", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.BlockCrops", SprinklesForVanillaTransformer.class.getMethod("transformBlockCrops", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -789,6 +791,52 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 method.instructions.insertBefore(ldcNode, toInject);
                 method.instructions.insert(ldcNode, jump);
+            }
+        }
+    }
+
+    public static void transformBlockCrops(ClassNode classNode, boolean isObf)
+    {
+        final String UPDATE_TICK = isObf ? "a" : "updateTick";
+        final String UPDATE_TICK_DESC = isObf ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(UPDATE_TICK) && method.desc.equals(UPDATE_TICK_DESC))
+            {
+                AbstractInsnNode lightValNode = ASMHelper.findFirstInstructionWithOpcode(method, BIPUSH);
+
+                LabelNode jump = new LabelNode();
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getMinimumLightCrops", "()I", false));
+                toInject.add(new JumpInsnNode(GOTO, jump));
+
+                method.instructions.insertBefore(lightValNode, toInject);
+                method.instructions.insert(lightValNode, jump);
+            }
+        }
+    }
+
+    public static void transformBlockSapling(ClassNode classNode, boolean isObf)
+    {
+        final String UPDATE_TICK = isObf ? "a" : "updateTick";
+        final String UPDATE_TICK_DESC = isObf ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(UPDATE_TICK) && method.desc.equals(UPDATE_TICK_DESC))
+            {
+                AbstractInsnNode lightValNode = ASMHelper.findFirstInstructionWithOpcode(method, BIPUSH);
+
+                LabelNode jump = new LabelNode();
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getMinimumLightSapling", "()I", false));
+                toInject.add(new JumpInsnNode(GOTO, jump));
+
+                method.instructions.insertBefore(lightValNode, toInject);
+                method.instructions.insert(lightValNode, jump);
             }
         }
     }

@@ -85,8 +85,9 @@ public class Settings
     public static int[]     playerKeepsHealthOnRespawn          = new int[2];
     public static int[]     playerKeepsHungerOnRespawn          = new int[2];
     public static boolean[] playerKeepsXPOnRespawn              = new boolean[2];
-    // public static boolean[] playerChecksBedRespawn              = new boolean[2];
     public static boolean[] allowWaterInNether                  = new boolean[2];
+    public static int[]     minimumCropsLightLevel              = new int[2];
+    public static int[]     minimumSaplingLightLevel            = new int[2];
 
     public static List<Integer>[] waterAndLavaMakesObsidianBlacklist = (ArrayList<Integer>[])new ArrayList[2];
     public static List<Integer>[] waterAndLavaMakesCobbleBlacklist = (ArrayList<Integer>[])new ArrayList[2];
@@ -286,6 +287,8 @@ public class Settings
         playerKeepsXPOnRespawn[1] = playerKeepsXPOnRespawn[0];
         // playerChecksBedRespawn[1] = playerChecksBedRespawn[0];
         allowWaterInNether[1] = allowWaterInNether[0];
+        minimumCropsLightLevel[1] = minimumCropsLightLevel[0];
+        minimumSaplingLightLevel[1] = minimumSaplingLightLevel[0];
         waterAndLavaMakesObsidianBlacklist[1] = new ArrayList<Integer>(waterAndLavaMakesObsidianBlacklist[0]);
         waterAndLavaMakesCobbleBlacklist[1] = new ArrayList<Integer>(waterAndLavaMakesCobbleBlacklist[0]);
         enableSpawnFuzz[1] = enableSpawnFuzz[0];

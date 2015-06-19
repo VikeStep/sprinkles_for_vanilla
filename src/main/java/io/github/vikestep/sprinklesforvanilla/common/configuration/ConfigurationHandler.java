@@ -130,6 +130,16 @@ public class ConfigurationHandler
         Settings.allowWaterInNether[side] = config.get(CATEGORY, "allowWaterInNether", false, COMMENT).getBoolean(false);
         propOrder.add("allowWaterInNether");
 
+        COMMENT = "Set this value to the minimum light level required for crops to grow. Default is 9 and maximum light level is 15.\n" +
+                  "Please note that some other mods may override this behaviour with their own crops/saplings";
+        Settings.minimumCropsLightLevel[side] = config.get(CATEGORY, "minimumCropsLightLevel", 9, COMMENT, 0, 15).getInt();
+        propOrder.add("minimumCropsLightLevel");
+
+        COMMENT = "Set this value to the minimum light level required for saplings to grow. Default is 9 and maximum light level is 15.\n" +
+                  "Please note that some other mods may override this behaviour with their own crops/saplings";
+        Settings.minimumSaplingLightLevel[side] = config.get(CATEGORY, "minimumSaplingLightLevel", 9, COMMENT, 0, 15).getInt();
+        propOrder.add("minimumSaplingLightLevel");
+
         int[] DEFAULT = new int[]{};
         COMMENT = "Set this to a list of dimension ids which should not allow obsidian from water and lava";
         int[] result = config.get(CATEGORY, "waterAndLavaMakesObsidianBlacklist", DEFAULT, COMMENT).getIntList();

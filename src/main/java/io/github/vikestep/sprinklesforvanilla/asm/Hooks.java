@@ -190,4 +190,14 @@ public class Hooks
     {
         return SprinklesForVanilla.isOnServer ? InitMobRegistry.gcdPassiveSpawn : 400L;
     }
+
+    public static int getMinimumLightSapling()
+    {
+        return SprinklesForVanilla.isOnServer ? Settings.minimumSaplingLightLevel[1] : 9;
+    }
+
+    public static int getMinimumLightCrops()
+    {
+        return SprinklesForVanilla.isOnServer ? Settings.minimumCropsLightLevel[1] : 9;
+    }
 }
