@@ -283,11 +283,12 @@ public class WorldHandlers
                         int i = MathHelper.floor_double(entity.posX);
                         int j = MathHelper.floor_double(entity.boundingBox.minY);
                         int k = MathHelper.floor_double(entity.posZ);
-                        if (dim != 0 && entity.worldObj.getBlock(i, j - 1, k) != Blocks.grass)
+                        boolean enoughLight = entity.worldObj.getFullBlockLightValue(i, j, k) > 8;
+                        if (dim != 0 && entity.worldObj.getBlock(i, j - 1, k) != Blocks.grass && enoughLight)
                         {
                             shouldAllowIfRule = true;
                         }
-                        else if (entity instanceof EntityOcelot && !entity.worldObj.getBlock(i, j - 1, k).isLeaves(event.world, i, j - 1, k))
+                        else if (entity instanceof EntityOcelot && !entity.worldObj.getBlock(i, j - 1, k).isLeaves(event.world, i, j - 1, k) && enoughLight)
                         {
                             shouldAllowIfRule = true;
                         }
