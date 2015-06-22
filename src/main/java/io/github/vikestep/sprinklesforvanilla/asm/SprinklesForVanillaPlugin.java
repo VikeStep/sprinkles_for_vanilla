@@ -8,6 +8,8 @@ import java.util.Map;
 @IFMLLoadingPlugin.TransformerExclusions({"io.github.vikestep.sprinklesforvanilla.asm"})
 public class SprinklesForVanillaPlugin implements IFMLLoadingPlugin
 {
+    public static boolean isObf;
+
     @Override
     public String[] getASMTransformerClass()
     {
@@ -29,7 +31,7 @@ public class SprinklesForVanillaPlugin implements IFMLLoadingPlugin
     @Override
     public void injectData(Map<String, Object> data)
     {
-
+        isObf = (Boolean) data.get("runtimeDeobfuscationEnabled");
     }
 
     @Override

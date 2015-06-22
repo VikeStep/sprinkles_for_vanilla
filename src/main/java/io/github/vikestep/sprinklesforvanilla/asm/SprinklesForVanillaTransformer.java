@@ -60,7 +60,6 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     @Override
     public byte[] transform(String name, String transformedName, byte[] clazz)
     {
-        boolean isObf = !name.equals(transformedName);
         Method transformMethod = classToTransformMethodMap.get(transformedName);
         if (transformMethod == null)
         {
@@ -70,7 +69,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         try
         {
             ClassNode classNode = ASMHelper.readClassFromBytes(clazz);
-            transformMethod.invoke(null, classNode, isObf);
+            transformMethod.invoke(null, classNode, SprinklesForVanillaPlugin.isObf);
             return ASMHelper.writeClassToBytes(classNode, ClassWriter.COMPUTE_MAXS | (transformedName.equals("net.minecraft.entity.EntityLivingBase") ? 0 : ClassWriter.COMPUTE_FRAMES));
         }
         catch (Exception e)
