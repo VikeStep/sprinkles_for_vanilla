@@ -245,7 +245,7 @@ public class ConfigurationHandler
         CATEGORY = "global.mob griefing";
 
         COMMENT = "Enable this if you want the below configs to override the vanilla mobGriefing gamerule. Disabling this means that mobGriefing gamerule will be used and will either toggle everything on or off";
-        Settings.mobGriefingOverride[side] = config.get(CATEGORY, "mobGriefingOverride", true, COMMENT).getBoolean();
+        Settings.mobGriefingOverride[side] = config.get(CATEGORY, "mobGriefingOverride", false, COMMENT).getBoolean(false);
         propOrder.add("mobGriefingOverride");
 
         COMMENT = "Set to true to enable this type of mob griefing. Set to false to disable it. These will only be used if mobGriefingOverride is true";

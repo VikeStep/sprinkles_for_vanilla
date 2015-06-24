@@ -128,6 +128,7 @@ public class WorldHandlers
                 String[] data = explosionDatum.replace(", ", ",").split(",");
                 String exploderName = data[0];
                 boolean doesDamage = Boolean.parseBoolean(data[3]);
+                boolean isSmoking = Boolean.parseBoolean(data[5]);
 
                 if (isNotCorrectConfig(exploderName, explosion.exploder, event.explosion.explosionX, event.explosion.explosionY, event.explosion.explosionZ, event.world))
                 {
@@ -137,6 +138,11 @@ public class WorldHandlers
                 if (!doesDamage)
                 {
                     event.getAffectedEntities().clear();
+                }
+
+                if (!isSmoking)
+                {
+                    explosion.affectedBlockPositions.clear();
                 }
 
                 return;
