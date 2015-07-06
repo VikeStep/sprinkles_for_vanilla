@@ -14,10 +14,10 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class NetworkHandler
 {
-
-    public static final String[] blacklistedSettingsFields = new String[]
+    private static final String[] blacklistedSettingsFields = new String[]
             {
                     "particleNames",
                     "defaultBeaconBaseBlocks",
@@ -70,7 +70,7 @@ public class NetworkHandler
         }
     }
 
-    public static void sendConfigInfo(String configName, Object configValue, EntityPlayerMP player)
+    private static void sendConfigInfo(String configName, Object configValue, EntityPlayerMP player)
     {
         String configSendValue = null;
         if (configValue instanceof int[])

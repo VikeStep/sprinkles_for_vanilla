@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings({"unchecked", "UnusedDeclaration"})
 public class ConfigPacket implements IMessage
 {
     private String key;
@@ -50,7 +51,7 @@ public class ConfigPacket implements IMessage
         ByteBufUtils.writeUTF8String(buf, key + "::" + value);
     }
 
-    public String getKey()
+    String getKey()
     {
         return key;
     }
@@ -60,7 +61,7 @@ public class ConfigPacket implements IMessage
         this.key = key;
     }
 
-    public String getValue()
+    String getValue()
     {
         return value;
     }
@@ -70,7 +71,6 @@ public class ConfigPacket implements IMessage
         this.value = value;
     }
 
-    @SuppressWarnings("unchecked")
     public static class Handler implements IMessageHandler<ConfigPacket, IMessage>
     {
         @Override

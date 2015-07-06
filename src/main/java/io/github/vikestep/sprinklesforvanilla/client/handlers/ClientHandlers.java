@@ -9,6 +9,7 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent17;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class ClientHandlers
 {
     public static class SoundHandler

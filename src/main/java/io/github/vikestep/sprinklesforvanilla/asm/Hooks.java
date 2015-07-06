@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+@SuppressWarnings("UnusedDeclaration")
 public class Hooks
 {
     public static ArrayList<EntityLargeFireball> fireballsExploding = new ArrayList<EntityLargeFireball>();

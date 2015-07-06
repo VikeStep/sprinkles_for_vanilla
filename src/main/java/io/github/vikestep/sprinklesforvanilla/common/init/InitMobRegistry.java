@@ -18,14 +18,15 @@ import java.util.*;
 
 public class InitMobRegistry
 {
-    public static final String[] commands = {"add", "remove", "modify"};
+    private static final String[] commands = {"add", "remove", "modify"};
 
     public static Map<Class<? extends EntityLiving>, BiomeGenBase[]> modificationMap = new HashMap<Class<? extends EntityLiving>, BiomeGenBase[]>();
-    public static Map<Integer, Map<EnumCreatureType, Integer>>                 heightMap       = new HashMap<Integer, Map<EnumCreatureType, Integer>>();
-    public static Map<Integer, Map<EnumCreatureType, Integer>>                 rateMap         = new HashMap<Integer, Map<EnumCreatureType, Integer>>();
+    public static Map<Integer, Map<EnumCreatureType, Integer>>       heightMap       = new HashMap<Integer, Map<EnumCreatureType, Integer>>();
+    public static Map<Integer, Map<EnumCreatureType, Integer>>       rateMap         = new HashMap<Integer, Map<EnumCreatureType, Integer>>();
 
     public static int gcdPassiveSpawn = 400;
 
+    @SuppressWarnings("unchecked")
     public static void init()
     {
         for (String entry : Settings.mobSpawnRulesModifications[1])

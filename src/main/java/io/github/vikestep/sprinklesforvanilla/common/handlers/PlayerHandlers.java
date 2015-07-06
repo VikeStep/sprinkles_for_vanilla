@@ -24,6 +24,7 @@ import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 
 import java.util.*;
 
+@SuppressWarnings("ALL")
 public class PlayerHandlers
 {
     public static class PlayerSleepHandler

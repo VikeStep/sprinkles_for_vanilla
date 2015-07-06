@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class SprinkleConfiguration extends Configuration
+class SprinkleConfiguration extends Configuration
 {
 
     //The config description is text that goes before configStart. It will not be regenerated if edited, but will be created if the separator does not exist

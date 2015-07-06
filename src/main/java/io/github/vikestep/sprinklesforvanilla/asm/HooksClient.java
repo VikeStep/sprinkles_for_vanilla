@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import java.util.Arrays;
 import java.util.Calendar;
 
+@SuppressWarnings("UnusedDeclaration")
 @SideOnly(Side.CLIENT)
 public class HooksClient
 {

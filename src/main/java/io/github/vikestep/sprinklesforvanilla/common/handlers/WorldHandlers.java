@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class WorldHandlers
 {
     public static class ExplosionHandler

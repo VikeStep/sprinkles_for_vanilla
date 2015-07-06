@@ -4,9 +4,10 @@ import cpw.mods.fml.common.FMLLog;
 import io.github.vikestep.sprinklesforvanilla.common.reference.ModInfo;
 import org.apache.logging.log4j.Level;
 
+@SuppressWarnings("UnusedDeclaration")
 public class LogHelper
 {
-    public static void log(Level logLevel, Object object)
+    private static void log(Level logLevel, Object object)
     {
         FMLLog.log(ModInfo.MOD_ID, logLevel, String.valueOf(object));
     }

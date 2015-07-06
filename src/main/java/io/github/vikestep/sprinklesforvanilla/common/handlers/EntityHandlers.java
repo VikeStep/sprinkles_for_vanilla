@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class EntityHandlers
 {
     public static class EnderPearlHandler

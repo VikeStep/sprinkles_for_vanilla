@@ -385,12 +385,12 @@ public class ConfigurationHandler
         config.setCategoryPropertyOrder(CATEGORY, propOrder);
     }
 
-    public static void saveConfiguration()
+    private static void saveConfiguration()
     {
         config.save();
     }
 
-    public static void setConfigDescription()
+    private static void setConfigDescription()
     {
         List<String> configDescription = new ArrayList<String>();
         configDescription.add("To view this text art you need to be using a monospaced font (such as Courier)");

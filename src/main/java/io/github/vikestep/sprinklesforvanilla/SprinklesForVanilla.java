@@ -11,12 +11,12 @@ import cpw.mods.fml.relauncher.Side;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.ConfigurationHandler;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.network.ConfigPacket;
-import io.github.vikestep.sprinklesforvanilla.common.network.GenericPacket;
 import io.github.vikestep.sprinklesforvanilla.common.reference.ModInfo;
 import io.github.vikestep.sprinklesforvanilla.common.utils.MetadataHelper;
 
 import java.util.Map;
 
+@SuppressWarnings("UnusedDeclaration")
 @Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_NAME, version = ModInfo.VERSION)
 public class SprinklesForVanilla
 {
@@ -46,11 +46,7 @@ public class SprinklesForVanilla
             isOnServer = true;
         }
 
-        //I register packets for both sides since I do not always have one side being sent to the other
         network = NetworkRegistry.INSTANCE.newSimpleChannel("sfv_channel");
-        network.registerMessage(GenericPacket.Handler.class, GenericPacket.class, 0, Side.SERVER);
-        //network.registerMessage(ConfigPacket.Handler.class, ConfigPacket.class, 0, Side.SERVER);
-        network.registerMessage(GenericPacket.Handler.class, GenericPacket.class, 0, Side.CLIENT);
         network.registerMessage(ConfigPacket.Handler.class, ConfigPacket.class, 0, Side.CLIENT);
 
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
@@ -81,6 +77,7 @@ public class SprinklesForVanilla
         }
     }
 
+    @SuppressWarnings("SameReturnValue")
     @NetworkCheckHandler
     public boolean checkIfServer(Map<String, String> serverMods, Side remoteSide)
     {
