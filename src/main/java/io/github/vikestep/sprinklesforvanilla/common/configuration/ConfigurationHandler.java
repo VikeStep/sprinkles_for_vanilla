@@ -358,6 +358,14 @@ public class ConfigurationHandler
         Settings.mobSpawnRateRules[side] = new ArrayList<String>(Arrays.asList(config.get(CATEGORY, "mobSpawnRateRules", Settings.defaultRates, COMMENT).getStringList()));
         propOrder.add("mobSpawnRateRules");
 
+        COMMENT = "Set this to the maximum number of chunks (irrespective of y axis) surrounding a player that any animals/mobs can spawn in. Default is 8";
+        Settings.maxChunkRadius[side] = config.get(CATEGORY, "maxChunkRadius", 8, COMMENT, 0, 255).getInt();
+        propOrder.add("maxChunkRadius");
+
+        COMMENT = "Set this to the minimum number of blocks (factors in y axis) surrounding a player that any animals/mobs has to spawn outside of. Default is 24";
+        Settings.minBlockRadius[side] = config.get(CATEGORY, "minBlockRadius", 24, COMMENT).getInt();
+        propOrder.add("minBlockRadius");
+
         config.setCategoryPropertyOrder(CATEGORY, propOrder);
 
         /************

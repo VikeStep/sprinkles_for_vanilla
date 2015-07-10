@@ -201,4 +201,14 @@ public class Hooks
     {
         return SprinklesForVanilla.isOnServer ? Settings.minimumCropsLightLevel[1] : 9;
     }
+
+    public static byte getMaxChunkRadius()
+    {
+        return (byte) (SprinklesForVanilla.isOnServer ? Settings.maxChunkRadius[1] : 8);
+    }
+
+    public static double getMinBlockRadius()
+    {
+        return SprinklesForVanilla.isOnServer ? (double)(Settings.minBlockRadius[1]) : 24.0D;
+    }
 }

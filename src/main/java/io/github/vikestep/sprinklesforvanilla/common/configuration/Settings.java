@@ -259,6 +259,8 @@ public class Settings
     public static List<String>[] mobSpawnRulesModifications = (ArrayList<String>[])new ArrayList[2];
     public static List<String>[] mobSpawnHeightRules  = (ArrayList<String>[])new ArrayList[2];
     public static List<String>[] mobSpawnRateRules  = (ArrayList<String>[])new ArrayList[2];
+    public static int[] maxChunkRadius = new int[2];
+    public static int[] minBlockRadius = new int[2];
 
     //EXPLOSIONS
 
@@ -300,6 +302,8 @@ public class Settings
         mobSpawnRulesModifications[1] = new ArrayList<String>(mobSpawnRulesModifications[0]);
         mobSpawnHeightRules[1] = new ArrayList<String>(mobSpawnHeightRules[0]);
         mobSpawnRateRules[1] = new ArrayList<String>(mobSpawnRateRules[0]);
+        maxChunkRadius[1] = maxChunkRadius[0];
+        minBlockRadius[1] = minBlockRadius[0];
         shouldBeaconCheckForSunlight[1] = shouldBeaconCheckForSunlight[0];
         beaconBaseBlocks[1] = new ArrayList<String>(beaconBaseBlocks[0]);
         //flammableBlocks[1] = new ArrayList<String>(flammableBlocks[0]);

@@ -50,6 +50,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("net.minecraft.world.WorldServer", SprinklesForVanillaTransformer.class.getMethod("transformWorldServer", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.block.BlockSapling", SprinklesForVanillaTransformer.class.getMethod("transformBlockSapling", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.block.BlockCrops", SprinklesForVanillaTransformer.class.getMethod("transformBlockCrops", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.world.SpawnerAnimals", SprinklesForVanillaTransformer.class.getMethod("transformSpawnerAnimals", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -836,6 +837,35 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 method.instructions.insertBefore(lightValNode, toInject);
                 method.instructions.insert(lightValNode, jump);
+            }
+        }
+    }
+
+    public static void transformSpawnerAnimals(ClassNode classNode, boolean isObf)
+    {
+        final String FIND_CHUNKS = isObf ? "a" : "findChunksForSpawning";
+        final String FIND_CHUNKS_DESC = isObf ? "(Lmt;ZZZ)I" : "(Lnet/minecraft/world/WorldServer;ZZZ)I";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(FIND_CHUNKS) && method.desc.equals(FIND_CHUNKS_DESC))
+            {
+                AbstractInsnNode maxChunkRadiusNode = ASMHelper.findFirstInstructionWithOpcode(method, BIPUSH);
+                AbstractInsnNode spawnRadiusFromWorldSpawn = ASMHelper.findFirstInstructionWithOpcode(method, FCMPL).getPrevious();
+                AbstractInsnNode minSpawnPlayerNode = ASMHelper.findPreviousInstructionWithOpcode(spawnRadiusFromWorldSpawn, INVOKEVIRTUAL).getPrevious();
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getMaxChunkRadius", "()B", false));
+
+                method.instructions.insertBefore(maxChunkRadiusNode, toInject);
+
+                toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getMinBlockRadius", "()D", false));
+
+                method.instructions.insertBefore(minSpawnPlayerNode, toInject);
+
+                ASMHelper.skipInstructions(method.instructions, maxChunkRadiusNode, maxChunkRadiusNode.getNext());
+                ASMHelper.skipInstructions(method.instructions, minSpawnPlayerNode, minSpawnPlayerNode.getNext());
             }
         }
     }
