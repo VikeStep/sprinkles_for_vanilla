@@ -3,7 +3,11 @@ package io.github.vikestep.sprinklesforvanilla.client.handlers;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGameOver;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent17;
 
 import java.util.ArrayList;
@@ -37,6 +41,36 @@ public class ClientHandlers
                     LogHelper.warn((sound.split(":").length < 2 ? "You do not have this sound in the format (modname:soundPath): " : "Too many colons in disabled sound: ") + sound);
                     incorrectEntries.add(sound);
                 }
+            }
+        }
+    }
+
+    public static class GuiHandler
+    {
+        private static boolean hasClicked = false;
+
+        @SubscribeEvent
+        public void onGuiOpen(GuiOpenEvent event)
+        {
+            GuiScreen gui = event.gui;
+            if (!Settings.autoRespawn)
+            {
+                return;
+            }
+            if (gui instanceof GuiGameOver && !hasClicked)
+            {
+                Minecraft mc = Minecraft.getMinecraft();
+                if (!mc.theWorld.getWorldInfo().isHardcoreModeEnabled())
+                {
+                    hasClicked = true;
+                    mc.thePlayer.respawnPlayer();
+                    mc.displayGuiScreen((GuiScreen) null);
+                    event.setCanceled(true);
+                }
+            }
+            else if (!(gui instanceof GuiGameOver) && hasClicked)
+            {
+                hasClicked = false;
             }
         }
     }

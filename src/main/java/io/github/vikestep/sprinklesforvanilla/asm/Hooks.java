@@ -211,4 +211,14 @@ public class Hooks
     {
         return SprinklesForVanilla.isOnServer ? (double)(Settings.minBlockRadius[1]) : 24.0D;
     }
+
+    public static boolean shouldEndPortalTeleport()
+    {
+        return !SprinklesForVanilla.isOnServer || Settings.endPortalsAllowTeleportation[1];
+    }
+
+    public static boolean shouldPortalBlockBeGenerated()
+    {
+        return !SprinklesForVanilla.isOnServer || Settings.endPortalBlocksAreGenerated[1];
+    }
 }

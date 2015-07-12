@@ -10,5 +10,6 @@ public class ClientProxy extends CommonProxy
     {
         super.init();
         MinecraftForge.EVENT_BUS.register(new ClientHandlers.SoundHandler());
+        MinecraftForge.EVENT_BUS.register(new ClientHandlers.GuiHandler());
     }
 }

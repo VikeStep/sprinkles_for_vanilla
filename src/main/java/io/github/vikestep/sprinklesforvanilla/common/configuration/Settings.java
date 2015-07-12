@@ -25,6 +25,7 @@ public class Settings
 
     //GENERAL
     public static int displayChristmasChest;
+    public static boolean autoRespawn;
 
     //SOUNDS
     public static List<String> disabledSounds = new ArrayList<String>();
@@ -190,6 +191,10 @@ public class Settings
     public static boolean[] netherPortalBlocksAreGenerated    = new boolean[2];
     public static double[]  zombiePigmanNetherPortalSpawnMult = new double[2];
 
+    //END PORTALS
+    public static boolean[] endPortalsAllowTeleportation = new boolean[2];
+    public static boolean[] endPortalBlocksAreGenerated  = new boolean[2];
+
     //SLEEP
     public static boolean[]  sleepIsEnabled              = new boolean[2];
     public static boolean[]  bedSetsSpawn                = new boolean[2];
@@ -313,6 +318,8 @@ public class Settings
         netherPortalsAllowTeleportation[1] = netherPortalsAllowTeleportation[0];
         netherPortalBlocksAreGenerated[1] = netherPortalBlocksAreGenerated[0];
         zombiePigmanNetherPortalSpawnMult[1] = zombiePigmanNetherPortalSpawnMult[0];
+        endPortalsAllowTeleportation[1] = endPortalsAllowTeleportation[0];
+        endPortalBlocksAreGenerated[1] = endPortalBlocksAreGenerated[0];
         sleepIsEnabled[1] = sleepIsEnabled[0];
         bedSetsSpawn[1] = bedSetsSpawn[0];
         nearbyMobsCancelSleep[1] = nearbyMobsCancelSleep[0];

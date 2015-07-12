@@ -50,6 +50,10 @@ public class ConfigurationHandler
         Settings.displayChristmasChest = config.get(CATEGORY, "displayChristmasChest", 0, COMMENT, 0, 2).getInt(0);
         propOrder.add("displayChristmasChest");
 
+        COMMENT = "Set this to true to automatically respawn on death (in non-hardcore worlds)";
+        Settings.autoRespawn = config.get(CATEGORY, "autoRespawn", false, COMMENT).getBoolean(false);
+        propOrder.add("autoRespawn");
+
         config.setCategoryPropertyOrder(CATEGORY, propOrder);
 
         /************
@@ -276,6 +280,23 @@ public class ConfigurationHandler
         COMMENT = "Set this to a number (0 or greater and can be a decimal) that is multiplied by the chance of a zombie pigmen spawning in the overworld at a nether portal";
         Settings.zombiePigmanNetherPortalSpawnMult[side] = config.get(CATEGORY, "zombiePigmanNetherPortalSpawnMult", 1.0, COMMENT, 0, Double.MAX_VALUE).getDouble(1.0);
         propOrder.add("zombiePigmanNetherPortalSpawnMult");
+
+        config.setCategoryPropertyOrder(CATEGORY, propOrder);
+
+        /************
+         * End Portals
+         ************/
+
+        propOrder = new ArrayList<String>();
+        CATEGORY = "global.end portals";
+
+        COMMENT = "Set to true to allow nether portals to teleport. Set to false to disallow";
+        Settings.endPortalsAllowTeleportation[side] = config.get(CATEGORY, "endPortalsAllowTeleportation", true, COMMENT).getBoolean(true);
+        propOrder.add("endPortalsAllowTeleportation");
+
+        COMMENT = "Set to true to have portals generated when the obsidian portal structure is lit with fire. Set to false to have no reaction when the obsidian structure is lit";
+        Settings.endPortalBlocksAreGenerated[side] = config.get(CATEGORY, "endPortalBlocksAreGenerated", true, COMMENT).getBoolean(true);
+        propOrder.add("endPortalBlocksAreGenerated");
 
         config.setCategoryPropertyOrder(CATEGORY, propOrder);
 

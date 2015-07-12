@@ -51,6 +51,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("net.minecraft.block.BlockSapling", SprinklesForVanillaTransformer.class.getMethod("transformBlockSapling", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.block.BlockCrops", SprinklesForVanillaTransformer.class.getMethod("transformBlockCrops", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.world.SpawnerAnimals", SprinklesForVanillaTransformer.class.getMethod("transformSpawnerAnimals", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.item.ItemEnderEye", SprinklesForVanillaTransformer.class.getMethod("transformItemEnderEye", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.BlockEndPortal", SprinklesForVanillaTransformer.class.getMethod("transformBlockEndPortal", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -866,6 +868,46 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 ASMHelper.skipInstructions(method.instructions, maxChunkRadiusNode, maxChunkRadiusNode.getNext());
                 ASMHelper.skipInstructions(method.instructions, minSpawnPlayerNode, minSpawnPlayerNode.getNext());
+            }
+        }
+    }
+
+    public static void transformBlockEndPortal(ClassNode classNode, boolean isObf)
+    {
+        final String ON_ENTITY_COLLIDE = isObf ? "a" : "onEntityCollidedWithBlock";
+        final String ON_ENTITY_COLLIDE_DESC = isObf ? "(Lahb;IIILsa;)V" : "(Lnet/minecraft/world/World;IIILnet/minecraft/entity/Entity;)V";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(ON_ENTITY_COLLIDE) && method.desc.equals(ON_ENTITY_COLLIDE_DESC))
+            {
+                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFNONNULL);
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "shouldEndPortalTeleport", "()Z", false));
+                toInject.add(new JumpInsnNode(IFEQ, ifNode.label));
+
+                method.instructions.insert(ifNode, toInject);
+            }
+        }
+    }
+
+    public static void transformItemEnderEye(ClassNode classNode, boolean isObf)
+    {
+        final String ON_ENTITY_COLLIDE = isObf ? "a" : "onItemUse";
+        final String ON_ENTITY_COLLIDE_DESC = isObf ? "(Ladd;Lyz;Lahb;IIIIFFF)Z" : "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;IIIIFFF)Z";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(ON_ENTITY_COLLIDE) && method.desc.equals(ON_ENTITY_COLLIDE_DESC))
+            {
+                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findLastInstructionWithOpcode(method, IFEQ);
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "shouldPortalBlockBeGenerated", "()Z", false));
+                toInject.add(new JumpInsnNode(IFEQ, ifNode.label));
+
+                method.instructions.insert(ifNode, toInject);
             }
         }
     }
