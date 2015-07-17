@@ -89,6 +89,7 @@ public class Settings
     public static boolean[] allowWaterInNether                  = new boolean[2];
     public static int[]     minimumCropsLightLevel              = new int[2];
     public static int[]     minimumSaplingLightLevel            = new int[2];
+    public static float[]   playerPunchDamageMultiplier         = new float[2];
 
     public static List<Integer>[] waterAndLavaMakesObsidianBlacklist = (ArrayList<Integer>[])new ArrayList[2];
     public static List<Integer>[] waterAndLavaMakesCobbleBlacklist = (ArrayList<Integer>[])new ArrayList[2];
@@ -162,7 +163,6 @@ public class Settings
                     "anvil",
                     "fallingBlock"
             };
-
     public static List<Integer>[] damageSourceConfigs = (ArrayList<Integer>[])new ArrayList[2];
 
     //MOB GRIEFING
@@ -266,6 +266,8 @@ public class Settings
     public static List<String>[] mobSpawnRateRules  = (ArrayList<String>[])new ArrayList[2];
     public static int[] maxChunkRadius = new int[2];
     public static int[] minBlockRadius = new int[2];
+    public static boolean[] zombiesBurnInSunlight = new boolean[2];
+    public static boolean[] skeletonsBurnInSunlight = new boolean[2];
 
     //EXPLOSIONS
 
@@ -287,6 +289,10 @@ public class Settings
     public static boolean[] enableExplosionLogging = new boolean[2];
     public static boolean[] disableAllExplosions   = new boolean[2];
 
+    //VILLAGERS
+    //Villager ID, Chance, ItemSelling:metadata(min - max), ItemBuying1:metadata(min - max), ItemBuying2:metadata(min - max)
+    public static List<String>[] additionalVillagerTrades = (ArrayList<String>[])new ArrayList[2];
+
     public static void copyClientToServer() {
         enderPearlsTeleport[1] = enderPearlsTeleport[0];
         playerKeepsHealthOnRespawn[1] = playerKeepsHealthOnRespawn[0];
@@ -296,6 +302,7 @@ public class Settings
         allowWaterInNether[1] = allowWaterInNether[0];
         minimumCropsLightLevel[1] = minimumCropsLightLevel[0];
         minimumSaplingLightLevel[1] = minimumSaplingLightLevel[0];
+        playerPunchDamageMultiplier[1] = playerPunchDamageMultiplier[0];
         waterAndLavaMakesObsidianBlacklist[1] = new ArrayList<Integer>(waterAndLavaMakesObsidianBlacklist[0]);
         waterAndLavaMakesCobbleBlacklist[1] = new ArrayList<Integer>(waterAndLavaMakesCobbleBlacklist[0]);
         enableSpawnFuzz[1] = enableSpawnFuzz[0];
@@ -309,6 +316,8 @@ public class Settings
         mobSpawnRateRules[1] = new ArrayList<String>(mobSpawnRateRules[0]);
         maxChunkRadius[1] = maxChunkRadius[0];
         minBlockRadius[1] = minBlockRadius[0];
+        zombiesBurnInSunlight[1] = zombiesBurnInSunlight[0];
+        skeletonsBurnInSunlight[1] = skeletonsBurnInSunlight[0];
         shouldBeaconCheckForSunlight[1] = shouldBeaconCheckForSunlight[0];
         beaconBaseBlocks[1] = new ArrayList<String>(beaconBaseBlocks[0]);
         //flammableBlocks[1] = new ArrayList<String>(flammableBlocks[0]);

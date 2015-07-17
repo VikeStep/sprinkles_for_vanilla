@@ -1,16 +1,22 @@
 package io.github.vikestep.sprinklesforvanilla.common.handlers;
 
+import com.google.common.collect.Multimap;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.HashMap;
@@ -71,6 +77,36 @@ public class EntityHandlers
                     default:
                         LogHelper.warn("Found incorrect value in stoppedDamageSources: " + event.source.damageType + ", " + value);
                         break;
+                }
+            }
+        }
+    }
+
+    public static class LivingHurtHandler
+    {
+        @SubscribeEvent
+        public void onLivingHurt(LivingHurtEvent event)
+        {
+            DamageSource source = event.source;
+            if (source.damageType == "player" && SprinklesForVanilla.isOnServer && event.ammount > 0)
+            {
+                EntityPlayer player = (EntityPlayer)((EntityDamageSource)source).getEntity();
+                if (player != null)
+                {
+                    ItemStack heldItem = player.getCurrentEquippedItem();
+                    if (heldItem != null)
+                    {
+                        Multimap attribMap = heldItem.getAttributeModifiers();
+                        //If held item doesn't change the base damage
+                        if (!attribMap.containsKey(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName()))
+                        {
+                            event.ammount *= Settings.playerPunchDamageMultiplier[1];
+                        }
+                    }
+                    else
+                    {
+                        event.ammount *= Settings.playerPunchDamageMultiplier[1];
+                    }
                 }
             }
         }

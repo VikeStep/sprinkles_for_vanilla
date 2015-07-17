@@ -144,6 +144,19 @@ public class ConfigurationHandler
         Settings.minimumSaplingLightLevel[side] = config.get(CATEGORY, "minimumSaplingLightLevel", 9, COMMENT, 0, 15).getInt();
         propOrder.add("minimumSaplingLightLevel");
 
+        COMMENT = "Set this to a value (can be decimal) that will be multiplied by the damage of punching either bare handed or with an item\n" +
+                  "which does not affect damage. Setting this to 0 will disable punch damage. This does not affect punching blocks to break.";
+        Settings.playerPunchDamageMultiplier[side] = (float) config.get(CATEGORY, "punchDamageMultiplier", 1, COMMENT, 0, Float.MAX_VALUE).getDouble();
+        propOrder.add("punchDamageMultiplier");
+
+        COMMENT = "Set this to true to make zombies burn in sunlight. Set to false to disable";
+        Settings.zombiesBurnInSunlight[side] = config.get(CATEGORY, "zombiesBurnInSunlight", true, COMMENT).getBoolean(true);
+        propOrder.add("zombiesBurnInSunlight");
+
+        COMMENT = "Set this to true to make skeletons burn in sunlight. Set to false to disable";
+        Settings.skeletonsBurnInSunlight[side] = config.get(CATEGORY, "skeletonsBurnInSunlight", true, COMMENT).getBoolean(true);
+        propOrder.add("skeletonsBurnInSunlight");
+
         int[] DEFAULT = new int[]{};
         COMMENT = "Set this to a list of dimension ids which should not allow obsidian from water and lava";
         int[] result = config.get(CATEGORY, "waterAndLavaMakesObsidianBlacklist", DEFAULT, COMMENT).getIntList();
@@ -290,11 +303,11 @@ public class ConfigurationHandler
         propOrder = new ArrayList<String>();
         CATEGORY = "global.end portals";
 
-        COMMENT = "Set to true to allow nether portals to teleport. Set to false to disallow";
+        COMMENT = "Set to true to allow end portals to teleport. Set to false to disallow";
         Settings.endPortalsAllowTeleportation[side] = config.get(CATEGORY, "endPortalsAllowTeleportation", true, COMMENT).getBoolean(true);
         propOrder.add("endPortalsAllowTeleportation");
 
-        COMMENT = "Set to true to have portals generated when the obsidian portal structure is lit with fire. Set to false to have no reaction when the obsidian structure is lit";
+        COMMENT = "Set to true to have portals generated when the end portal structure is completed with the last eye of ender. Set to false to have no reaction when the eye of ender is placed";
         Settings.endPortalBlocksAreGenerated[side] = config.get(CATEGORY, "endPortalBlocksAreGenerated", true, COMMENT).getBoolean(true);
         propOrder.add("endPortalBlocksAreGenerated");
 

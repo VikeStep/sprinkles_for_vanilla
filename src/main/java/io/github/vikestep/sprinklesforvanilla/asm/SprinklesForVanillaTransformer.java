@@ -53,6 +53,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("net.minecraft.world.SpawnerAnimals", SprinklesForVanillaTransformer.class.getMethod("transformSpawnerAnimals", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.item.ItemEnderEye", SprinklesForVanillaTransformer.class.getMethod("transformItemEnderEye", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.block.BlockEndPortal", SprinklesForVanillaTransformer.class.getMethod("transformBlockEndPortal", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySkeleton", SprinklesForVanillaTransformer.class.getMethod("transformEntitySkeleton", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityZombie", SprinklesForVanillaTransformer.class.getMethod("transformEntityZombie", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -905,6 +907,46 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 InsnList toInject = new InsnList();
                 toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "shouldPortalBlockBeGenerated", "()Z", false));
+                toInject.add(new JumpInsnNode(IFEQ, ifNode.label));
+
+                method.instructions.insert(ifNode, toInject);
+            }
+        }
+    }
+
+    public static void transformEntityZombie(ClassNode classNode, boolean isObf)
+    {
+        final String LIVING_UPDATE = isObf ? "e" : "onLivingUpdate";
+        final String LIVING_UPDATE_DESC = "()V";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(LIVING_UPDATE) && method.desc.equals(LIVING_UPDATE_DESC))
+            {
+                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFEQ);
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "shouldZombiesBurn", "()Z", false));
+                toInject.add(new JumpInsnNode(IFEQ, ifNode.label));
+
+                method.instructions.insert(ifNode, toInject);
+            }
+        }
+    }
+
+    public static void transformEntitySkeleton(ClassNode classNode, boolean isObf)
+    {
+        final String LIVING_UPDATE = isObf ? "e" : "onLivingUpdate";
+        final String LIVING_UPDATE_DESC = "()V";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(LIVING_UPDATE) && method.desc.equals(LIVING_UPDATE_DESC))
+            {
+                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFEQ);
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "shouldSkeletonsBurn", "()Z", false));
                 toInject.add(new JumpInsnNode(IFEQ, ifNode.label));
 
                 method.instructions.insert(ifNode, toInject);

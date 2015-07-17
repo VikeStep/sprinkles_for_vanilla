@@ -221,4 +221,14 @@ public class Hooks
     {
         return !SprinklesForVanilla.isOnServer || Settings.endPortalBlocksAreGenerated[1];
     }
+
+    public static boolean shouldZombiesBurn()
+    {
+        return SprinklesForVanilla.isOnServer && Settings.zombiesBurnInSunlight[1];
+    }
+
+    public static boolean shouldSkeletonsBurn()
+    {
+        return SprinklesForVanilla.isOnServer && Settings.skeletonsBurnInSunlight[1];
+    }
 }
