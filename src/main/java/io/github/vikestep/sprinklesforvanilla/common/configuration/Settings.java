@@ -290,7 +290,12 @@ public class Settings
     public static boolean[] disableAllExplosions   = new boolean[2];
 
     //VILLAGERS
-    //Villager ID, Chance, ItemSelling:metadata(min - max), ItemBuying1:metadata(min - max), ItemBuying2:metadata(min - max)
+    public static final String[] defaultAdditionalTrades =
+            {
+                    //Villager ID, Chance, ItemSelling:metadata(min - max), ItemBuying1:metadata(min - max), ItemBuying2:metadata(min - max)
+                    "#0, 1, minecraft:dirt(32-64), minecraft:emerald(1-1)",
+                    "#0, 1, minecraft:dirt(32-64), minecraft:emerald(1-1), minecraft:gravel(8-10)",
+            };
     public static List<String>[] additionalVillagerTrades = (ArrayList<String>[])new ArrayList[2];
 
     public static void copyClientToServer() {
@@ -342,5 +347,6 @@ public class Settings
         explosionData[1] = new ArrayList<String>(explosionData[0]);
         enableExplosionLogging[1] = enableExplosionLogging[0];
         disableAllExplosions[1] = disableAllExplosions[0];
+        additionalVillagerTrades[1] = new ArrayList<String>(additionalVillagerTrades[0]);
     }
 }

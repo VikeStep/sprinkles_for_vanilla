@@ -100,6 +100,11 @@ public class ConfigPacket implements IMessage
                     double[] newValue = new double[]{((double[]) configValue)[0], Double.parseDouble(message.getValue())};
                     field.set(null, newValue);
                 }
+                else if (configValue instanceof float[])
+                {
+                    float[] newValue = new float[]{((float[]) configValue)[0], Float.parseFloat(message.getValue())};
+                    field.set(null, newValue);
+                }
                 else if (configValue instanceof double[][])
                 {
                     String[] doubleStrings = message.getValue().split(";");
@@ -114,7 +119,7 @@ public class ConfigPacket implements IMessage
                 //Because Screw Type Erasure
                 else if (configValue instanceof List<?>[] || emptyList)
                 {
-                    String[] stringListsNames  = new String[]{/*"flammableBlocks", */"beaconBaseBlocks", "explosionData", "mobSpawnRulesModifications", "mobSpawnHeightRules", "mobSpawnRateRules"};
+                    String[] stringListsNames  = new String[]{/*"flammableBlocks", */"beaconBaseBlocks", "explosionData", "mobSpawnRulesModifications", "mobSpawnHeightRules", "mobSpawnRateRules", "additionalVillagerTrades"};
                     String[] booleanListsNames = new String[]{"mobGriefingConfigs", "mobConfigs"};
                     String[] intListNames      = new String[]{"damageSourceConfigs", "waterAndLavaMakesObsidianBlacklist", "waterAndLavaMakesCobbleBlacklist"};
                     if (Arrays.asList(stringListsNames).contains(message.getKey()))

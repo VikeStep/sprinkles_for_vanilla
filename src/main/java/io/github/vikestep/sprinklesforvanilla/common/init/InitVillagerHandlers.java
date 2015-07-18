@@ -4,13 +4,13 @@ import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.handlers.VillagerHandler;
+import io.github.vikestep.sprinklesforvanilla.common.utils.CustomMerchantRecipe;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.block.Block;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.RegistryNamespaced;
-import net.minecraft.util.Tuple;
+import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 
 import java.util.ArrayList;
@@ -24,8 +24,7 @@ public class InitVillagerHandlers
 
     public static void initVillageHandlers()
     {
-        HashMap<Integer, CustomRecipe> additionalRecipes = new HashMap<Integer, CustomRecipe>();
-
+        HashMap<Integer, CustomMerchantRecipe> additionalRecipes = new HashMap<Integer, CustomMerchantRecipe>();
         for (String additionalRecipe : Settings.additionalVillagerTrades[1])
         {
             if (additionalRecipe.startsWith("#"))
@@ -81,32 +80,45 @@ public class InitVillagerHandlers
                     {
                         try
                         {
-                            Integer min = Integer.parseInt(rangeSelling[0]);
-                            Integer max = Integer.parseInt(rangeSelling[1]);
-                            EntityVillager.blacksmithSellingList.put(itemSellingStack.getItem(), new Tuple(min, max));
-                            min = Integer.parseInt(rangeBuying[0]);
-                            max = Integer.parseInt(rangeBuying[1]);
-                            EntityVillager.villagersSellingList.put(itemBuyingStack.getItem(), new Tuple(min, max));
+                            List<Integer> mins = new ArrayList<Integer>();
+                            List<Integer> maxs = new ArrayList<Integer>();
+                            mins.add(Integer.parseInt(rangeSelling[0]));
+                            maxs.add(Integer.parseInt(rangeSelling[1]));
+                            mins.add(Integer.parseInt(rangeBuying[0]));
+                            maxs.add(Integer.parseInt(rangeBuying[1]));
                             if (recipeData.length == 5)
                             {
-                                min = Integer.parseInt(rangeBuyingSecond[0]);
-                                max = Integer.parseInt(rangeBuyingSecond[1]);
-                                EntityVillager.villagersSellingList.put(itemBuyingSecondStack.getItem(), new Tuple(min, max));
+                                mins.add(Integer.parseInt(rangeBuyingSecond[0]));
+                                maxs.add(Integer.parseInt(rangeBuyingSecond[1]));
                             }
-                            CustomRecipe customRecipe = additionalRecipes.get(id);
-                            if (customRecipe == null)
+                            CustomMerchantRecipe customMerchantRecipe = additionalRecipes.get(id);
+                            if (customMerchantRecipe == null)
                             {
-                                //customRecipe = new CustomRecipe(new MerchantRecipeList(), new ArrayList<Float>());
+                                customMerchantRecipe = new CustomMerchantRecipe(new MerchantRecipeList(), new ArrayList<Float>(), new ArrayList<List<Integer>>(), new ArrayList<List<Integer>>());
                             }
+                            MerchantRecipe merchantRecipe;
+                            if (recipeData.length == 5)
+                            {
+                                merchantRecipe = new MerchantRecipe(itemBuyingStack, itemBuyingSecondStack, itemSellingStack);
+                            }
+                            else
+                            {
+                                merchantRecipe = new MerchantRecipe(itemBuyingStack, itemSellingStack);
+                            }
+                            customMerchantRecipe.merchantRecipeList.add(merchantRecipe);
+                            customMerchantRecipe.chanceList.add(chance);
+                            customMerchantRecipe.minList.add(mins);
+                            customMerchantRecipe.maxList.add(maxs);
+                            additionalRecipes.put(id, customMerchantRecipe);
                         }
                         catch (NumberFormatException e)
                         {
-                            LogHelper.error("");
+                            LogHelper.error("Invalid Villager Trade Addition: " + additionalRecipe + ". Invalid min-max range specified");
                         }
                     }
                     else
                     {
-                        LogHelper.error("");
+                        LogHelper.error("Invalid Villager Trade Addition: " + additionalRecipe + ". Invalid min-max range specified");
                     }
                 }
                 else
@@ -116,9 +128,9 @@ public class InitVillagerHandlers
             }
         }
 
-        for(Map.Entry<Integer, CustomRecipe> entry : additionalRecipes.entrySet())
+        for(Map.Entry<Integer, CustomMerchantRecipe> entry : additionalRecipes.entrySet())
         {
-            addVillagerTrades(entry.getKey(), entry.getValue().merchantRecipeList, entry.getValue().chanceList);
+            addVillagerTrades(entry.getKey(), entry.getValue());
         }
     }
 
@@ -127,7 +139,7 @@ public class InitVillagerHandlers
         String[] itemParts = itemName.split(":");
         if (itemParts.length == 2 || itemParts.length == 3)
         {
-            String fullItemName = itemParts[0] + itemParts[1];
+            String fullItemName = itemParts[0] + ":" + itemParts[1];
             Block block = Block.getBlockFromName(fullItemName);
             Item item;
             if (block != null)
@@ -174,20 +186,10 @@ public class InitVillagerHandlers
         return null;
     }
 
-    public static void addVillagerTrades(int id, MerchantRecipeList merchantRecipeList, List<Float> chanceList)
+    public static void addVillagerTrades(int id, CustomMerchantRecipe customMerchantRecipe)
     {
-        VillagerRegistry.instance().registerVillageTradeHandler(id, new VillagerHandler(merchantRecipeList, chanceList));
+        VillagerRegistry.instance().registerVillageTradeHandler(id, new VillagerHandler(customMerchantRecipe));
     }
 
-    class CustomRecipe
-    {
-        public MerchantRecipeList merchantRecipeList;
-        public List<Float> chanceList;
 
-        CustomRecipe(MerchantRecipeList merchantRecipeList, List<Float> chanceList)
-        {
-            this.merchantRecipeList = merchantRecipeList;
-            this.chanceList = chanceList;
-        }
-    }
 }

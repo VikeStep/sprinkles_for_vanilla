@@ -27,7 +27,8 @@ public class NetworkHandler
                     "defaultExplosionData",
                     "defaultModifications",
                     "defaultHeights",
-                    "defaultRates"
+                    "defaultRates",
+                    "defaultAdditionalTrades"
             };
 
     //Fired on the client when they are disconnected from a server
@@ -88,6 +89,10 @@ public class NetworkHandler
         else if (configValue instanceof String[])
         {
             configSendValue = ((String[])configValue)[1];
+        }
+        else if (configValue instanceof float[])
+        {
+            configSendValue = Float.toString(((float[]) configValue)[1]);
         }
         else if (configValue instanceof double[][])
         {

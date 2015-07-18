@@ -32,14 +32,12 @@ public class CommonProxy
         MinecraftForge.EVENT_BUS.register(new WorldHandlers.ExplosionHandler());
         MinecraftForge.EVENT_BUS.register(new WorldHandlers.WorldPotentialSpawnsHandler());
 
-        if (SprinklesForVanilla.isOnServer)
+
+        InitVillagerHandlers.initVillageHandlers();
+        InitMobRegistry.init();
+        if (!Settings.enableSpawnFuzz[1])
         {
-            InitVillagerHandlers.initVillageHandlers();
-            InitMobRegistry.init();
-            if (!Settings.enableSpawnFuzz[1])
-            {
-                ForgeModContainer.defaultHasSpawnFuzz = false;
-            }
+            ForgeModContainer.defaultHasSpawnFuzz = false;
         }
     }
 }
