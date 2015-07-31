@@ -119,7 +119,7 @@ public class ConfigPacket implements IMessage
                 //Because Screw Type Erasure
                 else if (configValue instanceof List<?>[] || emptyList)
                 {
-                    String[] stringListsNames  = new String[]{/*"flammableBlocks", */"beaconBaseBlocks", "explosionData", "mobSpawnRulesModifications", "mobSpawnHeightRules", "mobSpawnRateRules", "additionalVillagerTrades"};
+                    String[] stringListsNames  = new String[]{/*"flammableBlocks", */"beaconBaseBlocks", "explosionData", "mobSpawnRulesModifications", "blockLightValues", "mobSpawnHeightRules", "mobSpawnRateRules", "additionalVillagerTrades"};
                     String[] booleanListsNames = new String[]{"mobGriefingConfigs", "mobConfigs"};
                     String[] intListNames      = new String[]{"damageSourceConfigs", "waterAndLavaMakesObsidianBlacklist", "waterAndLavaMakesCobbleBlacklist"};
                     if (Arrays.asList(stringListsNames).contains(message.getKey()))

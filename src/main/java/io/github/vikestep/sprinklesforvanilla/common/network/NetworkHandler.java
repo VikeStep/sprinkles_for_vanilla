@@ -28,7 +28,8 @@ public class NetworkHandler
                     "defaultModifications",
                     "defaultHeights",
                     "defaultRates",
-                    "defaultAdditionalTrades"
+                    "defaultAdditionalTrades",
+                    "defaultLightValues"
             };
 
     //Fired on the client when they are disconnected from a server

@@ -5,6 +5,7 @@ import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.handlers.EntityHandlers;
 import io.github.vikestep.sprinklesforvanilla.common.handlers.PlayerHandlers;
 import io.github.vikestep.sprinklesforvanilla.common.handlers.WorldHandlers;
+import io.github.vikestep.sprinklesforvanilla.common.init.InitLightLevels;
 import io.github.vikestep.sprinklesforvanilla.common.init.InitMobRegistry;
 import io.github.vikestep.sprinklesforvanilla.common.init.InitVillagerHandlers;
 import io.github.vikestep.sprinklesforvanilla.common.network.NetworkHandler;
@@ -35,6 +36,7 @@ public class CommonProxy
 
         InitVillagerHandlers.initVillageHandlers();
         InitMobRegistry.init();
+        InitLightLevels.tweakLightValues();
         if (!Settings.enableSpawnFuzz[1])
         {
             ForgeModContainer.defaultHasSpawnFuzz = false;

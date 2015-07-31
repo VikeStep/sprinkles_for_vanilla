@@ -24,7 +24,7 @@ public class Settings
      */
 
     //GENERAL
-    public static int displayChristmasChest;
+    public static int     displayChristmasChest;
     public static boolean autoRespawn;
 
     //SOUNDS
@@ -82,17 +82,17 @@ public class Settings
      */
 
     //GENERAL
-    public static boolean[] enderPearlsTeleport                 = new boolean[2];
-    public static int[]     playerKeepsHealthOnRespawn          = new int[2];
-    public static int[]     playerKeepsHungerOnRespawn          = new int[2];
-    public static boolean[] playerKeepsXPOnRespawn              = new boolean[2];
-    public static boolean[] allowWaterInNether                  = new boolean[2];
-    public static int[]     minimumCropsLightLevel              = new int[2];
-    public static int[]     minimumSaplingLightLevel            = new int[2];
-    public static float[]   playerPunchDamageMultiplier         = new float[2];
+    public static boolean[] enderPearlsTeleport         = new boolean[2];
+    public static int[]     playerKeepsHealthOnRespawn  = new int[2];
+    public static int[]     playerKeepsHungerOnRespawn  = new int[2];
+    public static boolean[] playerKeepsXPOnRespawn      = new boolean[2];
+    public static boolean[] allowWaterInNether          = new boolean[2];
+    public static int[]     minimumCropsLightLevel      = new int[2];
+    public static int[]     minimumSaplingLightLevel    = new int[2];
+    public static float[]   playerPunchDamageMultiplier = new float[2];
 
-    public static List<Integer>[] waterAndLavaMakesObsidianBlacklist = (ArrayList<Integer>[])new ArrayList[2];
-    public static List<Integer>[] waterAndLavaMakesCobbleBlacklist = (ArrayList<Integer>[])new ArrayList[2];
+    public static List<Integer>[] waterAndLavaMakesObsidianBlacklist = (ArrayList<Integer>[]) new ArrayList[2];
+    public static List<Integer>[] waterAndLavaMakesCobbleBlacklist   = (ArrayList<Integer>[]) new ArrayList[2];
 
     //SPAWNING
     public static boolean[] enableSpawnFuzz       = new boolean[2];
@@ -103,8 +103,8 @@ public class Settings
     public static String[]  endSpawnDefault       = new String[2];
 
     //BEACONS
-    public static boolean[] shouldBeaconCheckForSunlight = new boolean[2];
-    public static final String[] defaultBeaconBaseBlocks =
+    public static       boolean[] shouldBeaconCheckForSunlight = new boolean[2];
+    public static final String[]  defaultBeaconBaseBlocks      =
             {
                     "minecraft:iron_block",
                     "minecraft:gold_block",
@@ -112,7 +112,7 @@ public class Settings
                     "minecraft:diamond_block"
             };
 
-    public static List<String>[] beaconBaseBlocks = (ArrayList<String>[])new ArrayList[2];
+    public static List<String>[] beaconBaseBlocks = (ArrayList<String>[]) new ArrayList[2];
 
     //FLAMMABLE BLOCKS
     /*public static final String[] defaultFlammable =
@@ -144,8 +144,16 @@ public class Settings
 
     public static List<String>[] flammableBlocks = (ArrayList<String>[])new ArrayList[2];*/
 
+    //BLOCKS
+    public static final String[] defaultLightValues =
+            {
+                    "#minecraft:glowstone, 0",
+                    "#minecraft:torch, 12"
+            };
+    public static List<String>[] blockLightValues = (ArrayList<String>[]) new ArrayList[2];
+
     //DAMAGE SOURCES
-    public static final String[] damageSources =
+    public static final String[]        damageSources       =
             {
                     "inFire",
                     "onFire",
@@ -163,7 +171,7 @@ public class Settings
                     "anvil",
                     "fallingBlock"
             };
-    public static List<Integer>[] damageSourceConfigs = (ArrayList<Integer>[])new ArrayList[2];
+    public static       List<Integer>[] damageSourceConfigs = (ArrayList<Integer>[]) new ArrayList[2];
 
     //MOB GRIEFING
     public static final String[] mobGriefingTypes =
@@ -184,7 +192,7 @@ public class Settings
             };
 
     public static boolean[]       mobGriefingOverride = new boolean[2];
-    public static List<Boolean>[] mobGriefingConfigs  = (ArrayList<Boolean>[])new ArrayList[2];
+    public static List<Boolean>[] mobGriefingConfigs  = (ArrayList<Boolean>[]) new ArrayList[2];
 
     //NETHER PORTALS
     public static boolean[] netherPortalsAllowTeleportation   = new boolean[2];
@@ -199,7 +207,7 @@ public class Settings
     public static boolean[]  sleepIsEnabled              = new boolean[2];
     public static boolean[]  bedSetsSpawn                = new boolean[2];
     public static boolean[]  nearbyMobsCancelSleep       = new boolean[2];
-    public static boolean[]  dayCancelsSleep             = new boolean[]{true, true}; //Currently not in the configs. Either use coremodding or request a Forge PR to fix this
+    public static boolean[]  dayCancelsSleep             = new boolean[] {true, true}; //Currently not in the configs. Either use coremodding or request a Forge PR to fix this
     public static boolean[]  otherDimensionsCancelSleep  = new boolean[2];
     public static boolean[]  distanceFromBedCancelsSleep = new boolean[2];
     public static double[][] nearbyMobDistance           = new double[3][2]; //{x, y, z}
@@ -326,6 +334,7 @@ public class Settings
         shouldBeaconCheckForSunlight[1] = shouldBeaconCheckForSunlight[0];
         beaconBaseBlocks[1] = new ArrayList<String>(beaconBaseBlocks[0]);
         //flammableBlocks[1] = new ArrayList<String>(flammableBlocks[0]);
+        blockLightValues[1] = new ArrayList<String>(blockLightValues[0]);
         damageSourceConfigs[1] = new ArrayList<Integer>(damageSourceConfigs[0]);
         mobGriefingOverride[1] = mobGriefingOverride[0];
         mobGriefingConfigs[1] = new ArrayList<Boolean>(mobGriefingConfigs[0]);

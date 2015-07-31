@@ -238,6 +238,21 @@ public class ConfigurationHandler
         config.setCategoryPropertyOrder(CATEGORY, propOrder);*/
 
         /************
+         * Blocks
+         ************/
+
+        propOrder = new ArrayList<String>();
+        CATEGORY = "global.blocks";
+
+        COMMENT = "In this list, write a list of blocks which you would like to change the default value. There is no metadata support in this.\n" +
+                  "So the format is modname:blockname, lightlevel. Putting a # in front comments it out";
+        Settings.blockLightValues[side] = new ArrayList<String>(Arrays.asList(config.get(CATEGORY, "blockLightValues", Settings.defaultLightValues, COMMENT).getStringList()));
+        propOrder.add("blockLightValues");
+
+        config.setCategoryPropertyOrder(CATEGORY, propOrder);
+
+
+        /************
          * Damage Sources
          ************/
 
