@@ -2,6 +2,7 @@ package io.github.vikestep.sprinklesforvanilla.asm;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.client.Minecraft;
@@ -55,5 +56,15 @@ public class HooksClient
                 LogHelper.warn("It seems that you have set the config christmasChest to " + Settings.displayChristmasChest + ". The range for that is integers between 0 and 2");
                 return false;
         }
+    }
+
+    public static boolean shouldStopSprinting()
+    {
+        return Settings.sprintingHasCooldown[1] || !SprinklesForVanilla.isOnServer;
+    }
+
+    public static float getMinimumHunger()
+    {
+        return SprinklesForVanilla.isOnServer ? Settings.minimumHungerToSprint[1] : 6.0F;
     }
 }

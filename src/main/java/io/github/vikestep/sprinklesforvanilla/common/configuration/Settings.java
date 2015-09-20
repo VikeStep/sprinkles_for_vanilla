@@ -90,6 +90,8 @@ public class Settings
     public static int[]     minimumCropsLightLevel      = new int[2];
     public static int[]     minimumSaplingLightLevel    = new int[2];
     public static float[]   playerPunchDamageMultiplier = new float[2];
+    public static boolean[] sprintingHasCooldown        = new boolean[2];
+    public static int[]     minimumHungerToSprint       = new int[2];
 
     public static List<Integer>[] waterAndLavaMakesObsidianBlacklist = (ArrayList<Integer>[]) new ArrayList[2];
     public static List<Integer>[] waterAndLavaMakesCobbleBlacklist   = (ArrayList<Integer>[]) new ArrayList[2];
@@ -318,6 +320,8 @@ public class Settings
         playerPunchDamageMultiplier[1] = playerPunchDamageMultiplier[0];
         waterAndLavaMakesObsidianBlacklist[1] = new ArrayList<Integer>(waterAndLavaMakesObsidianBlacklist[0]);
         waterAndLavaMakesCobbleBlacklist[1] = new ArrayList<Integer>(waterAndLavaMakesCobbleBlacklist[0]);
+        sprintingHasCooldown[1] = sprintingHasCooldown[0];
+        minimumHungerToSprint[1] = minimumHungerToSprint[0];
         enableSpawnFuzz[1] = enableSpawnFuzz[0];
         allowNetherRespawn[1] = allowNetherRespawn[0];
         allowEndRespawn[1] = allowEndRespawn[0];

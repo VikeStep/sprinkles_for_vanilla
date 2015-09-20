@@ -168,6 +168,15 @@ public class ConfigurationHandler
         Settings.waterAndLavaMakesCobbleBlacklist[side] = result.length == 0 ? new ArrayList<Integer>() : new ArrayList<Integer>(Arrays.asList(ArrayUtils.toObject(result)));
         propOrder.add("waterAndLavaMakesCobbleBlacklist");
 
+        COMMENT = "Set this to true to have constant sprinting stop after 600 ticks (30 seconds). Set to false to remove the requirement";
+        Settings.sprintingHasCooldown[side] = config.get(CATEGORY, "sprintingHasCooldown", true, COMMENT).getBoolean(true);
+        propOrder.add("sprintingHasCooldown");
+
+        COMMENT = "Set this to the minimum hunger required for sprinting (must be in half-units), so default of 3 pork chops is 6. Set to -1\n" +
+                  "to enable sprinting at any hunger level (0 will stop sprinting when you have 0 hunger). Setting to 20 will disable sprinting.";
+        Settings.minimumHungerToSprint[side] = config.get(CATEGORY, "minimumHungerToSprint", 6, COMMENT, -1, 20).getInt();
+        propOrder.add("minimumHungerToSprint");
+
         config.setCategoryPropertyOrder(CATEGORY, propOrder);
 
         /************

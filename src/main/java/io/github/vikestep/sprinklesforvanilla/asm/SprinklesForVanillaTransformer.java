@@ -55,6 +55,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("net.minecraft.block.BlockEndPortal", SprinklesForVanillaTransformer.class.getMethod("transformBlockEndPortal", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySkeleton", SprinklesForVanillaTransformer.class.getMethod("transformEntitySkeleton", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.entity.monster.EntityZombie", SprinklesForVanillaTransformer.class.getMethod("transformEntityZombie", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.client.entity.EntityPlayerSP", SprinklesForVanillaTransformer.class.getMethod("transformEntityPlayerSP", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -950,6 +951,43 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 toInject.add(new JumpInsnNode(IFEQ, ifNode.label));
 
                 method.instructions.insert(ifNode, toInject);
+            }
+        }
+    }
+
+    public static void transformEntityPlayerSP(ClassNode classNode, boolean isObf)
+    {
+        final String LIVING_UPDATE = isObf ? "e" : "onLivingUpdate";
+        final String LIVING_UPDATE_DESC = "()V";
+
+        for (MethodNode method : classNode.methods)
+        {
+            if (method.name.equals(LIVING_UPDATE) && method.desc.equals(LIVING_UPDATE_DESC))
+            {
+                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFNE);
+
+                InsnList toInject = new InsnList();
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "shouldStopSprinting", "()Z", false));
+                toInject.add(new JumpInsnNode(IFEQ, ifNode.label));
+
+                method.instructions.insert(ifNode, toInject);
+
+                boolean found = false;
+                AbstractInsnNode node = method.instructions.getFirst();
+                while (!found) {
+                    node = ASMHelper.findNextInstructionWithOpcode(node, LDC);
+                    if (((LdcInsnNode)node).cst instanceof Float) {
+                        Float f = (Float)((LdcInsnNode)node).cst;
+                        if (f == 6.0F) {
+                            found = true;
+                        }
+                    }
+                }
+
+                MethodInsnNode toAdd = new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "getMinimumHunger", "()F", false);
+                method.instructions.insert(node, toAdd);
+
+                ASMHelper.skipInstructions(method.instructions, node, node.getNext());
             }
         }
     }

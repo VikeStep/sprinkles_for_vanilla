@@ -47,19 +47,25 @@ Must be on server for these to work:
 - Configure mob spawn rules for different biomes (add, modify or remove)
 - Disable/Enable all explosions
 - Configure values for different types of explosions (including from other mods)
+- Set minimum and maximum spawn radius around a player
+- Skip the respawn screen and respawn on non-hardcore worlds
+- Disable/Enable end portals
+- Set custom villager trades
+- Set multiplier on punch damage against entities
+- Disable/Enable zombies/skeletons burning in the sun
+- Set the light value of any block from any mod
+- Disable/Enable Sprinting
+- Set hunger level required for sprinting
 
 Planned Features
 ---------------------
 - Disable/Enable Weather overall or based on biomes
 - Set Frequency/Duration of rain/thunder
 - Set which biomes should snow
-- Disable End
 - Disable/Enable Double Chests being created
 - Toggle between full block or chest models
 - Disable/Enable different Worldgen features
 - Disable/Enable Hunger
-- Disable/Enable Sprinting
-- Set hunger level required for sprinting
 - Set gravity
 - Disable/Enable Night
 - Set duration of day/night cycle
