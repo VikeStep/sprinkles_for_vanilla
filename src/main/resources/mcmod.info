@@ -1,0 +1,16 @@
+[
+{
+  "modid": "sprinkles_for_vanilla",
+  "name": "sprinkles_for_vanilla",
+  "description": "This mod adds a config file for vanilla",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://minecraft.curseforge.com/mc-mods/226309-sprinkles_for_vanilla",
+  "updateUrl": "",
+  "authorList": ["VikeStep"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
