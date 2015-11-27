@@ -5,5 +5,5 @@ import java.util.List;
 
 public class Modules
 {
-    public static List<IModule> modules = new ArrayList<IModule>();
+    public static List<IModule> modules = new ArrayList<>();
 }

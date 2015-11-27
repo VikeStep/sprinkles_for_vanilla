@@ -20,4 +20,7 @@ public interface IModule
 
     // Disables the module code so it is not ran
     void disable();
+
+    // Initialisation code
+    void init();
 }
