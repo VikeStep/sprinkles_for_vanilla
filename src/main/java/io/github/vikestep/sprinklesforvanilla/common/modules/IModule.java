@@ -4,6 +4,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.List;
 
+//Modules should be implemented as singletons
 public interface IModule
 {
     // Returns a list of properties this module has (in order)
