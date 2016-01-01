@@ -4,6 +4,7 @@ import io.github.vikestep.sprinklesforvanilla.common.modules.IProperty;
 import io.github.vikestep.sprinklesforvanilla.common.modules.ModuleBase;
 import net.minecraftforge.fml.relauncher.Side;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExplosionsModule extends ModuleBase
@@ -27,7 +28,7 @@ public class ExplosionsModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

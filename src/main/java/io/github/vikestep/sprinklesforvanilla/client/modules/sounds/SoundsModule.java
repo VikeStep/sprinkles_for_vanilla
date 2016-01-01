@@ -2,8 +2,11 @@ package io.github.vikestep.sprinklesforvanilla.client.modules.sounds;
 
 import io.github.vikestep.sprinklesforvanilla.common.modules.IProperty;
 import io.github.vikestep.sprinklesforvanilla.common.modules.ModuleBase;
+import io.github.vikestep.sprinklesforvanilla.common.modules.PropertyBase;
 import net.minecraftforge.fml.relauncher.Side;
+import org.apache.logging.log4j.core.config.plugins.ResolverUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SoundsModule extends ModuleBase
@@ -27,7 +30,7 @@ public class SoundsModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
