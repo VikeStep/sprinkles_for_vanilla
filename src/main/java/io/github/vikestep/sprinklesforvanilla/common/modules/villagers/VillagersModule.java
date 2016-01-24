@@ -11,16 +11,16 @@ public class VillagersModule extends ModuleBase
 {
     private static VillagersModule instance = null;
 
-    protected VillagersModule(String name, Side side)
+    private VillagersModule()
     {
-        super(name, side);
+        super("villagers", Side.SERVER);
     }
 
     public static VillagersModule getInstance()
     {
         if (instance == null)
         {
-            instance = new VillagersModule("villagers", Side.SERVER);
+            instance = new VillagersModule();
         }
         return instance;
     }
@@ -28,7 +28,7 @@ public class VillagersModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return new ArrayList<>();
+        return new ArrayList<IProperty>();
     }
 
     @Override

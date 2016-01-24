@@ -25,7 +25,7 @@ public class ConfigurationHandler
 
         for (IModule module : Modules.modules)
         {
-            category = (module.getModuleSide() == Side.CLIENT ? "client-side" : "global") + module.getModuleName();
+            category = (module.getModuleSide() == Side.CLIENT ? "client-side." : "global.") + module.getModuleName();
             propOrder = new ArrayList<>();
             for (IProperty prop : module.getProperties())
             {

@@ -4,10 +4,11 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public abstract class ModuleBase implements IModule
 {
-    String name;
-    Side side;
+    private final String  name;
+    private final Side    side;
+    private       boolean isEnabled;
 
-    public ModuleBase(String name, Side side)
+    protected ModuleBase(String name, Side side)
     {
         this.name = name;
         this.side = side;
@@ -23,5 +24,17 @@ public abstract class ModuleBase implements IModule
     public Side getModuleSide()
     {
         return side;
+    }
+
+    @Override
+    public boolean isEnabled()
+    {
+        return isEnabled;
+    }
+
+    @Override
+    public void setEnabled(boolean isEnabled)
+    {
+        this.isEnabled = isEnabled;
     }
 }

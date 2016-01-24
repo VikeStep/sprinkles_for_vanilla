@@ -11,16 +11,16 @@ public class BlocksModule extends ModuleBase
 {
     private static BlocksModule instance = null;
 
-    protected BlocksModule(String name, Side side)
+    private BlocksModule()
     {
-        super(name, side);
+        super("blocks", Side.SERVER);
     }
 
     public static BlocksModule getInstance()
     {
         if (instance == null)
         {
-            instance = new BlocksModule("blocks", Side.SERVER);
+            instance = new BlocksModule();
         }
         return instance;
     }
@@ -28,7 +28,7 @@ public class BlocksModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return new ArrayList<>();
+        return new ArrayList<IProperty>();
     }
 
     @Override

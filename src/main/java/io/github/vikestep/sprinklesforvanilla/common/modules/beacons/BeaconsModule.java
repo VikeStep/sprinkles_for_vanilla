@@ -11,16 +11,16 @@ public class BeaconsModule extends ModuleBase
 {
     private static BeaconsModule instance = null;
 
-    protected BeaconsModule(String name, Side side)
+    private BeaconsModule()
     {
-        super(name, side);
+        super("beacons", Side.SERVER);
     }
 
     public static BeaconsModule getInstance()
     {
         if (instance == null)
         {
-            instance = new BeaconsModule("beacons", Side.SERVER);
+            instance = new BeaconsModule();
         }
         return instance;
     }

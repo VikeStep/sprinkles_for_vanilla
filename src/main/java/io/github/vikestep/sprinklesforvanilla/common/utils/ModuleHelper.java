@@ -1,10 +1,12 @@
 package io.github.vikestep.sprinklesforvanilla.common.utils;
 
+import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.modules.IModule;
 import io.github.vikestep.sprinklesforvanilla.common.modules.IProperty;
 import io.github.vikestep.sprinklesforvanilla.common.modules.Modules;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.Arrays;
 
@@ -39,7 +41,7 @@ public class ModuleHelper
             case BOOLEAN:
                 return null;
             case INT_LIST:
-                int[] ints = (int[])property.getValue();
+                int[] ints = (int[]) property.getValue();
                 values = new String[ints.length];
                 for (int i = 0; i < ints.length; i++)
                 {
@@ -49,7 +51,7 @@ public class ModuleHelper
             case STRING_LIST:
                 return (String[]) property.getValue();
             case DOUBLE_LIST:
-                double[] doubles = (double[])property.getValue();
+                double[] doubles = (double[]) property.getValue();
                 values = new String[doubles.length];
                 for (int i = 0; i < doubles.length; i++)
                 {
@@ -57,7 +59,7 @@ public class ModuleHelper
                 }
                 return values;
             case BOOLEAN_LIST:
-                boolean[] booleans = (boolean[])property.getValue();
+                boolean[] booleans = (boolean[]) property.getValue();
                 values = new String[booleans.length];
                 for (int i = 0; i < booleans.length; i++)
                 {
@@ -77,28 +79,28 @@ public class ModuleHelper
         switch (prop.getType())
         {
             case INT:
-                property = config.get(category, name, (Integer)defaultValue, comment);
+                property = config.get(category, name, (Integer) defaultValue, comment);
                 break;
             case STRING:
-                property = config.get(category, name, (String)defaultValue, comment);
+                property = config.get(category, name, (String) defaultValue, comment);
                 break;
             case DOUBLE:
-                property = config.get(category, name, (Double)defaultValue, comment);
+                property = config.get(category, name, (Double) defaultValue, comment);
                 break;
             case BOOLEAN:
-                property = config.get(category, name, (Boolean)defaultValue, comment);
+                property = config.get(category, name, (Boolean) defaultValue, comment);
                 break;
             case INT_LIST:
-                property = config.get(category, name, (int[])defaultValue, comment);
+                property = config.get(category, name, (int[]) defaultValue, comment);
                 break;
             case STRING_LIST:
-                property = config.get(category, name, (String[])defaultValue, comment);
+                property = config.get(category, name, (String[]) defaultValue, comment);
                 break;
             case DOUBLE_LIST:
-                property = config.get(category, name, (double[])defaultValue, comment);
+                property = config.get(category, name, (double[]) defaultValue, comment);
                 break;
             case BOOLEAN_LIST:
-                property = config.get(category, name, (boolean[])defaultValue, comment);
+                property = config.get(category, name, (boolean[]) defaultValue, comment);
                 break;
             default:
                 LogHelper.error("Invalid Config Type " + name);
@@ -116,16 +118,16 @@ public class ModuleHelper
         switch (prop.getType())
         {
             case INT:
-                prop.setValue(property.getInt((Integer)defaultValue));
+                prop.setValue(property.getInt((Integer) defaultValue));
                 break;
             case STRING:
                 prop.setValue(property.getString());
                 break;
             case DOUBLE:
-                prop.setValue(property.getDouble((Double)defaultValue));
+                prop.setValue(property.getDouble((Double) defaultValue));
                 break;
             case BOOLEAN:
-                prop.setValue(property.getBoolean((Boolean)defaultValue));
+                prop.setValue(property.getBoolean((Boolean) defaultValue));
                 break;
             case INT_LIST:
                 prop.setValue(property.getIntList());
@@ -144,7 +146,8 @@ public class ModuleHelper
 
     public static void setIPropertyValueFromString(String value, String[] values, IProperty property)
     {
-        switch (property.getType()){
+        switch (property.getType())
+        {
             case INT:
                 property.setValue(Integer.parseInt(value));
                 break;
@@ -220,7 +223,7 @@ public class ModuleHelper
         return property;
     }
 
-    public static boolean isPropertyDefault(IProperty property)
+    private static boolean isPropertyDefault(IProperty property)
     {
         switch (property.getType())
         {
@@ -245,6 +248,16 @@ public class ModuleHelper
     {
         for (IModule module : Modules.modules)
         {
+            // Don't run any modules which require server if it is not on the server
+            if (!SprinklesForVanilla.isOnServer() && module.getModuleSide() == Side.SERVER)
+            {
+                if (module.isEnabled())
+                {
+                    module.disable();
+                    module.setEnabled(false);
+                }
+                continue;
+            }
             boolean isAllDefault = true;
             for (IProperty property : module.getProperties())
             {
@@ -255,11 +268,16 @@ public class ModuleHelper
             }
             if (isAllDefault)
             {
-                module.disable();
+                if (module.isEnabled())
+                {
+                    module.disable();
+                    module.setEnabled(false);
+                }
             }
-            else
+            else if (!module.isEnabled())
             {
                 module.enable();
+                module.setEnabled(true);
             }
         }
     }

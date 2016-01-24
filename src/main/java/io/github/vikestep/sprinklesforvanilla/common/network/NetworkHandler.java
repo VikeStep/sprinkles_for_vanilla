@@ -10,16 +10,18 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
-@SuppressWarnings("UnusedDeclaration")
 public class NetworkHandler
 {
     //Fired on the client when they are disconnected from a server
+    @SuppressWarnings("UnusedDeclaration")
     @SubscribeEvent
     public void onClientDisconnectFromServer(FMLNetworkEvent.ClientDisconnectionFromServerEvent event)
     {
-        SprinklesForVanilla.isOnServer = false;
+        SprinklesForVanilla.setIsOnServer(false);
     }
 
+    // Send config info to players when they join
+    @SuppressWarnings("UnusedDeclaration")
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
@@ -30,7 +32,7 @@ public class NetworkHandler
                 boolean isArray = property.getType().isArray;
                 String value = ModuleHelper.getIPropertyValueAsString(property);
                 String[] values = ModuleHelper.getIPropertyValueAsStringArr(property);
-                ConfigPacket packet = new ConfigPacket(module.getModuleName(), property.getName(),isArray, value, values);
+                ConfigPacket packet = new ConfigPacket(module.getModuleName(), property.getName(), isArray, value, values);
                 SprinklesForVanilla.network.sendTo(packet, (EntityPlayerMP) event.player);
             }
         }

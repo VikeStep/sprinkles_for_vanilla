@@ -11,16 +11,16 @@ public class ExplosionsModule extends ModuleBase
 {
     private static ExplosionsModule instance = null;
 
-    protected ExplosionsModule(String name, Side side)
+    private ExplosionsModule()
     {
-        super(name, side);
+        super("explosions", Side.SERVER);
     }
 
     public static ExplosionsModule getInstance()
     {
         if (instance == null)
         {
-            instance = new ExplosionsModule("explosions", Side.SERVER);
+            instance = new ExplosionsModule();
         }
         return instance;
     }
@@ -28,7 +28,7 @@ public class ExplosionsModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return new ArrayList<>();
+        return new ArrayList<IProperty>();
     }
 
     @Override

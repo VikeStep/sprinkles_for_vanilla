@@ -11,16 +11,16 @@ public class ParticlesModule extends ModuleBase
 {
     private static ParticlesModule instance = null;
 
-    protected ParticlesModule(String name, Side side)
+    private ParticlesModule()
     {
-        super(name, side);
+        super("particles", Side.CLIENT);
     }
 
     public static ParticlesModule getInstance()
     {
         if (instance == null)
         {
-            instance = new ParticlesModule("particles", Side.CLIENT);
+            instance = new ParticlesModule();
         }
         return instance;
     }
@@ -28,7 +28,7 @@ public class ParticlesModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return new ArrayList<>();
+        return new ArrayList<IProperty>();
     }
 
     @Override

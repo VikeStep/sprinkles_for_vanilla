@@ -11,16 +11,16 @@ public class MobsModule extends ModuleBase
 {
     private static MobsModule instance = null;
 
-    protected MobsModule(String name, Side side)
+    private MobsModule()
     {
-        super(name, side);
+        super("mobs", Side.SERVER);
     }
 
     public static MobsModule getInstance()
     {
         if (instance == null)
         {
-            instance = new MobsModule("mobs", Side.SERVER);
+            instance = new MobsModule();
         }
         return instance;
     }
@@ -28,7 +28,7 @@ public class MobsModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return new ArrayList<>();
+        return new ArrayList<IProperty>();
     }
 
     @Override

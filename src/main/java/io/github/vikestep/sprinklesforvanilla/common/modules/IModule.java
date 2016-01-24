@@ -24,4 +24,10 @@ public interface IModule
 
     // Initialisation code
     void init();
+
+    // Get whether or not the module is currently enabled
+    boolean isEnabled();
+
+    // Sets whether or not the module is currently enabled
+    void setEnabled(boolean isEnabled);
 }

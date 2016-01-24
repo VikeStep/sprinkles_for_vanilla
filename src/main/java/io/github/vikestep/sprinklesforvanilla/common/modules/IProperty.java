@@ -2,25 +2,6 @@ package io.github.vikestep.sprinklesforvanilla.common.modules;
 
 public interface IProperty
 {
-    enum Type
-    {
-        INT (false),
-        STRING (false),
-        DOUBLE (false),
-        BOOLEAN (false),
-        INT_LIST (true),
-        STRING_LIST (true),
-        DOUBLE_LIST (true),
-        BOOLEAN_LIST (true);
-
-        public final boolean isArray;
-
-        Type(boolean isArray)
-        {
-            this.isArray = isArray;
-        }
-    }
-
     // Returns the default value of the property
     Object getDefault();
 
@@ -44,4 +25,23 @@ public interface IProperty
 
     // Returns whether or not a minecraft restart is needed to change this property
     boolean requiresMcRestart();
+
+    enum Type
+    {
+        INT(false),
+        STRING(false),
+        DOUBLE(false),
+        BOOLEAN(false),
+        INT_LIST(true),
+        STRING_LIST(true),
+        DOUBLE_LIST(true),
+        BOOLEAN_LIST(true);
+
+        public final boolean isArray;
+
+        Type(boolean isArray)
+        {
+            this.isArray = isArray;
+        }
+    }
 }

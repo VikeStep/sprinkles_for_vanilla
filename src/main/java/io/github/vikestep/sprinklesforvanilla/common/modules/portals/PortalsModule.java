@@ -11,16 +11,16 @@ public class PortalsModule extends ModuleBase
 {
     private static PortalsModule instance = null;
 
-    protected PortalsModule(String name, Side side)
+    private PortalsModule()
     {
-        super(name, side);
+        super("portals", Side.SERVER);
     }
 
     public static PortalsModule getInstance()
     {
         if (instance == null)
         {
-            instance = new PortalsModule("portals", Side.SERVER);
+            instance = new PortalsModule();
         }
         return instance;
     }
@@ -28,7 +28,7 @@ public class PortalsModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return new ArrayList<>();
+        return new ArrayList<IProperty>();
     }
 
     @Override

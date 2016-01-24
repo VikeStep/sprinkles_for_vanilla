@@ -11,16 +11,16 @@ public class PlayersModule extends ModuleBase
 {
     private static PlayersModule instance = null;
 
-    protected PlayersModule(String name, Side side)
+    private PlayersModule()
     {
-        super(name, side);
+        super("players", Side.SERVER);
     }
 
     public static PlayersModule getInstance()
     {
         if (instance == null)
         {
-            instance = new PlayersModule("players", Side.SERVER);
+            instance = new PlayersModule();
         }
         return instance;
     }
@@ -28,7 +28,7 @@ public class PlayersModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return new ArrayList<>();
+        return new ArrayList<IProperty>();
     }
 
     @Override

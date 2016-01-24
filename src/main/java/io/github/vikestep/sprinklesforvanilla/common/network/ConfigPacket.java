@@ -1,9 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla.common.network;
 
-import io.github.vikestep.sprinklesforvanilla.common.modules.IModule;
 import io.github.vikestep.sprinklesforvanilla.common.modules.IProperty;
-import io.github.vikestep.sprinklesforvanilla.common.modules.Modules;
-import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import io.github.vikestep.sprinklesforvanilla.common.utils.ModuleHelper;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -11,15 +8,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-@SuppressWarnings("UnusedDeclaration")
 public class ConfigPacket implements IMessage
 {
-    private String moduleName;
-    private String propertyName;
-    private boolean isArray;
-    private String value;
+    private String   moduleName;
+    private String   propertyName;
+    private boolean  isArray;
+    private String   value;
     private String[] values;
 
+    @SuppressWarnings("UnusedDeclaration")
     public ConfigPacket()
     {
 
@@ -37,14 +34,14 @@ public class ConfigPacket implements IMessage
     @Override
     public void fromBytes(ByteBuf buf)
     {
-        moduleName =  ByteBufUtils.readUTF8String(buf);
-        propertyName =  ByteBufUtils.readUTF8String(buf);
+        moduleName = ByteBufUtils.readUTF8String(buf);
+        propertyName = ByteBufUtils.readUTF8String(buf);
         isArray = buf.readBoolean();
         if (isArray)
         {
             int length = buf.readInt();
             values = new String[length];
-            for (int i = 0; i < length; i ++)
+            for (int i = 0; i < length; i++)
             {
                 values[i] = ByteBufUtils.readUTF8String(buf);
             }
@@ -79,7 +76,6 @@ public class ConfigPacket implements IMessage
 
     public static class Handler implements IMessageHandler<ConfigPacket, IMessage>
     {
-
         @Override
         public IMessage onMessage(final ConfigPacket message, MessageContext ctx)
         {

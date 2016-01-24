@@ -4,6 +4,7 @@ import io.github.vikestep.sprinklesforvanilla.common.configuration.Configuration
 import io.github.vikestep.sprinklesforvanilla.common.network.ConfigPacket;
 import io.github.vikestep.sprinklesforvanilla.common.reference.ModInfo;
 import io.github.vikestep.sprinklesforvanilla.common.utils.MetadataHelper;
+import io.github.vikestep.sprinklesforvanilla.common.utils.ModuleHelper;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModMetadata;
@@ -18,64 +19,79 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.Map;
 
-@SuppressWarnings("UnusedDeclaration")
 @Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_NAME, version = ModInfo.VERSION)
 public class SprinklesForVanilla
 {
-    //Check whether mod is loaded server-side
-    public static boolean isOnServer = false;
     //Boolean to check if this is running client-side or server-side
-    public static boolean isClient = true;
-
+    public static  boolean isClient   = true;
     @Mod.Instance
     public static SprinklesForVanilla instance;
-
     @Mod.Metadata
     public static ModMetadata metadata;
-
     //Our Network Wrapper used for sending packets
     public static SimpleNetworkWrapper network;
-
     @SidedProxy(clientSide = ModInfo.CLIENT_PROXY_PATH, serverSide = ModInfo.SERVER_PROXY_PATH)
     public static CommonProxy proxy;
+    //Check whether mod is loaded server-side
+    private static boolean isOnServer = false;
 
+    public static boolean isOnServer()
+    {
+        return isOnServer;
+    }
+
+    public static void setIsOnServer(boolean isOnServer)
+    {
+        if (SprinklesForVanilla.isOnServer != isOnServer)
+        {
+            SprinklesForVanilla.isOnServer = isOnServer;
+            ModuleHelper.reloadModules();
+            return;
+        }
+        SprinklesForVanilla.isOnServer = isOnServer;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+        MetadataHelper.transformMetadata(metadata);
         //On an integrated server it will say that it is a client
         isClient = FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT;
         if (!isClient)
         {
-            isOnServer = true;
+            setIsOnServer(true);
         }
 
         network = NetworkRegistry.INSTANCE.newSimpleChannel("sfv_channel");
         network.registerMessage(ConfigPacket.Handler.class, ConfigPacket.class, 0, Side.CLIENT);
 
+        // Loads all config values, the server-side configs will be overwritten if client-side
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
-        MetadataHelper.transformMetadata(metadata);
         proxy.init();
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     @Mod.EventHandler
     public void onServerStarted(FMLServerStartedEvent event)
     {
-        isOnServer = true;
+        setIsOnServer(true);
         isClient = false;
     }
 
-    @SuppressWarnings("SameReturnValue")
+    @SuppressWarnings({"SameReturnValue", "UnusedDeclaration"})
     @NetworkCheckHandler
     public boolean checkIfServer(Map<String, String> serverMods, Side remoteSide)
     {
         if (remoteSide != Side.CLIENT)
         {
-            isOnServer = false;
+            setIsOnServer(false);
             serverMods.keySet().stream().filter(m -> m.equals("sprinkles_for_vanilla")).forEach(m -> isOnServer = true);
         }
         return true;

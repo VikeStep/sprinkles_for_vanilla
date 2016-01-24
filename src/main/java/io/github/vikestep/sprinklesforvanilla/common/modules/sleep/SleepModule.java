@@ -11,16 +11,16 @@ public class SleepModule extends ModuleBase
 {
     private static SleepModule instance = null;
 
-    protected SleepModule(String name, Side side)
+    private SleepModule()
     {
-        super(name, side);
+        super("sleep", Side.SERVER);
     }
 
     public static SleepModule getInstance()
     {
         if (instance == null)
         {
-            instance = new SleepModule("sleep", Side.SERVER);
+            instance = new SleepModule();
         }
         return instance;
     }
@@ -28,7 +28,7 @@ public class SleepModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return new ArrayList<>();
+        return new ArrayList<IProperty>();
     }
 
     @Override

@@ -2,11 +2,11 @@ package io.github.vikestep.sprinklesforvanilla.common.modules;
 
 public abstract class PropertyBase implements IProperty
 {
-    Type type;
-    String name;
-    String description;
-    boolean requiresWorldRestart;
-    boolean requiresMcRestart;
+    private final Type    type;
+    private final String  name;
+    private final String  description;
+    private final boolean requiresWorldRestart;
+    private final boolean requiresMcRestart;
 
     public PropertyBase(Type type, String name, String description, boolean requiresWorldRestart, boolean requiresMcRestart)
     {
