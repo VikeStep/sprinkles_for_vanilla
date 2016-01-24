@@ -14,7 +14,7 @@ public class EnderPearlHandler
 
     static
     {
-        doEnderPearlsTeleport = new DefaultProperty(Type.BOOLEAN, // Type
+        doEnderPearlsTeleport = new DefaultProperty(Type.BOOLEAN, // type
                 "doEnderPearlsTeleport", // name
                 "Setting this to false will disable ender pearls from teleporting", // comment
                 false, // requiresWorldRestart
