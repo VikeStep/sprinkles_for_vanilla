@@ -1,5 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla.common.modules;
 
+import io.github.vikestep.sprinklesforvanilla.client.modules.misc.MiscClientModule;
 import io.github.vikestep.sprinklesforvanilla.client.modules.particles.ParticlesModule;
 import io.github.vikestep.sprinklesforvanilla.client.modules.sounds.SoundsModule;
 import io.github.vikestep.sprinklesforvanilla.common.modules.beacons.BeaconsModule;
@@ -32,5 +33,6 @@ public class Modules
         Modules.modules.add(ItemsModule.getInstance());
         Modules.modules.add(ParticlesModule.getInstance());
         Modules.modules.add(SoundsModule.getInstance());
+        Modules.modules.add(MiscClientModule.getInstance());
     }
 }

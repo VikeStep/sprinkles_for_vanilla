@@ -11,9 +11,12 @@ public class ParticlesModule extends ModuleBase
 {
     private static ParticlesModule instance = null;
 
+    private final ParticlesHandler particlesHandler;
+
     private ParticlesModule()
     {
         super("particles", Side.CLIENT);
+        particlesHandler = new ParticlesHandler();
     }
 
     public static ParticlesModule getInstance()
@@ -28,7 +31,7 @@ public class ParticlesModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return new ArrayList<IProperty>();
+        return ParticlesHandler.particleConfigs;
     }
 
     @Override
@@ -46,6 +49,6 @@ public class ParticlesModule extends ModuleBase
     @Override
     public void init()
     {
-
+        particlesHandler.initParticleRules();
     }
 }

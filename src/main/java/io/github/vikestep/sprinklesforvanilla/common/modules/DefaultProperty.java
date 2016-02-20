@@ -6,6 +6,7 @@ public class DefaultProperty extends PropertyBase
     private final Object defaultValue;
     private       Object value;
 
+    @SuppressWarnings("SameParameterValue")
     public DefaultProperty(Type type, String name, String description, boolean requiresWorldRestart, boolean requiresMcRestart, Object defaultValue)
     {
         super(type, name, description, requiresWorldRestart, requiresMcRestart);

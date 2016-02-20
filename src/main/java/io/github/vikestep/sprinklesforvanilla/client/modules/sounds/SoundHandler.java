@@ -19,7 +19,8 @@ public class SoundHandler
     {
         soundsToStop = new DefaultProperty(IProperty.Type.STRING_LIST, // type
                 "soundsToStop", // name
-                "In this list, include a list of sounds you wish to stop. Putting a '#' in front of a sound will act as a comment to enable the sound.", // comment
+                "In this list, include a list of sounds you wish to stop. Putting a '#' in front of a sound will act" +
+                        " as a \ncomment to enable the sound.", // comment
                 false, // requiresWorldRestart
                 false, // requiresMcRestart
                 new String[]{"#minecraft:mob.wither.spawn", "#minecraft:mob.enderdragon.end", "#minecraft:portal.portal"} // defaultValue

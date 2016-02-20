@@ -28,7 +28,7 @@ public class BlocksModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return new ArrayList<IProperty>();
+        return new ArrayList<>();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package io.github.vikestep.sprinklesforvanilla.client.modules.sounds;
+package io.github.vikestep.sprinklesforvanilla.client.modules.misc;
 
 import io.github.vikestep.sprinklesforvanilla.common.modules.IProperty;
 import io.github.vikestep.sprinklesforvanilla.common.modules.ModuleBase;
@@ -8,23 +8,23 @@ import net.minecraftforge.fml.relauncher.Side;
 import java.util.Arrays;
 import java.util.List;
 
-public class SoundsModule extends ModuleBase
+public class MiscClientModule extends ModuleBase
 {
-    private static SoundsModule instance = null;
+    private static MiscClientModule instance = null;
 
-    private final SoundHandler soundHandler;
+    private final MiscClientHandler miscClientHandler;
 
-    private SoundsModule()
+    private MiscClientModule()
     {
-        super("sounds", Side.CLIENT);
-        soundHandler = new SoundHandler();
+        super("misc", Side.CLIENT);
+        miscClientHandler = new MiscClientHandler();
     }
 
-    public static SoundsModule getInstance()
+    public static MiscClientModule getInstance()
     {
         if (instance == null)
         {
-            instance = new SoundsModule();
+            instance = new MiscClientModule();
         }
         return instance;
     }
@@ -33,19 +33,19 @@ public class SoundsModule extends ModuleBase
     @Override
     public List<IProperty> getProperties()
     {
-        return Arrays.asList(SoundHandler.soundsToStop);
+        return Arrays.asList(MiscClientHandler.shouldSkipRespawnScreen);
     }
 
     @Override
     public void enable()
     {
-        MinecraftForge.EVENT_BUS.register(soundHandler);
+        MinecraftForge.EVENT_BUS.register(miscClientHandler);
     }
 
     @Override
     public void disable()
     {
-        MinecraftForge.EVENT_BUS.unregister(soundHandler);
+        MinecraftForge.EVENT_BUS.unregister(miscClientHandler);
     }
 
     @Override

@@ -29,6 +29,7 @@ public class ItemsModule extends ModuleBase
         return instance;
     }
 
+    @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     @Override
     public List<IProperty> getProperties()
     {

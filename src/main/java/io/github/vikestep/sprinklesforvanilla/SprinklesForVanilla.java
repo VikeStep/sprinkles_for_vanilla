@@ -23,15 +23,17 @@ import java.util.Map;
 public class SprinklesForVanilla
 {
     //Boolean to check if this is running client-side or server-side
-    public static  boolean isClient   = true;
+    public static boolean isClient = true;
     @Mod.Instance
-    public static SprinklesForVanilla instance;
+    public static SprinklesForVanilla  instance;
+    @SuppressWarnings("unused")
     @Mod.Metadata
-    public static ModMetadata metadata;
+    private static ModMetadata          metadata;
     //Our Network Wrapper used for sending packets
     public static SimpleNetworkWrapper network;
+    @SuppressWarnings("unused")
     @SidedProxy(clientSide = ModInfo.CLIENT_PROXY_PATH, serverSide = ModInfo.SERVER_PROXY_PATH)
-    public static CommonProxy proxy;
+    private static CommonProxy          proxy;
     //Check whether mod is loaded server-side
     private static boolean isOnServer = false;
 

@@ -8,7 +8,7 @@ public abstract class PropertyBase implements IProperty
     private final boolean requiresWorldRestart;
     private final boolean requiresMcRestart;
 
-    public PropertyBase(Type type, String name, String description, boolean requiresWorldRestart, boolean requiresMcRestart)
+    PropertyBase(Type type, String name, String description, boolean requiresWorldRestart, boolean requiresMcRestart)
     {
         this.type = type;
         this.name = name;

@@ -23,6 +23,7 @@ public interface IModule
     void disable();
 
     // Initialisation code
+    @SuppressWarnings("EmptyMethod")
     void init();
 
     // Get whether or not the module is currently enabled
