@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -43,7 +44,7 @@ public class Hooks
 
     public static boolean spawnZombiePigmen(World world, Random rand)
     {
-        double difficultyID = (float) world.difficultySetting.getDifficultyId();
+        double difficultyID = (float) world.getDifficulty().getDifficultyId();
         double multiplier = !SprinklesForVanilla.isOnServer ? 1 : Settings.zombiePigmanNetherPortalSpawnMult[1];
         double randomVal = rand.nextDouble();
         double chance = (difficultyID * multiplier) / 2000.0f;
@@ -55,9 +56,9 @@ public class Hooks
         if (Settings.mobGriefingOverride[1] && SprinklesForVanilla.isOnServer)
         {
             int index = Arrays.asList(Settings.mobGriefingTypes).indexOf(griefType);
-            return index != -1 ? Settings.mobGriefingConfigs[1].get(index) : world.getGameRules().getGameRuleBooleanValue("mobGriefing");
+            return index != -1 ? Settings.mobGriefingConfigs[1].get(index) : world.getGameRules().getBoolean("mobGriefing");
         }
-        return world.getGameRules().getGameRuleBooleanValue("mobGriefing");
+        return world.getGameRules().getBoolean("mobGriefing");
     }
 
     public static boolean canMobGrief(int preset, World world, String griefType)
@@ -76,11 +77,12 @@ public class Hooks
                     continue;
                 }
                 String[] blockNameData = beaconBase.split(":");
-                if (block == Block.blockRegistry.getObject(blockNameData[0] + ":" + blockNameData[1]))
+                if (block == Block.blockRegistry.getObject(new ResourceLocation(blockNameData[0] + ":" + blockNameData[1])))
                 {
                     if (blockNameData.length > 2)
                     {
-                        if (worldObj.getBlockMetadata(x, y, z) == Integer.parseInt(blockNameData[2]))
+                        BlockPos pos = new BlockPos(x, y, z);
+                        if (worldObj.getBlockState(pos).getBlock().getMetaFromState(worldObj.getBlockState(pos)) == Integer.parseInt(blockNameData[2]))
                         {
                             return true;
                         }
