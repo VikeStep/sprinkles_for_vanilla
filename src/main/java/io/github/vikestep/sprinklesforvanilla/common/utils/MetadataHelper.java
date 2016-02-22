@@ -1,6 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla.common.utils;
 
-import cpw.mods.fml.common.ModMetadata;
+import net.minecraftforge.fml.common.ModMetadata;
 import io.github.vikestep.sprinklesforvanilla.common.reference.ModInfo;
 
 public class MetadataHelper

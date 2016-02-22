@@ -1,10 +1,12 @@
 package io.github.vikestep.sprinklesforvanilla.common.handlers;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.relauncher.Side;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.reference.ModInfo;
@@ -14,7 +16,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import net.minecraftforge.event.entity.EntityEvent;
@@ -53,7 +54,7 @@ public class PlayerHandlers
             double distX = Settings.distanceFromBed[1][0];
             double distY = Settings.distanceFromBed[1][1];
             double distZ = Settings.distanceFromBed[1][2];
-            if ((Math.abs(player.posX - event.x) > distX || Math.abs(player.posY - event.y) > distY || Math.abs(player.posZ - event.z) > distZ) && Settings.distanceFromBedCancelsSleep[1])
+            if ((Math.abs(player.posX - event.pos.getX()) > distX || Math.abs(player.posY - event.pos.getY()) > distY || Math.abs(player.posZ - event.pos.getZ()) > distZ) && Settings.distanceFromBedCancelsSleep[1])
             {
                 //We manually set it because it may be close enough with vanilla code
                 event.result = EntityPlayer.EnumStatus.TOO_FAR_AWAY;
@@ -64,7 +65,7 @@ public class PlayerHandlers
             distX = Settings.nearbyMobDistance[1][0];
             distY = Settings.nearbyMobDistance[1][1];
             distZ = Settings.nearbyMobDistance[1][2];
-            if (!(player.worldObj.getEntitiesWithinAABB(EntityMob.class, AxisAlignedBB.getBoundingBox(event.x - distX, event.y - distY, event.z - distZ, event.x + distX, event.y + distY, event.z + distZ)).isEmpty()) && Settings.nearbyMobsCancelSleep[1])
+            if (!(player.worldObj.getEntitiesWithinAABB(EntityMob.class, AxisAlignedBB.fromBounds(event.pos.getX() - distX, event.pos.getY() - distY, event.pos.getZ() - distZ, event.pos.getX() + distX, event.pos.getY() + distY, event.pos.getZ() + distZ)).isEmpty()) && Settings.nearbyMobsCancelSleep[1])
             {
                 //We manually set it because it may be safe with vanilla code
                 event.result = EntityPlayer.EnumStatus.NOT_SAFE;
@@ -84,28 +85,22 @@ public class PlayerHandlers
                 event.result = EntityPlayer.EnumStatus.OTHER_PROBLEM;
                 if (Settings.bedSetsSpawn[1])
                 {
-                    ChunkCoordinates chunkCoordinates = new ChunkCoordinates(event.x, event.y, event.z);
-                    ChunkCoordinates bedCoordinates = player.worldObj.getBlock(event.x, event.y, event.z).getBedSpawnPosition(player.worldObj, chunkCoordinates.posX, chunkCoordinates.posY, chunkCoordinates.posZ, player);
+                    BlockPos blockPos = new BlockPos(event.pos.getX(), event.pos.getY(), event.pos.getZ());
+                    BlockPos bedCoordinates = player.worldObj.getBlockState(event.pos).getBlock().getBedSpawnPosition(player.worldObj, blockPos, player);
                     if (bedCoordinates == null) {
-                        bedCoordinates = new ChunkCoordinates(chunkCoordinates.posX, chunkCoordinates.posY + 1, chunkCoordinates.posZ);
+                        bedCoordinates = new BlockPos(blockPos);
                     }
 
-                    ChunkCoordinates verifiedCoordinates = EntityPlayer.verifyRespawnCoordinates(player.worldObj, bedCoordinates, false);
-
-                    if (verifiedCoordinates == null) {
-                        verifiedCoordinates = new ChunkCoordinates(chunkCoordinates.posX, chunkCoordinates.posY, chunkCoordinates.posZ);
-                    }
-
-                    player.setSpawnChunk(verifiedCoordinates, false); //!Settings.playerChecksBedRespawn[1]);
+                    player.setSpawnChunk(blockPos, false, player.dimension); //!Settings.playerChecksBedRespawn[1]);
                 }
                 return;
             }
 
-            boolean wouldSleep = wouldSleepInVanilla(player, event.x, event.y, event.z);
+            boolean wouldSleep = wouldSleepInVanilla(player, event.pos.getX(), event.pos.getY(), event.pos.getZ());
             //If the tests would be failed in vanilla then we sleep using our own method
             if (!wouldSleep)
             {
-                sleep(player, event.x, event.y, event.z);
+                sleep(player, event.pos.getX(), event.pos.getY(), event.pos.getZ());
                 event.result = EntityPlayer.EnumStatus.OK;
             }
             if (!Settings.bedSetsSpawn[1])
@@ -143,12 +138,12 @@ public class PlayerHandlers
                     {
                         EntityPlayer player = (EntityPlayer) playerObj;
                         UUID entityPlayerUUID = player.getUniqueID();
-                        ChunkCoordinates bedLocation = player.getBedLocation(player.dimension);
+                        BlockPos bedLocation = player.getBedLocation(player.dimension);
                         boolean playerSpawnForced = player.isSpawnForced(player.dimension);
                         SpawnPoint mapValue = (SpawnPoint) spawnData.getValue();
                         if (entityPlayerUUID != spawnData.getKey() || bedLocation != mapValue.coordinates || playerSpawnForced != mapValue.isForced)
                         {
-                            player.setSpawnChunk(mapValue.coordinates, mapValue.isForced);
+                            player.setSpawnChunk(mapValue.coordinates, mapValue.isForced, player.dimension);
                         }
                     }
                 }
@@ -168,53 +163,54 @@ public class PlayerHandlers
                 return false;
             }
 
-            return player.worldObj.getEntitiesWithinAABB(EntityMob.class, AxisAlignedBB.getBoundingBox(x - 8.0D, y - 5.0D, z - 8.0D, x + 8.0D, y + 5.0D, z + 8.0D)).isEmpty();
+            return player.worldObj.getEntitiesWithinAABB(EntityMob.class, AxisAlignedBB.fromBounds(x - 8.0D, y - 5.0D, z - 8.0D, x + 8.0D, y + 5.0D, z + 8.0D)).isEmpty();
         }
 
         //The protected/private members being referenced in this are in the access transformer. If they show up as unavailable
         //do gradlew clean, gradlew setupDecompWorkspace then the gradle command for your IDE (such as gradlew idea) to have it shown as public
         public void sleep(EntityPlayer player, int bedX, int bedY, int bedZ)
         {
+            BlockPos bedLocation = new BlockPos(bedX, bedY, bedZ);
+
             if (player.isRiding())
             {
-                player.mountEntity(null);
+                player.mountEntity((Entity)null);
             }
 
             player.setSize(0.2F, 0.2F);
-            player.yOffset = 0.2F;
 
-            if (player.worldObj.blockExists(bedX, bedY, bedZ))
+            if (player.worldObj.isBlockLoaded(bedLocation) && player.worldObj.getBlockState(bedLocation).getBlock().isBed(player.worldObj, bedLocation, player))
             {
-                int l = player.worldObj.getBlock(bedX, bedY, bedZ).getBedDirection(player.worldObj, bedX, bedY, bedZ);
-                float f1 = 0.5F;
+                EnumFacing enumfacing = player.worldObj.getBlockState(bedLocation).getBlock().getBedDirection(player.worldObj, bedLocation);
                 float f = 0.5F;
+                float f1 = 0.5F;
 
-                switch (l)
+                switch (enumfacing)
                 {
-                    case 0:
-                        f = 0.9F;
+                    case SOUTH:
+                        f1 = 0.9F;
                         break;
-                    case 1:
+                    case NORTH:
                         f1 = 0.1F;
                         break;
-                    case 2:
+                    case WEST:
                         f = 0.1F;
                         break;
-                    case 3:
-                        f1 = 0.9F;
+                    case EAST:
+                        f = 0.9F;
                 }
 
-                player.func_71013_b(l);
-                player.setPosition((double) ((float) bedX + f1), (double) ((float) bedY + 0.9375F), (double) ((float) bedZ + f));
+                player.func_175139_a(enumfacing);
+                player.setPosition((double)((float)bedLocation.getX() + f), (double)((float)bedLocation.getY() + 0.6875F), (double)((float)bedLocation.getZ() + f1));
             }
             else
             {
-                player.setPosition((double) ((float) bedX + 0.5F), (double) ((float) bedY + 0.9375F), (double) ((float) bedZ + 0.5F));
+                player.setPosition((double)((float)bedLocation.getX() + 0.5F), (double)((float)bedLocation.getY() + 0.6875F), (double)((float)bedLocation.getZ() + 0.5F));
             }
 
             player.sleeping = true;
-            player.sleepTimer = Math.min(Math.max(100 - Settings.timeToSleep[1], 0), 100);
-            player.playerLocation = new ChunkCoordinates(bedX, bedY, bedZ);
+            player.sleepTimer = 0;
+            player.playerLocation = bedLocation;
             player.motionX = player.motionZ = player.motionY = 0.0D;
 
             if (!player.worldObj.isRemote)
@@ -224,10 +220,10 @@ public class PlayerHandlers
         }
 
         private class SpawnPoint {
-            private ChunkCoordinates coordinates;
+            private BlockPos coordinates;
             private Boolean isForced;
 
-            public SpawnPoint(ChunkCoordinates coordinates, Boolean isForced)
+            public SpawnPoint(BlockPos coordinates, Boolean isForced)
             {
                 this.coordinates = coordinates;
                 this.isForced = isForced;

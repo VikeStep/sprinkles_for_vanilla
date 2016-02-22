@@ -1,7 +1,8 @@
 package io.github.vikestep.sprinklesforvanilla.common.handlers;
 
-import cpw.mods.fml.common.eventhandler.Event;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.util.BlockPos;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.init.InitMobRegistry;
@@ -50,9 +51,10 @@ public class WorldHandlers
                 return;
             }
             Explosion explosion = event.explosion;
+            Entity exploder = explosion.getExplosivePlacedBy();
             if (Settings.enableExplosionLogging[1])
             {
-                String name = explosion.exploder == null ? "null" : EntityList.getEntityString(explosion.exploder);
+                String name = exploder == null ? "null" : EntityList.getEntityString(exploder);
                 LogHelper.info("Explosion: " + name + ", " + explosion.explosionSize + ", " + !event.isCanceled() + ", " + Boolean.toString(true) + ", " + explosion.isFlaming + ", " + explosion.isSmoking);
             }
             if (Settings.disableAllExplosions[1])
@@ -69,7 +71,7 @@ public class WorldHandlers
                 boolean isFlaming = Boolean.parseBoolean(data[4]);
                 boolean isSmoking = Boolean.parseBoolean(data[5]);
 
-                if (isNotCorrectConfig(exploderName, explosion.exploder, event.explosion.explosionX, event.explosion.explosionY, event.explosion.explosionZ, event.world))
+                if (isNotCorrectConfig(exploderName, exploder, event.explosion.getPosition().xCoord, event.explosion.getPosition().yCoord, event.explosion.getPosition().zCoord, event.world))
                 {
                     continue;
                 }
@@ -102,7 +104,7 @@ public class WorldHandlers
                 }
                 explosion.isFlaming = isFlaming;
                 // This is because the user may have disabled creeper explosions in mob griefing section
-                if (event.explosion.exploder instanceof EntityCreeper && !Settings.mobGriefingConfigs[1].get(Arrays.asList(Settings.mobGriefingTypes).indexOf("creeperExplosion")))
+                if (exploder instanceof EntityCreeper && !Settings.mobGriefingConfigs[1].get(Arrays.asList(Settings.mobGriefingTypes).indexOf("creeperExplosion")))
                 {
                     return;
                 }
@@ -124,6 +126,7 @@ public class WorldHandlers
                 return;
             }
             Explosion explosion = event.explosion;
+            Entity exploder = explosion.getExplosivePlacedBy();
             for (String explosionDatum : Settings.explosionData[1])
             {
                 String[] data = explosionDatum.replace(", ", ",").split(",");
@@ -131,7 +134,7 @@ public class WorldHandlers
                 boolean doesDamage = Boolean.parseBoolean(data[3]);
                 boolean isSmoking = Boolean.parseBoolean(data[5]);
 
-                if (isNotCorrectConfig(exploderName, explosion.exploder, event.explosion.explosionX, event.explosion.explosionY, event.explosion.explosionZ, event.world))
+                if (isNotCorrectConfig(exploderName, exploder, event.explosion.getPosition().xCoord, event.explosion.getPosition().yCoord, event.explosion.getPosition().zCoord, event.world))
                 {
                     continue;
                 }
@@ -143,7 +146,7 @@ public class WorldHandlers
 
                 if (!isSmoking)
                 {
-                    explosion.affectedBlockPositions.clear();
+                    explosion.getAffectedBlockPositions().clear();
                 }
 
                 return;
@@ -153,9 +156,9 @@ public class WorldHandlers
         @SubscribeEvent
         public void onBedActivated(PlayerInteractEvent event)
         {
-            if (event.world.getBlock(event.x, event.y, event.z).isBed(event.world, event.x, event.y, event.z, event.entityPlayer) && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && SprinklesForVanilla.isOnServer)
+            if (event.world.getBlockState(event.pos).getBlock().isBed(event.world, event.pos, event.entityPlayer) && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && SprinklesForVanilla.isOnServer)
             {
-                if (!event.world.isRemote && ((!event.world.provider.canRespawnHere() || event.world.getBiomeGenForCoords(event.x, event.z) == BiomeGenBase.hell) && Settings.otherDimensionsCancelSleep[1]))
+                if (!event.world.isRemote && ((!event.world.provider.canRespawnHere() || event.world.getBiomeGenForCoords(event.pos) == BiomeGenBase.hell) && Settings.otherDimensionsCancelSleep[1]))
                 {
                     playerSleepInNether = true;
                 }
@@ -181,7 +184,7 @@ public class WorldHandlers
                     }
                 }
 
-                List<Entity> entityList = world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(x, y, z, x, y, z));
+                List<Entity> entityList = world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.fromBounds(x, y, z, x, y, z));
                 for (Entity entity : entityList)
                 {
                     if (entity instanceof EntityLargeFireball && configExploderName.equals("GhastFireball"))
@@ -243,7 +246,7 @@ public class WorldHandlers
                 EnumCreatureType creatureType = getCreatureType(entity);
                 Map<EnumCreatureType, Integer> heightMap = InitMobRegistry.heightMap.get(dim);
                 Map<EnumCreatureType, Integer> rateMap = InitMobRegistry.rateMap.get(dim);
-                boolean shouldCheck = InitMobRegistry.gcdPassiveSpawn != 400 && creatureType == EnumCreatureType.creature;
+                boolean shouldCheck = InitMobRegistry.gcdPassiveSpawn != 400 && creatureType == EnumCreatureType.CREATURE;
                 if (heightMap != null)
                 {
                     Integer max = heightMap.get(creatureType);
@@ -288,14 +291,15 @@ public class WorldHandlers
                     if (entity instanceof EntityAnimal)
                     {
                         int i = MathHelper.floor_double(entity.posX);
-                        int j = MathHelper.floor_double(entity.boundingBox.minY);
+                        int j = MathHelper.floor_double(entity.getEntityBoundingBox().minY);
                         int k = MathHelper.floor_double(entity.posZ);
-                        boolean enoughLight = entity.worldObj.getFullBlockLightValue(i, j, k) > 8;
-                        if (dim != 0 && entity.worldObj.getBlock(i, j - 1, k) != Blocks.grass && enoughLight)
+                        boolean enoughLight = entity.worldObj.getLight(new BlockPos(i, j, k)) > 8;
+                        BlockPos pos = new BlockPos(i, j - 1, k);
+                        if (dim != 0 && entity.worldObj.getBlockState(pos).getBlock() != Blocks.grass && enoughLight)
                         {
                             shouldAllowIfRule = true;
                         }
-                        else if (entity instanceof EntityOcelot && !entity.worldObj.getBlock(i, j - 1, k).isLeaves(event.world, i, j - 1, k) && enoughLight)
+                        else if (entity instanceof EntityOcelot && !entity.worldObj.getBlockState(pos).getBlock().isLeaves(event.world, pos) && enoughLight)
                         {
                             shouldAllowIfRule = true;
                         }
@@ -310,7 +314,7 @@ public class WorldHandlers
                             String entitySpawnedName = EntityList.getEntityString(entity);
                             if (entityName.equals(entitySpawnedName))
                             {
-                                if (Arrays.asList(biomesChecked).contains(event.world.getBiomeGenForCoords((int) event.x, (int) event.z)))
+                                if (Arrays.asList(biomesChecked).contains(event.world.getBiomeGenForCoords(new BlockPos(event.x, event.y, event.z))))
                                 {
                                     event.setResult(Event.Result.ALLOW);
                                 }
@@ -326,19 +330,19 @@ public class WorldHandlers
             Class<? extends EntityLiving> entityClass = entity.getClass();
             if (IMob.class.isAssignableFrom(entityClass))
             {
-                return EnumCreatureType.monster;
+                return EnumCreatureType.MONSTER;
             }
             else if (EntityAnimal.class.isAssignableFrom(entityClass))
             {
-                return EnumCreatureType.creature;
+                return EnumCreatureType.CREATURE;
             }
             else if (EntityAmbientCreature.class.isAssignableFrom(entityClass))
             {
-                return EnumCreatureType.ambient;
+                return EnumCreatureType.AMBIENT;
             }
             else if (EntityWaterMob.class.isAssignableFrom(entityClass))
             {
-                return EnumCreatureType.waterCreature;
+                return EnumCreatureType.WATER_CREATURE;
             }
             else
             {

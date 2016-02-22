@@ -1,6 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla.common.utils;
 
-import cpw.mods.fml.common.FMLLog;
+import net.minecraftforge.fml.common.FMLLog;
 import io.github.vikestep.sprinklesforvanilla.common.reference.ModInfo;
 import org.apache.logging.log4j.Level;
 

@@ -1,7 +1,7 @@
 package io.github.vikestep.sprinklesforvanilla.common.handlers;
 
 import com.google.common.collect.Multimap;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;

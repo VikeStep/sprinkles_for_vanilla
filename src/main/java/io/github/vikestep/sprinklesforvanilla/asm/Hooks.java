@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -122,31 +122,28 @@ public class Hooks
     public static boolean createObsidian(World world)
     {
         boolean notOnServer = !SprinklesForVanilla.isOnServer;
-        boolean doesNotContain = !Settings.waterAndLavaMakesObsidianBlacklist[1].contains(world.provider.dimensionId);
+        boolean doesNotContain = !Settings.waterAndLavaMakesObsidianBlacklist[1].contains(world.provider.getDimensionId());
         return notOnServer || doesNotContain;
     }
 
     public static boolean createCobblestone(World world)
     {
         boolean notOnServer = !SprinklesForVanilla.isOnServer;
-        boolean doesNotContain = !Settings.waterAndLavaMakesCobbleBlacklist[1].contains(world.provider.dimensionId);
+        boolean doesNotContain = !Settings.waterAndLavaMakesCobbleBlacklist[1].contains(world.provider.getDimensionId());
         return notOnServer || doesNotContain;
     }
 
-    public static ChunkCoordinates getSpawnPoint(ChunkCoordinates chunkCoordinates, EntityPlayerMP player)
+    public static BlockPos getSpawnPoint(BlockPos chunkCoordinates, EntityPlayerMP player)
     {
         if (player.worldObj.isRemote || !SprinklesForVanilla.isOnServer)
         {
             return chunkCoordinates;
         }
         int dimID = player.dimension;
-        ChunkCoordinates bedLocation = player.getBedLocation(dimID);
+        BlockPos bedLocation = player.getBedLocation(dimID);
         if (bedLocation != null)
         {
-            if (EntityPlayerMP.verifyRespawnCoordinates(player.worldObj, bedLocation, player.isSpawnForced(dimID)) != null)
-            {
-                return chunkCoordinates;
-            }
+            return chunkCoordinates;
         }
         String[] coordinates;
         switch (dimID)
@@ -171,7 +168,7 @@ public class Hooks
                 int SpawnY = Integer.parseInt(coordinates[1]);
                 int SpawnZ = Integer.parseInt(coordinates[2]);
                 player.setPosition(SpawnX, SpawnY, SpawnZ);
-                return new ChunkCoordinates(SpawnX, SpawnY, SpawnZ);
+                return new BlockPos(SpawnX, SpawnY, SpawnZ);
             }
             catch (NumberFormatException e)
             {

@@ -2,7 +2,7 @@ package io.github.vikestep.sprinklesforvanilla.common.init;
 
 import com.google.common.math.IntMath;
 import com.google.common.primitives.Ints;
-import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.entity.EntityList;
@@ -72,19 +72,19 @@ public class InitMobRegistry
                     EnumCreatureType creatureType;
                     if (IMob.class.isAssignableFrom(entityClass))
                     {
-                        creatureType = EnumCreatureType.monster;
+                        creatureType = EnumCreatureType.MONSTER;
                     }
                     else if (EntityAnimal.class.isAssignableFrom(entityClass))
                     {
-                        creatureType = EnumCreatureType.creature;
+                        creatureType = EnumCreatureType.CREATURE;
                     }
                     else if (EntityAmbientCreature.class.isAssignableFrom(entityClass))
                     {
-                        creatureType = EnumCreatureType.ambient;
+                        creatureType = EnumCreatureType.AMBIENT;
                     }
                     else if (EntityWaterMob.class.isAssignableFrom(entityClass))
                     {
-                        creatureType = EnumCreatureType.waterCreature;
+                        creatureType = EnumCreatureType.WATER_CREATURE;
                     }
                     else
                     {
@@ -190,7 +190,7 @@ public class InitMobRegistry
                         LogHelper.warn(b[0] + " is an invalid mob type");
                         continue;
                     }
-                    if (type == EnumCreatureType.creature)
+                    if (type == EnumCreatureType.CREATURE)
                     {
                         rates.add(rate);
                     }
@@ -224,19 +224,19 @@ public class InitMobRegistry
     {
         if (type.toLowerCase().equals("creature"))
         {
-            return EnumCreatureType.creature;
+            return EnumCreatureType.CREATURE;
         }
         else if (type.toLowerCase().equals("monster"))
         {
-            return EnumCreatureType.monster;
+            return EnumCreatureType.MONSTER;
         }
         else if (type.toLowerCase().equals("ambient"))
         {
-            return EnumCreatureType.ambient;
+            return EnumCreatureType.AMBIENT;
         }
         else if (type.toLowerCase().equals("watercreature"))
         {
-            return EnumCreatureType.waterCreature;
+            return EnumCreatureType.WATER_CREATURE;
         }
         return null;
     }

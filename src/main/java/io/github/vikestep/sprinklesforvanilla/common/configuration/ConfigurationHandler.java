@@ -449,25 +449,6 @@ public class ConfigurationHandler
         propOrder.add("explosionSettings");
 
         config.setCategoryPropertyOrder(CATEGORY, propOrder);
-
-        /************
-         * Villagers
-         ************/
-        propOrder = new ArrayList<String>();
-        CATEGORY = "global.villagers";
-
-        COMMENT = "In this list you will add the extra villager trades you want to be tradeable. You are only able to add new ones, currently you are unable to edit the other ones.\n" +
-                  "The trades must be in the format of 'villagerId, chance, itemBeingSold, itemToGive1, itemToGive2'. villagerId is the type of villager this trade is added to. Refer\n" +
-                  "to the third column of http://minecraft.gamepedia.com/Villager#Professions_and_careers for ID. The chance is a number between 0 and 1 which determines whether it can\n" +
-                  "be a possibility. If the chance is 0.6 there is a 60% chance it will be added to the possibilities, then out of all the possibilities a random trade is chosen.\n" +
-                  "The Items must be in the format 'modname:itemOrBlockName:metadata(min-max)', the min and the max is a range that the stack size for the trade can be, if you wish the\n" +
-                  "stack size to always be the same, set min and max to the same number. The metadata is optional and can be removed by removing the ':metadata' part. itemToGive2 is also\n" +
-                  "optional and can be omitted by removing ', itemToGive2'. Putting a '#' in front of an option will comment it out and ignore it. If you have any questions please PM\n" +
-                  "me (VikeStep) and I will help explain it. I should also mention that putting a trade in this list multiple times will increase its chance as well.";
-        Settings.additionalVillagerTrades[side] = new ArrayList<String>(Arrays.asList(config.get(CATEGORY, "additionalVillagerTrades", Settings.defaultAdditionalTrades, COMMENT).getStringList()));
-        propOrder.add("additionalVillagerTrades");
-
-        config.setCategoryPropertyOrder(CATEGORY, propOrder);
     }
 
     private static void saveConfiguration()
