@@ -1,6 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla.client.handlers;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import io.github.vikestep.sprinklesforvanilla.common.configuration.Settings;
 import io.github.vikestep.sprinklesforvanilla.common.utils.LogHelper;
 import net.minecraft.client.Minecraft;
@@ -8,7 +8,7 @@ import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.client.event.sound.PlaySoundEvent17;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,9 @@ public class ClientHandlers
         private static List<String> incorrectEntries = new ArrayList<String>();
 
         @SubscribeEvent
-        public void onSound(PlaySoundEvent17 event)
+        public void onSound(PlaySoundEvent event)
         {
-            ResourceLocation soundLocation = event.sound.getPositionedSoundLocation();
+            ResourceLocation soundLocation = event.sound.getSoundLocation();
             String modName = soundLocation.getResourceDomain();
             String soundPath = soundLocation.getResourcePath();
             for (String sound : Settings.disabledSounds)

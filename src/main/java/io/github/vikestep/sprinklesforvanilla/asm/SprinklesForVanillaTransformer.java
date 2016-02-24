@@ -23,39 +23,39 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         {
             //Replace with lambda expressions when we move to a requirement of java 8
             classToTransformMethodMap.put("net.minecraft.block.BlockPortal", SprinklesForVanillaTransformer.class.getMethod("transformBlockPortal", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.client.renderer.RenderGlobal", SprinklesForVanillaTransformer.class.getMethod("transformRenderGlobal", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.client.renderer.tileentity.TileEntityChestRenderer", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityChestRenderer", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.EntityLivingBase", SprinklesForVanillaTransformer.class.getMethod("transformEntityLivingBase", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.block.BlockFarmland", SprinklesForVanillaTransformer.class.getMethod("transformBlockFarmland", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.EntityLiving", SprinklesForVanillaTransformer.class.getMethod("transformEntityLiving", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.ai.EntityAIBreakDoor", SprinklesForVanillaTransformer.class.getMethod("transformEntityAIBreakDoor", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.ai.EntityAIEatGrass", SprinklesForVanillaTransformer.class.getMethod("transformEntityAIEatGrass", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.boss.EntityDragon", SprinklesForVanillaTransformer.class.getMethod("transformEntityDragon", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.boss.EntityWither", SprinklesForVanillaTransformer.class.getMethod("transformEntityWither", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityCreeper", SprinklesForVanillaTransformer.class.getMethod("transformEntityCreeper", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityEnderman", SprinklesForVanillaTransformer.class.getMethod("transformEntityEnderman", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySilverfish", SprinklesForVanillaTransformer.class.getMethod("transformEntitySilverfish", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityLargeFireball", SprinklesForVanillaTransformer.class.getMethod("transformEntityLargeFireball", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityWitherSkull", SprinklesForVanillaTransformer.class.getMethod("transformEntityWitherSkull", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.block.Block", SprinklesForVanillaTransformer.class.getMethod("transformBlock", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.block.BlockBed", SprinklesForVanillaTransformer.class.getMethod("transformBlockBed", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.world.WorldProviderHell", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderHell", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.world.WorldProviderEnd", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderEnd", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.item.ItemBucket", SprinklesForVanillaTransformer.class.getMethod("transformItemBucket", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.block.BlockLiquid", SprinklesForVanillaTransformer.class.getMethod("transformBlockLiquid", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("cofh.asmhooks.block.BlockWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("cofh.asmhooks.block.BlockTickingWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.server.management.ServerConfigurationManager", SprinklesForVanillaTransformer.class.getMethod("transformServerConfigurationManager", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.tileentity.TileEntityBeacon", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityBeacon", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.world.WorldServer", SprinklesForVanillaTransformer.class.getMethod("transformWorldServer", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.block.BlockSapling", SprinklesForVanillaTransformer.class.getMethod("transformBlockSapling", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.block.BlockCrops", SprinklesForVanillaTransformer.class.getMethod("transformBlockCrops", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.world.SpawnerAnimals", SprinklesForVanillaTransformer.class.getMethod("transformSpawnerAnimals", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.item.ItemEnderEye", SprinklesForVanillaTransformer.class.getMethod("transformItemEnderEye", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.block.BlockEndPortal", SprinklesForVanillaTransformer.class.getMethod("transformBlockEndPortal", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySkeleton", SprinklesForVanillaTransformer.class.getMethod("transformEntitySkeleton", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityZombie", SprinklesForVanillaTransformer.class.getMethod("transformEntityZombie", ClassNode.class, boolean.class));
-            classToTransformMethodMap.put("net.minecraft.client.entity.EntityPlayerSP", SprinklesForVanillaTransformer.class.getMethod("transformEntityPlayerSP", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.client.renderer.RenderGlobal", SprinklesForVanillaTransformer.class.getMethod("transformRenderGlobal", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.client.renderer.tileentity.TileEntityChestRenderer", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityChestRenderer", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.EntityLivingBase", SprinklesForVanillaTransformer.class.getMethod("transformEntityLivingBase", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.block.BlockFarmland", SprinklesForVanillaTransformer.class.getMethod("transformBlockFarmland", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.EntityLiving", SprinklesForVanillaTransformer.class.getMethod("transformEntityLiving", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.ai.EntityAIBreakDoor", SprinklesForVanillaTransformer.class.getMethod("transformEntityAIBreakDoor", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.ai.EntityAIEatGrass", SprinklesForVanillaTransformer.class.getMethod("transformEntityAIEatGrass", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.boss.EntityDragon", SprinklesForVanillaTransformer.class.getMethod("transformEntityDragon", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.boss.EntityWither", SprinklesForVanillaTransformer.class.getMethod("transformEntityWither", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityCreeper", SprinklesForVanillaTransformer.class.getMethod("transformEntityCreeper", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityEnderman", SprinklesForVanillaTransformer.class.getMethod("transformEntityEnderman", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySilverfish", SprinklesForVanillaTransformer.class.getMethod("transformEntitySilverfish", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityLargeFireball", SprinklesForVanillaTransformer.class.getMethod("transformEntityLargeFireball", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityWitherSkull", SprinklesForVanillaTransformer.class.getMethod("transformEntityWitherSkull", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.block.Block", SprinklesForVanillaTransformer.class.getMethod("transformBlock", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.block.BlockBed", SprinklesForVanillaTransformer.class.getMethod("transformBlockBed", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.world.WorldProviderHell", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderHell", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.world.WorldProviderEnd", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderEnd", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.item.ItemBucket", SprinklesForVanillaTransformer.class.getMethod("transformItemBucket", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.block.BlockLiquid", SprinklesForVanillaTransformer.class.getMethod("transformBlockLiquid", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("cofh.asmhooks.block.BlockWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("cofh.asmhooks.block.BlockTickingWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.server.management.ServerConfigurationManager", SprinklesForVanillaTransformer.class.getMethod("transformServerConfigurationManager", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.tileentity.TileEntityBeacon", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityBeacon", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.world.WorldServer", SprinklesForVanillaTransformer.class.getMethod("transformWorldServer", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.block.BlockSapling", SprinklesForVanillaTransformer.class.getMethod("transformBlockSapling", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.block.BlockCrops", SprinklesForVanillaTransformer.class.getMethod("transformBlockCrops", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.world.SpawnerAnimals", SprinklesForVanillaTransformer.class.getMethod("transformSpawnerAnimals", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.item.ItemEnderEye", SprinklesForVanillaTransformer.class.getMethod("transformItemEnderEye", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.block.BlockEndPortal", SprinklesForVanillaTransformer.class.getMethod("transformBlockEndPortal", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySkeleton", SprinklesForVanillaTransformer.class.getMethod("transformEntitySkeleton", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityZombie", SprinklesForVanillaTransformer.class.getMethod("transformEntityZombie", ClassNode.class, boolean.class));
+//            classToTransformMethodMap.put("net.minecraft.client.entity.EntityPlayerSP", SprinklesForVanillaTransformer.class.getMethod("transformEntityPlayerSP", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -88,12 +88,12 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformBlockPortal(ClassNode classNode, boolean isObf)
     {
-        final String UPDATE_TICK = isObf ? "a" : "updateTick";
-        final String GET_SIZE = isObf ? "e" : "func_150000_e";
+        final String UPDATE_TICK = isObf ? "b" : "updateTick";
+        final String GET_SIZE = isObf ? "e" : "func_176548_d";
         final String ENTITY_COLLIDE = isObf ? "a" : "onEntityCollidedWithBlock";
-        final String UPDATE_TICK_DESC = isObf ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V";
-        final String GET_SIZE_DESC = isObf ? "(Lahb;III)Z" : "(Lnet/minecraft/world/World;III)Z";
-        final String ENTITY_COLLIDE_DESC = isObf ? "(Lahb;IIILsa;)V" : "(Lnet/minecraft/world/World;IIILnet/minecraft/entity/Entity;)V";
+        final String UPDATE_TICK_DESC = isObf ? "(Ladm;Lcj;Lalz;Ljava/util/Random;)V" : "(Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V";
+        final String GET_SIZE_DESC = isObf ? "(Ladm;Lcj;)Z" : "(Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;)Z";
+        final String ENTITY_COLLIDE_DESC = isObf ? "(Ladm;Lcj;Lalz;Lpk;)V" : "(Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/entity/Entity;)V";
 
         for (MethodNode method : classNode.methods)
         {
@@ -118,8 +118,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 //HookBlockPortal.spawnZombiePigman(p_149674_1_, p_149674_5_)
                 InsnList toInject = new InsnList();
                 toInject.add(new VarInsnNode(ALOAD, 1));
-                toInject.add(new VarInsnNode(ALOAD, 5));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "spawnZombiePigmen", isObf ? "(Lahb;Ljava/util/Random;)Z" : "(Lnet/minecraft/world/World;Ljava/util/Random;)Z", false));
+                toInject.add(new VarInsnNode(ALOAD, 4));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "spawnZombiePigmen", isObf ? "(Ladm;Ljava/util/Random;)Z" : "(Lnet/minecraft/world/World;Ljava/util/Random;)Z", false));
                 toInject.add(new JumpInsnNode(IFEQ, newConditionalEndLabel));
 
                 method.instructions.insert(injectPoint, toInject);
@@ -712,26 +712,26 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         }
     }
 
-    public static void transformCoFHBlockWater(ClassNode classNode, boolean isObf)
-    {
-        final String ON_BLOCK_ADDED = "onBlockAdded";
-        final String ON_BLOCK_ADDED_DESC = isObf ? "(Lahb;III)V" : "(Lnet/minecraft/world/World;III)V";
-
-        for (MethodNode method : classNode.methods)
-        {
-            if (method.name.equals(ON_BLOCK_ADDED) && method.desc.equals(ON_BLOCK_ADDED_DESC))
-            {
-                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFEQ);
-                VarInsnNode aLoadNode = (VarInsnNode) ASMHelper.findPreviousInstructionWithOpcode(ifNode, ALOAD);
-
-                InsnList toInject = new InsnList();
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "allowWater", "()Z", false));
-                toInject.add(new JumpInsnNode(IFNE, ifNode.label));
-
-                method.instructions.insertBefore(aLoadNode, toInject);
-            }
-        }
-    }
+//    public static void transformCoFHBlockWater(ClassNode classNode, boolean isObf)
+    //    {
+    //        final String ON_BLOCK_ADDED = "onBlockAdded";
+    //        final String ON_BLOCK_ADDED_DESC = isObf ? "(Lahb;III)V" : "(Lnet/minecraft/world/World;III)V";
+    //
+    //        for (MethodNode method : classNode.methods)
+    //        {
+    //            if (method.name.equals(ON_BLOCK_ADDED) && method.desc.equals(ON_BLOCK_ADDED_DESC))
+    //            {
+    //                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFEQ);
+    //                VarInsnNode aLoadNode = (VarInsnNode) ASMHelper.findPreviousInstructionWithOpcode(ifNode, ALOAD);
+    //
+    //                InsnList toInject = new InsnList();
+    //                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "allowWater", "()Z", false));
+    //                toInject.add(new JumpInsnNode(IFNE, ifNode.label));
+    //
+    //                method.instructions.insertBefore(aLoadNode, toInject);
+    //            }
+    //        }
+    //    }
 
     public static void transformServerConfigurationManager(ClassNode classNode, boolean isObf)
     {

@@ -156,7 +156,7 @@ public class WorldHandlers
         @SubscribeEvent
         public void onBedActivated(PlayerInteractEvent event)
         {
-            if (event.world.getBlockState(event.pos).getBlock().isBed(event.world, event.pos, event.entityPlayer) && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && SprinklesForVanilla.isOnServer)
+            if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && SprinklesForVanilla.isOnServer && event.world.getBlockState(event.pos).getBlock().isBed(event.world, event.pos, event.entityPlayer))
             {
                 if (!event.world.isRemote && ((!event.world.provider.canRespawnHere() || event.world.getBiomeGenForCoords(event.pos) == BiomeGenBase.hell) && Settings.otherDimensionsCancelSleep[1]))
                 {
