@@ -1,5 +1,6 @@
 package io.github.vikestep.sprinklesforvanilla.asm;
 
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import io.github.vikestep.sprinklesforvanilla.SprinklesForVanilla;
@@ -18,8 +19,10 @@ public class HooksClient
 {
     public static Entity particlePlayerOrigin;
 
-    public static boolean particleIsAllowed(String particle)
+    public static boolean particleIsAllowed(int id)
     {
+        EnumParticleTypes particleType = EnumParticleTypes.getParticleFromId(id);
+        String particle = particleType.getParticleName();
         EntityPlayer currentPlayer = Minecraft.getMinecraft().thePlayer;
         if (Settings.potionEffectsShown != 0 && particlePlayerOrigin != null)
         {

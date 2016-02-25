@@ -23,20 +23,20 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         {
             //Replace with lambda expressions when we move to a requirement of java 8
             classToTransformMethodMap.put("net.minecraft.block.BlockPortal", SprinklesForVanillaTransformer.class.getMethod("transformBlockPortal", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.client.renderer.RenderGlobal", SprinklesForVanillaTransformer.class.getMethod("transformRenderGlobal", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.client.renderer.tileentity.TileEntityChestRenderer", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityChestRenderer", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.EntityLivingBase", SprinklesForVanillaTransformer.class.getMethod("transformEntityLivingBase", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.block.BlockFarmland", SprinklesForVanillaTransformer.class.getMethod("transformBlockFarmland", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.EntityLiving", SprinklesForVanillaTransformer.class.getMethod("transformEntityLiving", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.ai.EntityAIBreakDoor", SprinklesForVanillaTransformer.class.getMethod("transformEntityAIBreakDoor", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.ai.EntityAIEatGrass", SprinklesForVanillaTransformer.class.getMethod("transformEntityAIEatGrass", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.boss.EntityDragon", SprinklesForVanillaTransformer.class.getMethod("transformEntityDragon", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.boss.EntityWither", SprinklesForVanillaTransformer.class.getMethod("transformEntityWither", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityCreeper", SprinklesForVanillaTransformer.class.getMethod("transformEntityCreeper", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityEnderman", SprinklesForVanillaTransformer.class.getMethod("transformEntityEnderman", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySilverfish", SprinklesForVanillaTransformer.class.getMethod("transformEntitySilverfish", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityLargeFireball", SprinklesForVanillaTransformer.class.getMethod("transformEntityLargeFireball", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityWitherSkull", SprinklesForVanillaTransformer.class.getMethod("transformEntityWitherSkull", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.client.renderer.RenderGlobal", SprinklesForVanillaTransformer.class.getMethod("transformRenderGlobal", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.client.renderer.tileentity.TileEntityChestRenderer", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityChestRenderer", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.EntityLivingBase", SprinklesForVanillaTransformer.class.getMethod("transformEntityLivingBase", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.BlockFarmland", SprinklesForVanillaTransformer.class.getMethod("transformBlockFarmland", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.EntityLiving", SprinklesForVanillaTransformer.class.getMethod("transformEntityLiving", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.ai.EntityAIBreakDoor", SprinklesForVanillaTransformer.class.getMethod("transformEntityAIBreakDoor", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.ai.EntityAIEatGrass", SprinklesForVanillaTransformer.class.getMethod("transformEntityAIEatGrass", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.boss.EntityDragon", SprinklesForVanillaTransformer.class.getMethod("transformEntityDragon", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.boss.EntityWither", SprinklesForVanillaTransformer.class.getMethod("transformEntityWither", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityCreeper", SprinklesForVanillaTransformer.class.getMethod("transformEntityCreeper", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityEnderman$AIPlaceBlock", SprinklesForVanillaTransformer.class.getMethod("transformEntityEnderman", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySilverfish$AISummonSilverfish", SprinklesForVanillaTransformer.class.getMethod("transformEntitySilverfish", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityLargeFireball", SprinklesForVanillaTransformer.class.getMethod("transformEntityLargeFireball", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityWitherSkull", SprinklesForVanillaTransformer.class.getMethod("transformEntityWitherSkull", ClassNode.class, boolean.class));
 //            classToTransformMethodMap.put("net.minecraft.block.Block", SprinklesForVanillaTransformer.class.getMethod("transformBlock", ClassNode.class, boolean.class));
 //            classToTransformMethodMap.put("net.minecraft.block.BlockBed", SprinklesForVanillaTransformer.class.getMethod("transformBlockBed", ClassNode.class, boolean.class));
 //            classToTransformMethodMap.put("net.minecraft.world.WorldProviderHell", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderHell", ClassNode.class, boolean.class));
@@ -164,10 +164,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformRenderGlobal(ClassNode classNode, boolean isObf)
     {
-        final String SPAWN_PARTICLE = isObf ? "b" : "doSpawnParticle";
-        final String PLAY_AUX_SFX = isObf ? "a" : "playAuxSFX";
-        final String SPAWN_PARTICLE_DESC = isObf ? "(Ljava/lang/String;DDDDDD)Lbkm;" : "(Ljava/lang/String;DDDDDD)Lnet/minecraft/client/particle/EntityFX;";
-        final String PLAY_AUX_SFX_DESC = isObf ? "(Lyz;IIIII)V" : "(Lnet/minecraft/entity/player/EntityPlayer;IIIII)V";
+        final String SPAWN_PARTICLE = isObf ? "b" : "spawnEntityFX";
+        final String SPAWN_PARTICLE_DESC = isObf ? "(IZDDDDDD[I)Lbeb;" : "(IZDDDDDD[I)Lnet/minecraft/client/particle/EntityFX;";
 
         for (MethodNode method : classNode.methods)
         {
@@ -175,43 +173,19 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             {
                 /*
                 FROM: if (this.mc != null && this.mc.renderViewEntity != null && this.mc.effectRenderer != null)
-                TO: if (this.mc != null && HooksClient.particleIsAllowed(p_72726_1_) && this.mc.renderViewEntity != null && this.mc.effectRenderer != null)
+                TO: if (this.mc != null && HooksClient.particleIsAllowed(p_174974_1_) && this.mc.renderViewEntity != null && this.mc.effectRenderer != null)
                 */
 
                 //This will grab the first IFNULL JumpInsnNode
-                JumpInsnNode injectNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFNULL);
-                LabelNode injectNodeLabel = injectNode.label;
+                AbstractInsnNode ifNode = ASMHelper.findFirstInstructionWithOpcode(method, IFNULL);
 
                 //HooksClient.particleIsAllowed(p_72726_1_)
                 InsnList toInject = new InsnList();
-                toInject.add(new VarInsnNode(ALOAD, 1));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "particleIsAllowed", "(Ljava/lang/String;)Z", false));
-                toInject.add(new JumpInsnNode(IFEQ, injectNodeLabel));
+                toInject.add(new VarInsnNode(ILOAD, 1));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "particleIsAllowed", "(I)Z", false));
+                toInject.add(new JumpInsnNode(IFEQ, ((JumpInsnNode)ifNode).label));
 
-                method.instructions.insert(injectNode, toInject);
-            }
-            else if (method.name.equals(PLAY_AUX_SFX) && method.desc.equals(PLAY_AUX_SFX_DESC))
-            {
-                /*
-                FROM: this.mc.effectRenderer.addBlockDestroyEffects(p_72706_3_, p_72706_4_, p_72706_5_, block, p_72706_6_ >> 12 & 255);
-                TO: if (HooksClient.particleIsAllowed("blockBreak") {
-                        this.mc.effectRenderer.addBlockDestroyEffects(p_72706_3_, p_72706_4_, p_72706_5_, block, p_72706_6_ >> 12 & 255);
-                    }
-                */
-
-                //This will be (ALOAD, 0) so we inject before it
-                AbstractInsnNode injectNode = ASMHelper.findPreviousInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, ISHR), GETFIELD).getPrevious().getPrevious();
-                LabelNode ifParticleNode = new LabelNode();
-                AbstractInsnNode endIfNode = ASMHelper.findNextInstructionWithOpcode(injectNode, INVOKEVIRTUAL);
-
-                //if (HooksClient.particleIsAllowed("blockBreak")
-                InsnList toInject = new InsnList();
-                toInject.add(new LdcInsnNode("blockBreak"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "particleIsAllowed", "(Ljava/lang/String;)Z", false));
-                toInject.add(new JumpInsnNode(IFEQ, ifParticleNode));
-
-                method.instructions.insertBefore(injectNode, toInject);
-                method.instructions.insert(endIfNode, ifParticleNode);
+                method.instructions.insertBefore(ifNode.getPrevious().getPrevious(), toInject);
             }
         }
     }
@@ -244,7 +218,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformEntityLivingBase(ClassNode classNode, boolean isObf)
     {
-        final String UPDATE_POTION_EFFECTS = isObf ? "aO" : "updatePotionEffects";
+        final String UPDATE_POTION_EFFECTS = isObf ? "bi" : "updatePotionEffects";
         final String UPDATE_POTION_EFFECTS_DESC = "()V";
 
         for (MethodNode method : classNode.methods)
@@ -279,20 +253,20 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     public static void transformBlockFarmland(ClassNode classNode, boolean isObf)
     {
         final String ON_FALLEN_UPON = isObf ? "a" : "onFallenUpon";
-        final String ON_FALLEN_UPON_DESC = isObf ? "(Lahb;IIILsa;F)V" : "(Lnet/minecraft/world/World;IIILnet/minecraft/entity/Entity;F)V";
+        final String ON_FALLEN_UPON_DESC = isObf ? "(Ladm;Lcj;Lpk;F)V" : "(Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/entity/Entity;F)V";
 
         for (MethodNode method : classNode.methods)
         {
             if (method.name.equals(ON_FALLEN_UPON) && method.desc.equals(ON_FALLEN_UPON_DESC))
             {
-                AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, INSTANCEOF), ALOAD);
+                AbstractInsnNode getGameRuleStart = ASMHelper.findPreviousInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, RETURN), ALOAD);
                 AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFNE).getPrevious();
 
                 ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("fallenOnFarmland"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
             }
@@ -301,7 +275,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformEntityLiving(ClassNode classNode, boolean isObf)
     {
-        final String ON_LIVING_UPDATE = isObf ? "e" : "onLivingUpdate";
+        final String ON_LIVING_UPDATE = isObf ? "m" : "onLivingUpdate";
         final String ON_LIVING_UPDATE_DESC = "()V";
 
         for (MethodNode method : classNode.methods)
@@ -315,7 +289,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("mobPickUpLoot"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
             }
@@ -338,7 +312,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("mobBreakDoor"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
             }
@@ -354,14 +328,14 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         {
             if (method.name.equals(UPDATE_TASK) && method.desc.equals(UPDATE_TASK_DESC))
             {
-                AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPNE), GETFIELD);
+                AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, INVOKEINTERFACE), GETFIELD);
                 AbstractInsnNode getGameRuleEnd = ASMHelper.findNextInstructionWithOpcode(getGameRuleStart, IFEQ).getPrevious();
 
                 ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("mobEatTallGrass"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
 
@@ -372,7 +346,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 toInject = new InsnList();
                 toInject.add(new LdcInsnNode("mobEatGrassBlock"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
             }
@@ -381,8 +355,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformEntityDragon(ClassNode classNode, boolean isObf)
     {
-        final String DESTROY_BLOCKS_AABB = isObf ? "a" : "destroyBlocksInAABB";
-        final String DESTROY_BLOCKS_AABB_DESC = isObf ? "(Lazt;)Z" : "(Lnet/minecraft/util/AxisAlignedBB;)Z";
+        final String DESTROY_BLOCKS_AABB = isObf ? "b" : "destroyBlocksInAABB";
+        final String DESTROY_BLOCKS_AABB_DESC = isObf ? "(Laug;)Z" : "(Lnet/minecraft/util/AxisAlignedBB;)Z";
 
         for (MethodNode method : classNode.methods)
         {
@@ -395,7 +369,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("enderDragonBreakBlock"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
             }
@@ -404,7 +378,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformEntityWither(ClassNode classNode, boolean isObf)
     {
-        final String UPDATE_AI_TASKS = isObf ? "bn" : "updateAITasks";
+        final String UPDATE_AI_TASKS = isObf ? "E" : "updateAITasks";
         final String UPDATE_AI_TASKS_DESC = "()V";
 
         for (MethodNode method : classNode.methods)
@@ -418,7 +392,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("witherExplode"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
 
@@ -429,7 +403,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 toInject = new InsnList();
                 toInject.add(new LdcInsnNode("witherBreakBlock"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
             }
@@ -438,7 +412,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformEntityCreeper(ClassNode classNode, boolean isObf)
     {
-        final String EXPLODE = isObf ? "ce" : "func_146077_cc";
+        final String EXPLODE = isObf ? "cr" : "explode";
         final String EXPLODE_DESC = "()V";
 
         for (MethodNode method : classNode.methods)
@@ -450,9 +424,9 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 InsnList toInject = new InsnList();
                 toInject.add(new VarInsnNode(ILOAD, 1));
                 toInject.add(new VarInsnNode(ALOAD, 0));
-                toInject.add(new FieldInsnNode(GETFIELD, isObf ? "xz" : "net/minecraft/entity/monster/EntityCreeper", isObf ? "o" : "worldObj", isObf ? "Lahb;" : "Lnet/minecraft/world/World;"));
+                toInject.add(new FieldInsnNode(GETFIELD, isObf ? "vn" : "net/minecraft/entity/monster/EntityCreeper", isObf ? "o" : "worldObj", isObf ? "Ladm;" : "Lnet/minecraft/world/World;"));
                 toInject.add(new LdcInsnNode("creeperExplosion"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(ILahb;Ljava/lang/String;)Z" : "(ILnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(ILadm;Ljava/lang/String;)Z" : "(ILnet/minecraft/world/World;Ljava/lang/String;)Z", false));
                 toInject.add(new VarInsnNode(ISTORE, 1));
 
                 method.instructions.insert(iStoreNode, toInject);
@@ -462,21 +436,21 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformEntityEnderman(ClassNode classNode, boolean isObf)
     {
-        final String ON_LIVING_UPDATE = isObf ? "e" : "onLivingUpdate";
-        final String ON_LIVING_UPDATE_DESC = "()V";
+        final String ON_LIVING_UPDATE = isObf ? "a" : "shouldExecute";
+        final String ON_LIVING_UPDATE_DESC = "()Z";
 
         for (MethodNode method : classNode.methods)
         {
             if (method.name.equals(ON_LIVING_UPDATE) && method.desc.equals(ON_LIVING_UPDATE_DESC))
             {
-                AbstractInsnNode getGameRuleStart = ASMHelper.findFirstInstructionWithOpcode(method, IFNE).getNext().getNext();
+                AbstractInsnNode getGameRuleStart = ASMHelper.findFirstInstructionWithOpcode(method, GETFIELD).getNext();
                 AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
                 ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("endermanStealBlock"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
             }
@@ -485,21 +459,21 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformEntitySilverfish(ClassNode classNode, boolean isObf)
     {
-        final String UPDATE_ACTION_STATE = isObf ? "bq" : "updateEntityActionState";
+        final String UPDATE_ACTION_STATE = isObf ? "e" : "updateTask";
         final String UPDATE_ACTION_STATE_DESC = "()V";
 
         for (MethodNode method : classNode.methods)
         {
             if (method.name.equals(UPDATE_ACTION_STATE) && method.desc.equals(UPDATE_ACTION_STATE_DESC))
             {
-                AbstractInsnNode getGameRuleStart = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPNE), GETFIELD);
+                AbstractInsnNode getGameRuleStart = ASMHelper.findLastInstructionWithOpcode(method, LDC).getPrevious().getPrevious();
                 AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
 
                 ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("silverfishBreakBlock"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
             }
@@ -509,7 +483,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     public static void transformEntityLargeFireball(ClassNode classNode, boolean isObf)
     {
         final String ON_IMPACT = isObf ? "a" : "onImpact";
-        final String ON_IMPACT_DESC = isObf ? "(Lazu;)V" : "(Lnet/minecraft/util/MovingObjectPosition;)V";
+        final String ON_IMPACT_DESC = isObf ? "(Lauh;)V" : "(Lnet/minecraft/util/MovingObjectPosition;)V";
 
         for (MethodNode method : classNode.methods)
         {
@@ -523,14 +497,14 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 method.instructions.insert(ifNodeStart, toInject);*/
 
-                AbstractInsnNode getGameRuleStart = ASMHelper.findLastInstructionWithOpcode(method, GETFIELD);
-                AbstractInsnNode getGameRuleEnd = getGameRuleStart.getNext().getNext().getNext();
+                AbstractInsnNode getGameRuleEnd = ASMHelper.findFirstInstructionWithOpcode(method, ISTORE).getPrevious();
+                AbstractInsnNode getGameRuleStart = getGameRuleEnd.getPrevious().getPrevious().getPrevious();
 
                 ASMHelper.skipInstructions(method.instructions, getGameRuleStart.getNext(), getGameRuleEnd.getNext());
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("largeFireballExplosion"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
             }
@@ -540,7 +514,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     public static void transformEntityWitherSkull(ClassNode classNode, boolean isObf)
     {
         final String ON_IMPACT = isObf ? "a" : "onImpact";
-        final String ON_IMPACT_DESC = isObf ? "(Lazu;)V" : "(Lnet/minecraft/util/MovingObjectPosition;)V";
+        final String ON_IMPACT_DESC = isObf ? "(Lauh;)V" : "(Lnet/minecraft/util/MovingObjectPosition;)V";
 
         for (MethodNode method : classNode.methods)
         {
@@ -553,7 +527,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
                 InsnList toInject = new InsnList();
                 toInject.add(new LdcInsnNode("witherSkullExplosion"));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Lahb;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canMobGrief", isObf ? "(Ladm;Ljava/lang/String;)Z" : "(Lnet/minecraft/world/World;Ljava/lang/String;)Z", false));
 
                 method.instructions.insert(getGameRuleStart, toInject);
             }
