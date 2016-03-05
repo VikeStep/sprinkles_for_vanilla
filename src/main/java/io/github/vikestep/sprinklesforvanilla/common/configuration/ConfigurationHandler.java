@@ -352,10 +352,10 @@ public class ConfigurationHandler
         Settings.bedSetsSpawn[side] = config.get(CATEGORY, "bedSetsSpawn", true, COMMENT).getBoolean(true);
         propOrder.add("bedSetsSpawn");
 
-        COMMENT = "Set this to true if you want beds to explode and cancel sleep when in dimensions such as the nether. Set this to false to allow sleep in other dimensions.\n" +
-                  "It should be noted that having this to false will allow you to set a spawn in other dimensions";
-        Settings.otherDimensionsCancelSleep[side] = config.get(CATEGORY, "otherDimensionsCancelSleep", true ,COMMENT).getBoolean(true);
-        propOrder.add("otherDimensionsCancelSleep");
+//        COMMENT = "Set this to true if you want beds to explode and cancel sleep when in dimensions such as the nether. Set this to false to allow sleep in other dimensions.\n" +
+//                  "It should be noted that having this to false will allow you to set a spawn in other dimensions";
+//        Settings.otherDimensionsCancelSleep[side] = config.get(CATEGORY, "otherDimensionsCancelSleep", true ,COMMENT).getBoolean(true);
+//        propOrder.add("otherDimensionsCancelSleep");
 
         COMMENT = "Set this to true if you want nearby mobs to cancel sleep, set to false to sleep even if mobs are nearby";
         Settings.nearbyMobsCancelSleep[side] = config.get(CATEGORY, "nearbyMobsCancelSleep", true, COMMENT).getBoolean(true);

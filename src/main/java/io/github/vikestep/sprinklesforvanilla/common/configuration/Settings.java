@@ -210,7 +210,7 @@ public class Settings
     public static boolean[]  bedSetsSpawn                = new boolean[2];
     public static boolean[]  nearbyMobsCancelSleep       = new boolean[2];
     public static boolean[]  dayCancelsSleep             = new boolean[] {true, true}; //Currently not in the configs. Either use coremodding or request a Forge PR to fix this
-    public static boolean[]  otherDimensionsCancelSleep  = new boolean[2];
+    //public static boolean[]  otherDimensionsCancelSleep  = new boolean[2];
     public static boolean[]  distanceFromBedCancelsSleep = new boolean[2];
     public static double[][] nearbyMobDistance           = new double[3][2]; //{x, y, z}
     public static double[][] distanceFromBed             = new double[3][2]; //{x, y, z}
@@ -342,7 +342,7 @@ public class Settings
         bedSetsSpawn[1] = bedSetsSpawn[0];
         nearbyMobsCancelSleep[1] = nearbyMobsCancelSleep[0];
         dayCancelsSleep[1] = dayCancelsSleep[0];
-        otherDimensionsCancelSleep[1] = otherDimensionsCancelSleep[0];
+        //otherDimensionsCancelSleep[1] = otherDimensionsCancelSleep[0];
         distanceFromBedCancelsSleep[1] = distanceFromBedCancelsSleep[0];
         nearbyMobDistance[1] = nearbyMobDistance[0].clone();
         distanceFromBed[1] = distanceFromBed[0].clone();

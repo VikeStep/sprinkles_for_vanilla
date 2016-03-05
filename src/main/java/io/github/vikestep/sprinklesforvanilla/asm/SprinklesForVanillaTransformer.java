@@ -37,25 +37,25 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
             classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySilverfish$AISummonSilverfish", SprinklesForVanillaTransformer.class.getMethod("transformEntitySilverfish", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityLargeFireball", SprinklesForVanillaTransformer.class.getMethod("transformEntityLargeFireball", ClassNode.class, boolean.class));
             classToTransformMethodMap.put("net.minecraft.entity.projectile.EntityWitherSkull", SprinklesForVanillaTransformer.class.getMethod("transformEntityWitherSkull", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.block.Block", SprinklesForVanillaTransformer.class.getMethod("transformBlock", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.Block", SprinklesForVanillaTransformer.class.getMethod("transformBlock", ClassNode.class, boolean.class));
 //            classToTransformMethodMap.put("net.minecraft.block.BlockBed", SprinklesForVanillaTransformer.class.getMethod("transformBlockBed", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.world.WorldProviderHell", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderHell", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.world.WorldProviderEnd", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderEnd", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.item.ItemBucket", SprinklesForVanillaTransformer.class.getMethod("transformItemBucket", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.block.BlockLiquid", SprinklesForVanillaTransformer.class.getMethod("transformBlockLiquid", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.world.WorldProviderHell", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderHell", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.world.WorldProviderEnd", SprinklesForVanillaTransformer.class.getMethod("transformWorldProviderEnd", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.item.ItemBucket", SprinklesForVanillaTransformer.class.getMethod("transformItemBucket", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.BlockLiquid", SprinklesForVanillaTransformer.class.getMethod("transformBlockLiquid", ClassNode.class, boolean.class));
 //            classToTransformMethodMap.put("cofh.asmhooks.block.BlockWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
 //            classToTransformMethodMap.put("cofh.asmhooks.block.BlockTickingWater", SprinklesForVanillaTransformer.class.getMethod("transformCoFHBlockWater", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.server.management.ServerConfigurationManager", SprinklesForVanillaTransformer.class.getMethod("transformServerConfigurationManager", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.tileentity.TileEntityBeacon", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityBeacon", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.world.WorldServer", SprinklesForVanillaTransformer.class.getMethod("transformWorldServer", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.block.BlockSapling", SprinklesForVanillaTransformer.class.getMethod("transformBlockSapling", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.block.BlockCrops", SprinklesForVanillaTransformer.class.getMethod("transformBlockCrops", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.world.SpawnerAnimals", SprinklesForVanillaTransformer.class.getMethod("transformSpawnerAnimals", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.item.ItemEnderEye", SprinklesForVanillaTransformer.class.getMethod("transformItemEnderEye", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.block.BlockEndPortal", SprinklesForVanillaTransformer.class.getMethod("transformBlockEndPortal", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySkeleton", SprinklesForVanillaTransformer.class.getMethod("transformEntitySkeleton", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityZombie", SprinklesForVanillaTransformer.class.getMethod("transformEntityZombie", ClassNode.class, boolean.class));
-//            classToTransformMethodMap.put("net.minecraft.client.entity.EntityPlayerSP", SprinklesForVanillaTransformer.class.getMethod("transformEntityPlayerSP", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.server.management.ServerConfigurationManager", SprinklesForVanillaTransformer.class.getMethod("transformServerConfigurationManager", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.tileentity.TileEntityBeacon", SprinklesForVanillaTransformer.class.getMethod("transformTileEntityBeacon", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.world.WorldServer", SprinklesForVanillaTransformer.class.getMethod("transformWorldServer", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.BlockSapling", SprinklesForVanillaTransformer.class.getMethod("transformBlockSapling", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.BlockCrops", SprinklesForVanillaTransformer.class.getMethod("transformBlockCrops", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.world.SpawnerAnimals", SprinklesForVanillaTransformer.class.getMethod("transformSpawnerAnimals", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.item.ItemEnderEye", SprinklesForVanillaTransformer.class.getMethod("transformItemEnderEye", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.block.BlockEndPortal", SprinklesForVanillaTransformer.class.getMethod("transformBlockEndPortal", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.monster.EntitySkeleton", SprinklesForVanillaTransformer.class.getMethod("transformEntitySkeleton", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.entity.monster.EntityZombie", SprinklesForVanillaTransformer.class.getMethod("transformEntityZombie", ClassNode.class, boolean.class));
+            classToTransformMethodMap.put("net.minecraft.client.entity.EntityPlayerSP", SprinklesForVanillaTransformer.class.getMethod("transformEntityPlayerSP", ClassNode.class, boolean.class));
         }
         catch (NoSuchMethodException e)
         {
@@ -225,25 +225,17 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
         {
             if (method.name.equals(UPDATE_POTION_EFFECTS) && method.desc.equals(UPDATE_POTION_EFFECTS_DESC))
             {
+                method.maxStack += 3;
                 /*
                 FROM: if (flag && i > 0)
-                TO: if (flag && i > 0 && Hooks.particleSpawnedFromEntity(this, flag ? "mobSpellAmbient" : "mobSpell"))
+                TO: if (flag && i > 0 && Hooks.particleSpawnedFromEntity(this))
                 */
 
                 JumpInsnNode ifSpawnParticleNode = (JumpInsnNode) ASMHelper.findLastInstructionWithOpcode(method, IFLE);
 
                 InsnList toInject = new InsnList();
                 toInject.add(new VarInsnNode(ALOAD, 0)); //this
-                toInject.add(new VarInsnNode(ILOAD, 3)); //flag
-                LabelNode particleTypeEnd = new LabelNode();
-                toInject.add(new JumpInsnNode(IFEQ, particleTypeEnd));
-                toInject.add(new LdcInsnNode("mobSpellAmbient"));
-                LabelNode startHook = new LabelNode();
-                toInject.add(new JumpInsnNode(GOTO, startHook));
-                toInject.add(particleTypeEnd);
-                toInject.add(new LdcInsnNode("mobSpell"));
-                toInject.add(startHook);
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "particleSpawnedFromEntity", isObf ? "(Lsv;Ljava/lang/String;)V" : "(Lnet/minecraft/entity/EntityLivingBase;Ljava/lang/String;)V", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "particleSpawnedFromEntity", isObf ? "(Lpr;)V" : "(Lnet/minecraft/entity/EntityLivingBase;)V", false));
 
                 method.instructions.insert(ifSpawnParticleNode, toInject);
             }
@@ -537,7 +529,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     public static void transformBlock(ClassNode classNode, boolean isObf)
     {
         final String IS_BEACON_BASE = "isBeaconBase";
-        final String IS_BEACON_BASE_DESC = isObf ? "(Lahl;IIIIII)Z" : "(Lnet/minecraft/world/IBlockAccess;IIIIII)Z";
+        final String IS_BEACON_BASE_DESC = isObf ? "(Ladq;Lcj;Lcj;)Z" : "(Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/BlockPos;)Z";
 
         for (MethodNode method : classNode.methods)
         {
@@ -560,50 +552,48 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 InsnList toInject = new InsnList();
                 toInject.add(new VarInsnNode(ALOAD, 0));
                 toInject.add(new VarInsnNode(ALOAD, 1));
-                toInject.add(new VarInsnNode(ILOAD, 2));
-                toInject.add(new VarInsnNode(ILOAD, 3));
-                toInject.add(new VarInsnNode(ILOAD, 4));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "isBeaconBase", isObf ? "(Laji;Lahl;III)Z" : "(Lnet/minecraft/block/Block;Lnet/minecraft/world/IBlockAccess;III)Z", false));
+                toInject.add(new VarInsnNode(ALOAD, 2));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "isBeaconBase", isObf ? "(Lafh;Ladq;Lcj;)Z" : "(Lnet/minecraft/block/Block;Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/BlockPos;)Z", false));
 
                 method.instructions.insertBefore(endNode, toInject);
             }
         }
     }
 
-    public static void transformBlockBed(ClassNode classNode, boolean isObf)
-    {
-        final String ON_BLOCK_ACTIVATED = isObf ? "a" : "onBlockActivated";
-        final String ON_BLOCK_ACTIVATED_DESC = isObf ? "(Lahb;IIILyz;IFFF)Z" : "(Lnet/minecraft/world/World;IIILnet/minecraft/entity/player/EntityPlayer;IFFF)Z";
-
-        for (MethodNode method : classNode.methods)
-        {
-            if (method.name.equals(ON_BLOCK_ACTIVATED) && method.desc.equals(ON_BLOCK_ACTIVATED_DESC))
-            {
-                InsnList toInject = new InsnList();
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "allowOtherDimensions", "()Z", false));
-                if (!isObf)
-                {
-                    AbstractInsnNode endIfNode = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPEQ), IF_ACMPEQ);
-                    AbstractInsnNode startIfNode = ASMHelper.findPreviousInstructionWithOpcode(endIfNode, GETFIELD).getPrevious();
-
-                    LabelNode jumpLabel = new LabelNode();
-                    toInject.add(new JumpInsnNode(IFEQ, jumpLabel));
-
-                    method.instructions.insertBefore(startIfNode, toInject);
-                    method.instructions.insert(endIfNode, jumpLabel);
-                }
-                else
-                {
-                    AbstractInsnNode endIfNode = ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPNE);
-                    AbstractInsnNode startIfNode = ASMHelper.findPreviousInstructionWithOpcode(endIfNode, GETFIELD).getPrevious();
-
-                    toInject.add(new JumpInsnNode(IFEQ, ((JumpInsnNode) endIfNode).label));
-
-                    method.instructions.insertBefore(startIfNode, toInject);
-                }
-            }
-        }
-    }
+//    public static void transformBlockBed(ClassNode classNode, boolean isObf)
+//    {
+//        final String ON_BLOCK_ACTIVATED = isObf ? "a" : "onBlockActivated";
+//        final String ON_BLOCK_ACTIVATED_DESC = isObf ? "(Ladm;Lcj;Lalz;Lwn;Lcq;FFF)Z" : "(Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumFacing;FFF)Z";
+//
+//        for (MethodNode method : classNode.methods)
+//        {
+//            if (method.name.equals(ON_BLOCK_ACTIVATED) && method.desc.equals(ON_BLOCK_ACTIVATED_DESC))
+//            {
+//                InsnList toInject = new InsnList();
+//                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "allowOtherDimensions", "()Z", false));
+//                if (!isObf)
+//                {
+//                    AbstractInsnNode endIfNode = ASMHelper.findNextInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPEQ), IF_ACMPEQ);
+//                    AbstractInsnNode startIfNode = ASMHelper.findPreviousInstructionWithOpcode(endIfNode, GETFIELD).getPrevious();
+//
+//                    LabelNode jumpLabel = new LabelNode();
+//                    toInject.add(new JumpInsnNode(IFEQ, jumpLabel));
+//
+//                    method.instructions.insertBefore(startIfNode, toInject);
+//                    method.instructions.insert(endIfNode, jumpLabel);
+//                }
+//                else
+//                {
+//                    AbstractInsnNode endIfNode = ASMHelper.findFirstInstructionWithOpcode(method, IF_ACMPNE);
+//                    AbstractInsnNode startIfNode = ASMHelper.findPreviousInstructionWithOpcode(endIfNode, GETFIELD).getPrevious();
+//
+//                    toInject.add(new JumpInsnNode(IFEQ, ((JumpInsnNode) endIfNode).label));
+//
+//                    method.instructions.insertBefore(startIfNode, toInject);
+//                }
+//            }
+//        }
+//    }
 
     public static void transformWorldProviderHell(ClassNode classNode, boolean isObf)
     {
@@ -640,7 +630,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     public static void transformItemBucket(ClassNode classNode, boolean isObf)
     {
         final String TRY_PLACE_LIQUID = isObf ? "a" : "tryPlaceContainedLiquid";
-        final String TRY_PLACE_LIQUID_DESC = isObf ? "(Lahb;III)Z" : "(Lnet/minecraft/world/World;III)Z";
+        final String TRY_PLACE_LIQUID_DESC = isObf ? "(Ladm;Lcj;)Z" : "(Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;)Z";
 
         for (MethodNode method : classNode.methods)
         {
@@ -659,26 +649,26 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformBlockLiquid(ClassNode classNode, boolean isObf)
     {
-        final String INTERACT_WATER = isObf ? "n" : "func_149805_n";
-        final String INTERACT_WATER_DESC = isObf ? "(Lahb;III)V" : "(Lnet/minecraft/world/World;III)V";
+        final String CHECK_FOR_MIXING = isObf ? "e" : "checkForMixing";
+        final String CHECK_FOR_MIXING_DESC = isObf ? "(Ladm;Lcj;Lalz;)Z" : "(Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/block/state/IBlockState;)Z";
 
         for (MethodNode method : classNode.methods)
         {
-            if (method.name.equals(INTERACT_WATER) && method.desc.equals(INTERACT_WATER_DESC))
+            if (method.name.equals(CHECK_FOR_MIXING) && method.desc.equals(CHECK_FOR_MIXING_DESC))
             {
                 JumpInsnNode cobbleIfNode = (JumpInsnNode) ASMHelper.findLastInstructionWithOpcode(method, IF_ICMPGT);
                 JumpInsnNode obsidianIfNode = (JumpInsnNode) ASMHelper.findPreviousInstructionWithOpcode(cobbleIfNode, IFNE);
 
                 InsnList toInject = new InsnList();
                 toInject.add(new VarInsnNode(ALOAD, 1));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "createObsidian", isObf ? "(Lahb;)Z" : "(Lnet/minecraft/world/World;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "createObsidian", isObf ? "(Ladm;)Z" : "(Lnet/minecraft/world/World;)Z", false));
                 toInject.add(new JumpInsnNode(IFEQ, obsidianIfNode.label));
 
                 method.instructions.insert(obsidianIfNode, toInject);
 
                 toInject = new InsnList();
                 toInject.add(new VarInsnNode(ALOAD, 1));
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "createCobblestone", isObf ? "(Lahb;)Z" : "(Lnet/minecraft/world/World;)Z", false));
+                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "createCobblestone", isObf ? "(Ladm;)Z" : "(Lnet/minecraft/world/World;)Z", false));
                 toInject.add(new JumpInsnNode(IFEQ, cobbleIfNode.label));
 
                 method.instructions.insert(cobbleIfNode, toInject);
@@ -687,30 +677,30 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     }
 
 //    public static void transformCoFHBlockWater(ClassNode classNode, boolean isObf)
-    //    {
-    //        final String ON_BLOCK_ADDED = "onBlockAdded";
-    //        final String ON_BLOCK_ADDED_DESC = isObf ? "(Lahb;III)V" : "(Lnet/minecraft/world/World;III)V";
-    //
-    //        for (MethodNode method : classNode.methods)
-    //        {
-    //            if (method.name.equals(ON_BLOCK_ADDED) && method.desc.equals(ON_BLOCK_ADDED_DESC))
-    //            {
-    //                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFEQ);
-    //                VarInsnNode aLoadNode = (VarInsnNode) ASMHelper.findPreviousInstructionWithOpcode(ifNode, ALOAD);
-    //
-    //                InsnList toInject = new InsnList();
-    //                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "allowWater", "()Z", false));
-    //                toInject.add(new JumpInsnNode(IFNE, ifNode.label));
-    //
-    //                method.instructions.insertBefore(aLoadNode, toInject);
-    //            }
-    //        }
-    //    }
+//        {
+//            final String ON_BLOCK_ADDED = "onBlockAdded";
+//            final String ON_BLOCK_ADDED_DESC = isObf ? "(Lahb;III)V" : "(Lnet/minecraft/world/World;III)V";
+//
+//            for (MethodNode method : classNode.methods)
+//            {
+//                if (method.name.equals(ON_BLOCK_ADDED) && method.desc.equals(ON_BLOCK_ADDED_DESC))
+//                {
+//                    JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFEQ);
+//                    VarInsnNode aLoadNode = (VarInsnNode) ASMHelper.findPreviousInstructionWithOpcode(ifNode, ALOAD);
+//
+//                    InsnList toInject = new InsnList();
+//                    toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "allowWater", "()Z", false));
+//                    toInject.add(new JumpInsnNode(IFNE, ifNode.label));
+//
+//                    method.instructions.insertBefore(aLoadNode, toInject);
+//                }
+//            }
+//        }
 
     public static void transformServerConfigurationManager(ClassNode classNode, boolean isObf)
     {
-        final String RESPAWN_PLAYER = isObf ? "a" : "respawnPlayer";
-        final String RESPAWN_PLAYER_DESC = isObf ? "(Lmw;IZ)Lmw;" : "(Lnet/minecraft/entity/player/EntityPlayerMP;IZ)Lnet/minecraft/entity/player/EntityPlayerMP;";
+        final String RESPAWN_PLAYER = isObf ? "a" : "recreatePlayerEntity";
+        final String RESPAWN_PLAYER_DESC = isObf ? "(Llf;IZ)Llf;" : "(Lnet/minecraft/entity/player/EntityPlayerMP;IZ)Lnet/minecraft/entity/player/EntityPlayerMP;";
 
         for (MethodNode method : classNode.methods)
         {
@@ -719,7 +709,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
                 AbstractInsnNode aStoreNode = ASMHelper.findLastInstructionWithOpcode(method, ASTORE);
 
                 InsnList toInject = new InsnList();
-                String desc = isObf ? "(Lr;Lmw;)Lr;" : "(Lnet/minecraft/util/ChunkCoordinates;Lnet/minecraft/entity/player/EntityPlayerMP;)Lnet/minecraft/util/ChunkCoordinates;";
+                String desc = isObf ? "(Lcj;Llf;)Lcj;" : "(Lnet/minecraft/util/BlockPos;Lnet/minecraft/entity/player/EntityPlayerMP;)Lnet/minecraft/util/BlockPos;";
                 toInject.add(new VarInsnNode(ALOAD, 10));
                 toInject.add(new VarInsnNode(ALOAD, 8));
                 toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getSpawnPoint", desc, false));
@@ -732,28 +722,31 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformTileEntityBeacon(ClassNode classNode, boolean isObf)
     {
-        final String INIT_METHOD = isObf ? "y" : "func_146003_y";
-        final String INIT_METHOD_DESC = "()V";
+        final String UPDATE_COLORS = isObf ? "B" : "updateSegmentColors";
+        final String UPDATE_COLORS_DESC = "()V";
 
         for (MethodNode method : classNode.methods)
         {
-            if (method.name.equals(INIT_METHOD) && method.desc.equals(INIT_METHOD_DESC))
+            if (method.name.equals(UPDATE_COLORS) && method.desc.equals(UPDATE_COLORS))
             {
-                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFNE);
-                AbstractInsnNode insertNode = ASMHelper.findPreviousInstructionWithOpcode(ifNode, ISTORE);
+                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findPreviousInstructionWithOpcode(ASMHelper.findFirstInstructionWithOpcode(method, IF_ICMPGT), IFEQ);
+                AbstractInsnNode insertNode = ASMHelper.findPreviousInstructionWithOpcode(ifNode, ALOAD);
+
+                LabelNode jump = new LabelNode();
 
                 InsnList toInject = new InsnList();
                 toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "shouldBeaconCheckForSky", "()Z", false));
-                toInject.add(new JumpInsnNode(IFEQ, ifNode.label));
+                toInject.add(new JumpInsnNode(IFNE, jump));
 
-                method.instructions.insert(insertNode, toInject);
+                method.instructions.insertBefore(insertNode, toInject);
+                method.instructions.insert(ifNode, jump);
             }
         }
     }
 
     public static void transformWorldServer(ClassNode classNode, boolean isObf)
     {
-        final String TICK = isObf ? "b" : "tick";
+        final String TICK = isObf ? "c" : "tick";
         final String TICK_DESC = "()V";
 
         for (MethodNode method : classNode.methods)
@@ -776,8 +769,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformBlockCrops(ClassNode classNode, boolean isObf)
     {
-        final String UPDATE_TICK = isObf ? "a" : "updateTick";
-        final String UPDATE_TICK_DESC = isObf ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V";
+        final String UPDATE_TICK = isObf ? "b" : "updateTick";
+        final String UPDATE_TICK_DESC = isObf ? "(Ladm;Lcj;Lalz;Ljava/util/Random;)V" : "(Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V";
 
         for (MethodNode method : classNode.methods)
         {
@@ -799,8 +792,8 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformBlockSapling(ClassNode classNode, boolean isObf)
     {
-        final String UPDATE_TICK = isObf ? "a" : "updateTick";
-        final String UPDATE_TICK_DESC = isObf ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V";
+        final String UPDATE_TICK = isObf ? "b" : "updateTick";
+        final String UPDATE_TICK_DESC = isObf ? "(Ladm;Lcj;Lalz;Ljava/util/Random;)V" : "(Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V";
 
         for (MethodNode method : classNode.methods)
         {
@@ -823,28 +816,20 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     public static void transformSpawnerAnimals(ClassNode classNode, boolean isObf)
     {
         final String FIND_CHUNKS = isObf ? "a" : "findChunksForSpawning";
-        final String FIND_CHUNKS_DESC = isObf ? "(Lmt;ZZZ)I" : "(Lnet/minecraft/world/WorldServer;ZZZ)I";
+        final String FIND_CHUNKS_DESC = isObf ? "(Lle;ZZZ)I" : "(Lnet/minecraft/world/WorldServer;ZZZ)I";
 
         for (MethodNode method : classNode.methods)
         {
             if (method.name.equals(FIND_CHUNKS) && method.desc.equals(FIND_CHUNKS_DESC))
             {
                 AbstractInsnNode maxChunkRadiusNode = ASMHelper.findFirstInstructionWithOpcode(method, BIPUSH);
-                AbstractInsnNode spawnRadiusFromWorldSpawn = ASMHelper.findFirstInstructionWithOpcode(method, FCMPL).getPrevious();
-                AbstractInsnNode minSpawnPlayerNode = ASMHelper.findPreviousInstructionWithOpcode(spawnRadiusFromWorldSpawn, INVOKEVIRTUAL).getPrevious();
 
                 InsnList toInject = new InsnList();
                 toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getMaxChunkRadius", "()B", false));
 
                 method.instructions.insertBefore(maxChunkRadiusNode, toInject);
 
-                toInject = new InsnList();
-                toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getMinBlockRadius", "()D", false));
-
-                method.instructions.insertBefore(minSpawnPlayerNode, toInject);
-
                 ASMHelper.skipInstructions(method.instructions, maxChunkRadiusNode, maxChunkRadiusNode.getNext());
-                ASMHelper.skipInstructions(method.instructions, minSpawnPlayerNode, minSpawnPlayerNode.getNext());
             }
         }
     }
@@ -852,7 +837,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     public static void transformBlockEndPortal(ClassNode classNode, boolean isObf)
     {
         final String ON_ENTITY_COLLIDE = isObf ? "a" : "onEntityCollidedWithBlock";
-        final String ON_ENTITY_COLLIDE_DESC = isObf ? "(Lahb;IIILsa;)V" : "(Lnet/minecraft/world/World;IIILnet/minecraft/entity/Entity;)V";
+        final String ON_ENTITY_COLLIDE_DESC = isObf ? "(Ladm;Lcj;Lalz;Lpk;)V" : "(Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/entity/Entity;)V";
 
         for (MethodNode method : classNode.methods)
         {
@@ -872,7 +857,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
     public static void transformItemEnderEye(ClassNode classNode, boolean isObf)
     {
         final String ON_ENTITY_COLLIDE = isObf ? "a" : "onItemUse";
-        final String ON_ENTITY_COLLIDE_DESC = isObf ? "(Ladd;Lyz;Lahb;IIIIFFF)Z" : "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;IIIIFFF)Z";
+        final String ON_ENTITY_COLLIDE_DESC = isObf ? "(Lzx;Lwn;Ladm;Lcj;Lcq;FFF)Z" : "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/EnumFacing;FFF)Z";
 
         for (MethodNode method : classNode.methods)
         {
@@ -891,7 +876,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformEntityZombie(ClassNode classNode, boolean isObf)
     {
-        final String LIVING_UPDATE = isObf ? "e" : "onLivingUpdate";
+        final String LIVING_UPDATE = isObf ? "m" : "onLivingUpdate";
         final String LIVING_UPDATE_DESC = "()V";
 
         for (MethodNode method : classNode.methods)
@@ -911,7 +896,7 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformEntitySkeleton(ClassNode classNode, boolean isObf)
     {
-        final String LIVING_UPDATE = isObf ? "e" : "onLivingUpdate";
+        final String LIVING_UPDATE = isObf ? "m" : "onLivingUpdate";
         final String LIVING_UPDATE_DESC = "()V";
 
         for (MethodNode method : classNode.methods)
@@ -931,14 +916,14 @@ public class SprinklesForVanillaTransformer implements IClassTransformer
 
     public static void transformEntityPlayerSP(ClassNode classNode, boolean isObf)
     {
-        final String LIVING_UPDATE = isObf ? "e" : "onLivingUpdate";
+        final String LIVING_UPDATE = isObf ? "m" : "onLivingUpdate";
         final String LIVING_UPDATE_DESC = "()V";
 
         for (MethodNode method : classNode.methods)
         {
             if (method.name.equals(LIVING_UPDATE) && method.desc.equals(LIVING_UPDATE_DESC))
             {
-                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFNE);
+                JumpInsnNode ifNode = (JumpInsnNode) ASMHelper.findFirstInstructionWithOpcode(method, IFLE);
 
                 InsnList toInject = new InsnList();
                 toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksClient.class), "shouldStopSprinting", "()Z", false));

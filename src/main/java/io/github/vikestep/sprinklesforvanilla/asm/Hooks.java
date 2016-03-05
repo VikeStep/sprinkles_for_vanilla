@@ -24,7 +24,7 @@ public class Hooks
     public static ArrayList<EntityLargeFireball> fireballsExploding = new ArrayList<EntityLargeFireball>();
 
     //String name is passed in case we use it in the future
-    public static void particleSpawnedFromEntity(EntityLivingBase entity, String particle)
+    public static void particleSpawnedFromEntity(EntityLivingBase entity, int flag)
     {
         if (entity.worldObj.isRemote)
         {
@@ -66,7 +66,7 @@ public class Hooks
         return preset == 1 && canMobGrief(world, griefType);
     }
 
-    public static boolean isBeaconBase(Block block, IBlockAccess worldObj, int x, int y, int z)
+    public static boolean isBeaconBase(Block block, IBlockAccess worldObj, BlockPos pos)
     {
         if (SprinklesForVanilla.isOnServer)
         {
@@ -81,7 +81,6 @@ public class Hooks
                 {
                     if (blockNameData.length > 2)
                     {
-                        BlockPos pos = new BlockPos(x, y, z);
                         if (worldObj.getBlockState(pos).getBlock().getMetaFromState(worldObj.getBlockState(pos)) == Integer.parseInt(blockNameData[2]))
                         {
                             return true;
@@ -101,10 +100,10 @@ public class Hooks
         }
     }
 
-    public static boolean allowOtherDimensions()
-    {
-        return !SprinklesForVanilla.isOnServer || Settings.otherDimensionsCancelSleep[1];
-    }
+//    public static boolean allowOtherDimensions()
+//    {
+//        return !SprinklesForVanilla.isOnServer || Settings.otherDimensionsCancelSleep[1];
+//    }
 
     public static boolean respawnInNether()
     {

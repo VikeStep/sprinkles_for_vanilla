@@ -73,7 +73,7 @@ public class PlayerHandlers
             }
 
             //This checks if if its day time or not sleeping overworld and returns if it should continue to cancel sleep
-            if ((player.worldObj.isDaytime() && Settings.dayCancelsSleep[1]) || (!player.worldObj.provider.isSurfaceWorld() && Settings.otherDimensionsCancelSleep[1]))
+            if ((player.worldObj.isDaytime() && Settings.dayCancelsSleep[1]) || (!player.worldObj.provider.isSurfaceWorld()))
             {
                 //We let vanilla handle setting the result as of this time
                 return;

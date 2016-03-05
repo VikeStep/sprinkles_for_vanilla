@@ -158,7 +158,7 @@ public class WorldHandlers
         {
             if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && SprinklesForVanilla.isOnServer && event.world.getBlockState(event.pos).getBlock().isBed(event.world, event.pos, event.entityPlayer))
             {
-                if (!event.world.isRemote && ((!event.world.provider.canRespawnHere() || event.world.getBiomeGenForCoords(event.pos) == BiomeGenBase.hell) && Settings.otherDimensionsCancelSleep[1]))
+                if (!event.world.isRemote && ((!event.world.provider.canRespawnHere() || event.world.getBiomeGenForCoords(event.pos) == BiomeGenBase.hell)))
                 {
                     playerSleepInNether = true;
                 }
