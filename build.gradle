@@ -12,7 +12,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.8.9-2.0.0-alpha"
+version = "1.8.9-2.0.0-alpha1"
 group= "io.github.vikestep.sprinklesforvanilla" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "sprinklesforvanilla"
 
