@@ -24,7 +24,7 @@ public class Hooks
     public static ArrayList<EntityLargeFireball> fireballsExploding = new ArrayList<EntityLargeFireball>();
 
     //String name is passed in case we use it in the future
-    public static void particleSpawnedFromEntity(EntityLivingBase entity, int flag)
+    public static void particleSpawnedFromEntity(EntityLivingBase entity)
     {
         if (entity.worldObj.isRemote)
         {
